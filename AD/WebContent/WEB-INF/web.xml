@@ -173,6 +173,22 @@
   	<servlet-name>EditAD</servlet-name>
   	<url-pattern>/editAD</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>SelectAD</servlet-name>
+  	<servlet-class>controller.AD.selectAD</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>SelectAD</servlet-name>
+  	<url-pattern>/selectAD</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>FunctionAD</servlet-name>
+  	<servlet-class>controller.AD.functionAD</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>FunctionAD</servlet-name>
+  	<url-pattern>/functionAD</url-pattern>
+  </servlet-mapping>
   
   <servlet>
   	<servlet-name>UserHistory</servlet-name>
