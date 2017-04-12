@@ -14,9 +14,23 @@
 .ADURL_col { width: 100px; }
 .ADImgURL_col { width: 100px; text-align: center; }
 .ADEdit_col { width: 50px; text-align: center; }
+.pointerBtn { cursor: pointer; }
 </style>
 </head>
 <body>
+<%
+  final String SELECT_AD_SERVLET_URL = "selectAD.ad";
+%>
+
+<script type="text/javascript" >
+function goSelect(i) {
+	var form = document.getElementById("goSelectForm");
+	var ADCodeInput = document.getElementById("ADCodeInput");
+	ADCodeInput.value = i;
+	form.submit();
+}
+
+</script>
 <br>
 	<div class="ADInfo_row"> 
 		<span class="ADCount_col">잔여 광고 횟수</span> 
@@ -47,18 +61,25 @@ if (tmp.get("result").equals("T")) {
 		if (!ADURL.startsWith("http") && !ADTools.isNull(ADURL)) { ADURL = "http://"+ADURL; }
 		if (!ADImgURL.startsWith("http")) { ADImgURL = "http://"+ADImgURL; }
 		%>
-		 <div class="ADInfo_row"> 
+		 <div class="ADInfo_row" > 
 			<span class="ADCount_col"><%=ADRemainCount %></span> 
 			<span class="ADImgURL_col"> <img src="<%=ADImgURL %>" width="50px" height="50px" > </span>
-			<span class="ADCtt_col"><%=ADCtt %> <% if (!ADTools.isNull(ADURL)) { %> <a href="<%=ADURL %>">링크 확인</a> <%} %></span>
+			<span class="ADCtt_col"><div>
+				<a class="pointerBtn" onclick="goSelect(<%=ADCode%>);" ><%=ADCtt %></a><br>
+				<% if (!ADTools.isNull(ADURL)) { %> <a href="<%=ADURL %>"><font size="0.7em" >링크 확인</font></a> <%} %>
+			</div></span>
 			<span class="ADBonus_col"><%=ADBonus %> </span>
 			<span class="ADStat_col"> <%=isADing %></span>
-			<span class="ADEdit_col"> <a href="editAD.ad?ADCode=<%=ADCode %>&clientCode=<%=clientCode %>" >광고 수정</a></span>
 		</div>
 		<%
 	}
 }
 %>
 <br>
+
+<form id="goSelectForm" action="<%=SELECT_AD_SERVLET_URL %>" method="post" >
+	<input id="ADCodeInput" name="ADCode" type="hidden" value="-1" />
+</form>
+
 </body>
 </html>
