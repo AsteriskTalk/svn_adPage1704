@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Header</title>
+<!--  desktop Setting -->
+<style>
+body { margin: 20px 50px 0 50px; }
+span { display: inline-block; }
+#header_logo { font-size: 2.5em; }
+#header_menu { padding:5% 0 3% 0; margin: 0 50px 0 50px; }
+#header_signIn_signOut { float: right; margin : 0 50px 0 50px; }
+#header_menu_button { float: right; }
+#header_logo_title > .title_point { color: red; }
+#header_logo_title > a { font-weight: bold; }
+
+</style>
+
+</head>
+<body>
+<!-- init -->
+<script type="text/javascript" >
+window.onload = function() {
+	DOMReady();
+}
+
+function DOMReady() {
+	var session = window.sessionStorage;
+	var signOutBtn = document.getElementById("signOutBtn");
+	var signInBtn = document.getElementById("signInBtn");
+	
+	var signInResultSet = session.getItem("clientID");
+	if (!signInResultSet) {
+		signOutBtn.style.display="none";
+		signInBtn.style.display="inline";
+	} else {
+		signOutBtn.style.display="inline";
+		signInBtn.style.display="none";
+	}
+}
+</script>
+
+<!-- btn function - header -->
+<script type="text/javascript" >
+
+function main() {
+	var form = document.getElementById("headerClick");
+	var viewPath = document.getElementById("viewPath");
+	viewPath.value = "main.jsp";
+	form.submit();
+}
+
+function mypage() {
+	var form = document.getElementById("headerClick");
+	var viewPath = document.getElementById("viewPath");
+	viewPath.value = "mypage.jsp";
+	form.submit();
+}
+function ad() {
+	var form = document.getElementById("headerClick");
+	var viewPath = document.getElementById("viewPath");
+	viewPath.value = "ad.jsp";
+	form.submit();
+	
+}
+function history() {
+	var form = document.getElementById("headerClick");
+	var viewPath = document.getElementById("viewPath");
+	viewPath.value = "history.jsp";
+	form.submit();
+	
+}
+function statistics() {
+	var form = document.getElementById("headerClick");
+	var viewPath = document.getElementById("viewPath");
+	viewPath.value = "statics.jsp";
+	form.submit();
+	
+}
+
+function goTitle() {
+	location.href="index.ad";
+}
+
+</script>
+
+<!-- btn function - signIn-Out -->
+<script type="text/javascript">
+function doSignIn() {
+	location.href="signIn.ad";
+}
+function doSignOut() {
+	location.href="doSignOut.ad";
+}
+</script>
+
+
+
+<span id="header_logo" > 
+	<span id="header_logo_title" onclick="goTitle();"> <a class="title_point">A</a>sterisk<a class="title_point" >So</a>ft <a class="title_point">Ko</a>rea </span> 
+</span>
+<span id="header_signIn_signOut">
+	<button id="signOutBtn" style="display: none;" onclick="doSignOut();"> 로그아웃 </button>
+	<button id="signInBtn" style="display: none;" onclick="doSignIn();" > 로그인 </button>
+</span>
+<form id="headerClick" method="post" action="headerClick.ad">
+	<input type="hidden" id="viewPath" name="viewPath" >
+</form>
+
+<div id="header_menu" > 
+	<div id="header_menu_button">
+		<span onclick="main();" > 메인 </span>
+		<span onclick="mypage();" > 마이페이지 </span>
+		<span onclick="ad();" > 광고관리 </span>
+		<span onclick="history();"> 기록 </span>
+		<span onclick="statistics();"> 통계 </span>
+	</div>
+</div>
+</body>
+</html>

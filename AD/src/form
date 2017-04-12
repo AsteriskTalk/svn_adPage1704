@@ -1,0 +1,35 @@
+ extends HttpServlet {
+
+	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		System.out.println("\nlog : doGP..");
+		
+		String pagePath = (String)req.getAttribute("pagePath");
+		
+		try {
+		
+		} catch (Exception ex) {
+			
+		} finally {
+			RequestDispatcher rd = req.getRequestDispatcher(pagePath);
+			rd.forward(req, resp);
+			
+		}
+		
+	}
+	
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		this.doGP(req, resp);
+		
+	}
+	
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		this.doGP(req, resp);
+		
+	}
