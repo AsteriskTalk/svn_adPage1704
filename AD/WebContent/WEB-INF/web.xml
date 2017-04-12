@@ -28,17 +28,28 @@
   	<servlet-name>Index</servlet-name>
   	<url-pattern>/index</url-pattern>
   </servlet-mapping>
+  
+  
   <servlet>
   	<servlet-name>HistoryClick</servlet-name>
-  	<servlet-class>controller.main.historyClick</servlet-class>
+  	<servlet-class>controller.history.historyClick</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>HistoryClick</servlet-name>
   	<url-pattern>/historyClick</url-pattern>
   </servlet-mapping>
   <servlet>
+  	<servlet-name>ADHistoryClick</servlet-name>
+  	<servlet-class>controller.history.ADHistoryClick</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ADHistoryClick</servlet-name>
+  	<url-pattern>/ADHistory</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
   	<servlet-name>StaticsClick</servlet-name>
-  	<servlet-class>controller.main.staticsClick</servlet-class>
+  	<servlet-class>controller.statics.staticsClick</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>StaticsClick</servlet-name>
@@ -46,7 +57,7 @@
   </servlet-mapping>
   <servlet>
   	<servlet-name>ADClick</servlet-name>
-  	<servlet-class>controller.main.ADClick</servlet-class>
+  	<servlet-class>controller.AD.ADClick</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>ADClick</servlet-name>

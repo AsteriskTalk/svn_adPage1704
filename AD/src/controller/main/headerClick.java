@@ -26,9 +26,9 @@ public class headerClick  extends HttpServlet {
 //		String pagePath = (String)sc.getAttribute("INDEX_PAGE");
 		String pagePath = "";
 		String viewPath = "";
-		final String HISTORY_MAIN_PAGE = "all.jsp";
-		final String STATICS_MAIN_PAGE = "all.jsp";
-		final String AD_MAIN_PAGE = "main.jsp";
+		final String HISTORY_INSIDE_PAGE = "clientHistory.jsp";
+		final String STATICS_INSIDE_PAGE = "all.jsp";
+		final String AD_INSIDE_PAGE = "main.jsp";
 		String insidePage = "";
 		
 		boolean isSignIn = false;
@@ -53,9 +53,9 @@ public class headerClick  extends HttpServlet {
 				/** signIn 되어 있는 경우 
 				 * */
 				if (isSignIn) { 
-					if (viewPath.startsWith("adMain")) { insidePage = AD_MAIN_PAGE;}
-					else if (viewPath.startsWith("history")) { insidePage = HISTORY_MAIN_PAGE; }
-					else if (viewPath.startsWith("statics")) { insidePage = STATICS_MAIN_PAGE; }
+					if (viewPath.startsWith("adMain")) { insidePage = AD_INSIDE_PAGE;}
+					else if (viewPath.startsWith("history")) { insidePage = HISTORY_INSIDE_PAGE; }
+					else if (viewPath.startsWith("statics")) { insidePage = STATICS_INSIDE_PAGE; }
 					else {  }
 					
 					req.setAttribute("insidePage", insidePage);

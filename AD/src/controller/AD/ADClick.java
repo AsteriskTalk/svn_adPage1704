@@ -1,6 +1,7 @@
-package controller.main;
+package controller.AD;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 
@@ -14,60 +15,60 @@ import javax.servlet.http.HttpSession;
 
 import DAO.ADManager;
 import DAO.ClientManager;
+import DTO.ADInfo;
+import DTO.ADTarget;
 import util.ASTKLogManager;
 
-public class historyClick  extends HttpServlet {
+public class ADClick extends HttpServlet {
 
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		System.out.println("\nlog : doGP..historyClickController");
+		System.out.println("\nlog : doGP..adClickController");
 		ServletContext sc = req.getServletContext();
 		HttpSession session = req.getSession();
 		
-		String pagePath = (String)sc.getAttribute("INDEX_PAGE");
-		String viewPath = "history.jsp";
-
-		String insidePage = "all.jsp";
-
+		String indexPath = (String)sc.getAttribute("INDEX_PAGE");
+		String viewPath = "adMain.jsp";
+		
+		String insidePage = "main.jsp";
+		
 		String clientID = "";
 		long clientCode = 0;
 		long ADCode = 0;
-		int histPage = 1;
 		
 		ClientManager cm = (ClientManager)sc.getAttribute("cm");
-		ADManager am = (ADManager) sc.getAttribute("am");
-
+		ADManager am = (ADManager)sc.getAttribute("am");
+		
 		try {
 			clientID = (String)session.getAttribute("clientID");
 			clientCode = cm.getClientCode(clientID);
-			
 			Enumeration<String> e = req.getParameterNames();
 			while (e.hasMoreElements()) {
 				String s = (String)e.nextElement();
-				if (s.equals("historyPath")) { insidePage = req.getParameter(s); }
-				if (s.equals("histPage")) { histPage = Integer.parseInt(req.getParameter(s)); }
+				if (s.equals("ADPath")) { insidePage = req.getParameter(s); break; }
 			}
 			
-			if (insidePage.startsWith("all")) {
-				
-			} else if (insidePage.startsWith("some")) {
+			if(insidePage.startsWith("select")) {
 				ADCode = Long.parseLong(req.getParameter("ADCode"));
-				HashMap<String, Object> someADInfo = am.selectAD_someAD(ADCode, clientCode);
-				HashMap<String, Object> someADHistory = am.selectADHistory_someAD(ADCode, clientCode);
-				req.setAttribute("someADHistory", someADHistory);
-				req.setAttribute("someADInfo", someADInfo);
+				HashMap<String, Object> ADInfoSet = am.selectAD_someAD_withTarget(ADCode, clientCode);
+				req.setAttribute("ADInfoSet", ADInfoSet);
+				
+			} else if (insidePage.startsWith("status")) {
+			
+			} else if (insidePage.startsWith("main")) {
+				
 			}
-
+			
 			req.setAttribute("insidePage", insidePage);
-			req.setAttribute("histPage", histPage);
+			
 			
 		} catch (Exception ex) {
 			System.out.println("log : try-catch.."+ ASTKLogManager.getClassName_now() +"\n"+ex);
-			viewPath = (String)sc.getAttribute("ERROR_PATH");
+			viewPath = (String)sc.getAttribute("ERROR_PAGE");
 			
 		} finally {
 			req.setAttribute("viewPath", viewPath);
-			RequestDispatcher rd = req.getRequestDispatcher(pagePath);
+			RequestDispatcher rd = req.getRequestDispatcher(indexPath);
 			rd.forward(req, resp);
 			
 		}

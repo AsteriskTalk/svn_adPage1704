@@ -1,4 +1,4 @@
-package controller.main;
+package controller.history;
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -16,51 +16,66 @@ import DAO.ADManager;
 import DAO.ClientManager;
 import util.ASTKLogManager;
 
-public class staticsClick  extends HttpServlet {
+public class historyClick  extends HttpServlet {
 
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("\nlog : doGP..historyClickController");
 		ServletContext sc = req.getServletContext();
-		HttpSession session = req.getSession();
+		HttpSession ses = req.getSession();
 		
 		String pagePath = (String)sc.getAttribute("INDEX_PAGE");
-		String viewPath = "statics.jsp";
+		String viewPath = "history.jsp";
 
-		String insidePage = "all.jsp";
+		String insidePage = "clientHistory.jsp";
+		String ADHistoryPage = "AD/allADHistory.jsp";
 
 		String clientID = "";
 		long clientCode = 0;
 		long ADCode = 0;
+		int histPage = 1;
+		
+		HashMap<String, Object> tmp = new HashMap<String ,Object>();
+		boolean hasAllADHistory = false;
 		
 		ClientManager cm = (ClientManager)sc.getAttribute("cm");
 		ADManager am = (ADManager) sc.getAttribute("am");
-		
-		HashMap<String, Object> tmp = new HashMap<String, Object>();
-		
+
 		try {
-			clientID = (String)session.getAttribute("clientID");
+			clientID = (String)ses.getAttribute("clientID");
 			clientCode = cm.getClientCode(clientID);
+			
 			Enumeration<String> e = req.getParameterNames();
 			while (e.hasMoreElements()) {
 				String s = (String)e.nextElement();
-				if (s.equals("staticsPath")) { insidePage = req.getParameter(s); break; }
+				if (s.equals("insidePage")) { insidePage = req.getParameter(s); }
+				if (s.equals("histPage")) { histPage = Integer.parseInt(req.getParameter(s)); }
 			}
 			
-			if (insidePage.startsWith("all")) {
-				tmp = am.selectAD_forStatics(clientCode);
-				req.setAttribute("ADStatics_all", tmp);
-			} else if (insidePage.startsWith("some")) {
-				ADCode = Long.parseLong(req.getParameter("ADCode"));
-				tmp = am.selectAD_forStatics(ADCode, clientCode);
-				req.setAttribute("ADStatics_some", tmp);
+			if (insidePage.startsWith("AD")) {
+				e = ses.getAttributeNames();
+				while (e.hasMoreElements()) {
+					String s = (String) e.nextElement();
+					if (s.equals("ADHistory_all")) { tmp=(HashMap<String, Object>)ses.getAttribute(s); hasAllADHistory = true; break; }
+				}
+				if (!hasAllADHistory) { tmp = am.selectADHistory_all(clientCode); }
+				ses.setAttribute("ADHistory_all", tmp);
 			}
-
+			
+			if (ADHistoryPage.equals("AD/someADHistory.jsp") ) {
+				ADCode = Long.parseLong(req.getParameter("ADCode"));
+				HashMap<String, Object> someADInfo = am.selectAD_someAD(ADCode, clientCode);
+				HashMap<String, Object> someADHistory = am.selectADHistory_someAD(ADCode, clientCode);
+				req.setAttribute("someADHistory", someADHistory);
+				req.setAttribute("someADInfo", someADInfo);
+			}
+			
 			req.setAttribute("insidePage", insidePage);
+			req.setAttribute("histPage", histPage);
 			
 		} catch (Exception ex) {
 			System.out.println("log : try-catch.."+ ASTKLogManager.getClassName_now() +"\n"+ex);
-			viewPath = (String)sc.getAttribute("ERROR_PAGE");
+			viewPath = (String)sc.getAttribute("ERROR_PATH");
 			
 		} finally {
 			req.setAttribute("viewPath", viewPath);
@@ -86,5 +101,6 @@ public class staticsClick  extends HttpServlet {
 		this.doGP(req, resp);
 		
 	}
+
 
 }

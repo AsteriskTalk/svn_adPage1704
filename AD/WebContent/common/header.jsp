@@ -50,7 +50,7 @@ function ad() {
 	form.submit();
 	
 }
-function history() {
+function goHistory() {
 	var form = document.getElementById("headerClick");
 	var viewPath = document.getElementById("viewPath");
 	var pagePath = document.getElementById("pagePath");
@@ -127,7 +127,7 @@ if (clientID==null || clientID.equals("") || clientID=="" || clientID.equals(nul
 		<span class="span_title_menu pointBtn" onclick="main();" > 메인 </span>
 		<span class="span_title_menu pointBtn" onclick="mypage();" > 마이페이지 </span>
 		<span class="span_title_menu pointBtn" onclick="ad();" > 광고관리 </span>
-		<span class="span_title_menu pointBtn" onclick="history();"> 기록 </span>
+		<span class="span_title_menu pointBtn" onclick="goHistory();"> 기록 </span>
 		<span class="span_title_menu pointBtn" onclick="statistics();"> 통계 </span>
 		<span class="span_title_menu pointBtn" onclick="pointRecharge();"> 포인트 충전 </span>
 	</div>
