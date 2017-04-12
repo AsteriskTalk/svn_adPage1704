@@ -1,6 +1,7 @@
 package controller.user;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -24,7 +25,7 @@ public class insertUserHistory extends HttpServlet {
 //		String viewPath =	"parsing/attrToJSON.jsp";
 		String pagePath = "parsing/attrToJSON.jsp";
 		
-		String type =	"";
+		String type =	"N";
 		String spendType = "N";
 		long userId = 0;
 		long chatRoomId = 0;
@@ -38,18 +39,18 @@ public class insertUserHistory extends HttpServlet {
 		JSONObject json = new JSONObject();
 		
 		try {
-			type = req.getParameter("type");
-			userId = Long.parseLong(req.getParameter("userId"));
-			chatRoomId = Long.parseLong(req.getParameter("chatRoomId"));
-			point = Long.parseLong(req.getParameter("point"));
-			isSpend = type.equals("S");
-			
-			if (isSpend) { 
-				spendType = req.getParameter("spendType"); 
-				result = um.insertUserHistory(userId, chatRoomId, type, spendType, point);
-			} else { 
-				result = um.insertUserHistory(userId, chatRoomId, type, point);
+			Enumeration e = req.getParameterNames();
+			while (e.hasMoreElements()) {
+				String s = (String) e.nextElement();
+				if (s.equals("type")) { type = req.getParameter("type"); }
+				else if (s.equals("userId")) { userId = Long.parseLong(req.getParameter("userId")); }
+				else if (s.equals("chatRoomId")) { chatRoomId = Long.parseLong(req.getParameter("chatRoomId")); }
+				else if (s.equals("point")) { point = Long.parseLong(req.getParameter("point")); }
+				else if (s.equals("spendType")) { spendType = req.getParameter("spendType");  }
 			}
+			
+			if (isSpend) { result = um.insertUserHistory(userId, chatRoomId, type, spendType, point); } 
+			else { result = um.insertUserHistory(userId, chatRoomId, type, point); }
 			
 			if (result) { json = um.updateUserPoint_astk(userId, chatRoomId, point); }
 			
