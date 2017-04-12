@@ -11,7 +11,7 @@
 </head>
 <body id="body_mypage">
 	<div id="div_mypage_top" class="div_mypage"> 
-		<jsp:include page="/mypage/today.html" flush="false" />	
+		<jsp:include page="/mypage/today.jsp" flush="false" />	
 	</div>
 	<div id="div_mypage_mid" class="div_mypage"> 
 		<span id="span_mypage_mid_left" class="span_mypage">

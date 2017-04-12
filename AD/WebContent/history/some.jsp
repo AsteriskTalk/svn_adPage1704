@@ -61,7 +61,7 @@ function goPage(i) {
 		}
 		%>
 		
-		<form id="goPageForm" action="/historyClick.ad" method="post">
+		<form id="goPageForm" action="historyClick.ad" method="post">
 			<input type="hidden" name="historyPath" value="some.jsp">
 			<input type="hidden" id="histPage" name="histPage">
 			<input type="hidden" name="ADCode" value="<%=ADCode %>">

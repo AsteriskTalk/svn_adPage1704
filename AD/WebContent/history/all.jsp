@@ -51,7 +51,7 @@ if (tmp.get("result").equals("T")) {
 
 %>
 
-<form id="goPageForm" action="/historyClick.ad" method="post">
+<form id="goPageForm" action="historyClick.ad" method="post">
 	<input type="hidden" name="historyPath" value="all.jsp">
 	<input type="hidden" id="histPage" name="histPage">
 </form>
