@@ -165,18 +165,50 @@ public class ADManager {
 		
 		final long NOW = System.currentTimeMillis();
 		final long SEND_POINT = this.calcADPoint_send(ADCode, clientCode);
-		System.out.println("log - sendPoint : " + SEND_POINT);
+		final long SPEND_POINT = SEND_POINT + BASE_FEE;
 		long sendedCode = 0;
 		
 		String sql_getSQ_sendedCode_nextval = ""; 
 		String sql_insertSendedAD = "";
 		String sql_insertADHistory = "";
 		String sql_updateADInfo = "";
+		String sql_selectADInfo = "";
+		
+		long remainCount = 0;
+		long remainPoint = 0;
 		
 		try {
 			conn = connPool.getConn();
 			conn.setAutoCommit(false);
 			st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			
+			/** Step 0. check.. */
+			sql_selectADInfo
+				= " SELECT * FROM ASTK_AD_INFO ";
+			sql_selectADInfo
+				+= " WHERE AD_CODE="+ ADCode + " AND CLIENT_CODE="+ clientCode + " ";
+			rs = st.executeQuery(sql_selectADInfo);
+			rs.last();
+			if (rs.getRow() != 1) { conn.rollback(); return -1; }
+			rs.beforeFirst();
+			rs.next();
+			
+			remainCount = rs.getLong("AD_REMAIN_COUNT");
+			remainPoint = rs.getLong("AD_REMAIN_POINT");
+			rs.close();
+			
+			if (remainCount-1 < 0 || remainPoint-SPEND_POINT < 0) {
+				/** Step 0 - case ERROR. update ADInfo */
+				sql_updateADInfo
+					= " UPDATE ASTK_AD_INFO SET IS_ADING='N' ";
+				sql_updateADInfo
+					+= " WHERE AD_CODE="+ ADCode +" AND CLIENT_CODE="+ clientCode +" ";
+				
+				rs2 = st.executeUpdate(sql_updateADInfo);
+				if (rs2 != 1) { conn.rollback(); return -1; }
+				
+				return 0; 
+			}
 			
 			/** Step1. get SendedCode */
 			sql_getSQ_sendedCode_nextval
@@ -207,19 +239,20 @@ public class ADManager {
 			sql_insertADHistory
 				+= " ) VALUES ( ";
 			sql_insertADHistory
-				+= " "+ ADCode +","+ clientCode +","+ userCode +",'S',"+ SEND_POINT +","+ NOW +" ";
+				+= " "+ ADCode +","+ clientCode +","+ userCode +",'S',"+ SPEND_POINT +","+ NOW +" ";
 			sql_insertADHistory
 				+= " ) ";
 			rs2 = st.executeUpdate(sql_insertADHistory);
 			if (rs2 != 1) { conn.rollback(); return -1; }
-			
+
 			/** Step4. update ADInfo - Point and Count */
 			sql_updateADInfo
 				= " UPDATE ASTK_AD_INFO ";
 			sql_updateADInfo
-				+= " SET AD_REMAIN_POINT=AD_REMAIN_POINT-("+ (BASE_FEE + SEND_POINT) +") "; //기본 차감 + send에 필요한 point 차감
+				+= " SET AD_REMAIN_POINT=AD_REMAIN_POINT-("+ SPEND_POINT +") "; //기본 차감 + send에 필요한 point 차감
 			sql_updateADInfo
 				+= ", AD_REMAIN_COUNT=AD_REMAIN_COUNT-1 ";
+		  if (remainCount-1 == 0 || remainPoint-SPEND_POINT == 0) { sql_updateADInfo += ", IS_ADING='N' "; } //remain 결과에 따라 추가 조작
 			sql_updateADInfo
 				+= " WHERE AD_CODE="+ ADCode +" AND CLIENT_CODE="+ clientCode +" ";
 			rs2 = st.executeUpdate(sql_updateADInfo);
