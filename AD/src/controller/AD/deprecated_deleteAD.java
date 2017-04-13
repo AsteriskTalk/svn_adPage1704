@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import DAO.ADManager;
 import util.ASTKLogManager;
 
-public class deleteAD extends HttpServlet {
+public class deprecated_deleteAD extends HttpServlet {
 
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {

@@ -59,7 +59,8 @@ if (tmp.get("result").equals("T")) {
 		String ADImgURL = a.getADImgAddr();
 		String ADURL = a.getADURL();
 		if (!ADURL.startsWith("http") && !ADTools.isNull(ADURL)) { ADURL = "http://"+ADURL; }
-		if (!ADImgURL.startsWith("http")) { ADImgURL = "http://"+ADImgURL; }
+		if (ADTools.isNull(ADImgURL)) { ADImgURL = "image/default.png"; }
+		else if (!ADImgURL.startsWith("http")) { ADImgURL = "http://"+ADImgURL; }
 		%>
 		 <div class="ADInfo_row" > 
 			<span class="ADCount_col"><%=ADRemainCount %></span> 

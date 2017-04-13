@@ -115,7 +115,7 @@ public class addAD  extends HttpServlet {
 				}
 
 				if (fileResult) { ADImgURL = FULL_URL +"/"+ clientCode +"/"+ newFileName; }
-				else { ADImgURL = DEFAULT_FOLDER_URL ; }
+				else { ADImgURL = "null" ; }
 				
 //				if (fileResult || !hasImgFile) { /** 업로드 성공 혹은 파일 이미지 없는 경우..일단 업로드 실패시에도 등록되게 처리한다. */
 					Enumeration e = multi.getParameterNames();
