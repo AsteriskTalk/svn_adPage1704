@@ -5061,15 +5061,17 @@ border-radius
 	}
 }
 
-.navbar-fixed-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse
-	{
-	max-height: 340px
-}
-
-@media ( max-device-width :480px) and (orientation:landscape) {
+@media ( min-device-width : 901px) and @media ( max-device-width : 1500px ) {
 	.navbar-fixed-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse
 		{
-		max-height: 200px
+		max-height: 140px
+	}
+}
+
+@media (min-device-width : 500px ) and @media (max-device-width : 900px) and (orientation:landscape) {
+	.navbar-fixed-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse
+		{
+		max-height: 100px
 	}
 }
 

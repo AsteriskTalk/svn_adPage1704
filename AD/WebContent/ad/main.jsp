@@ -15,9 +15,10 @@
 .ADImgURL_col { width: 100px; text-align: center; }
 .ADEdit_col { width: 50px; text-align: center; }
 .pointerBtn { cursor: pointer; }
+.AD_main_li { display:inline-block; }
 </style>
 </head>
-<body>
+<body >
 <%
   final String SELECT_AD_SERVLET_URL = "selectAD.ad";
 %>
@@ -32,14 +33,14 @@ function goSelect(i) {
 
 </script>
 <br>
-	<div class="ADInfo_row"> 
-		<span class="ADCount_col">잔여 광고 횟수</span> 
-		<span class="ADImgURL_col"> 첨부 이미지 </span>
-		<span class="ADCtt_col">광고 내용</span>
-		<span class="ADBonus_col">보너스 </span>
-		<span class="ADStat_col"> 광고 상태 </span>
-		<span class="ADEdit_col">&nbsp; </span>
-	</div>
+	<ul class="ADInfo_row" > 
+		<li class="ADCount_col AD_main_li">잔여 광고 횟수</li> 
+		<li class="ADImgURL_col AD_main_li"> 첨부 이미지 </li>
+		<li class="ADCtt_col AD_main_li">광고 내용</li>
+		<li class="ADBonus_col AD_main_li">보너스 </li>
+		<li class="ADStat_col AD_main_li"> 광고 상태 </li>
+		<li class="ADEdit_col AD_main_li">&nbsp; </li>
+	</ul>
 <%
 HttpSession ses = request.getSession();
 HashMap<String, Object> tmp = (HashMap<String ,Object>)ses.getAttribute("ADInfoMap_all");
@@ -62,16 +63,16 @@ if (tmp.get("result").equals("T")) {
 		if (ADTools.isNull(ADImgURL)) { ADImgURL = "image/default.png"; }
 		else if (!ADImgURL.startsWith("http")) { ADImgURL = "http://"+ADImgURL; }
 		%>
-		 <div class="ADInfo_row" > 
-			<span class="ADCount_col"><%=ADRemainCount %></span> 
-			<span class="ADImgURL_col"> <img src="<%=ADImgURL %>" width="50px" height="50px" > </span>
-			<span class="ADCtt_col"><div>
+		 <ul class="ADInfo_row" > 
+			<li class="ADCount_col AD_main_li"><%=ADRemainCount %></li> 
+			<li class="ADImgURL_col AD_main_li"> <img src="<%=ADImgURL %>" width="50px" height="50px" > </li>
+			<li class="ADCtt_col AD_main_li"><ul>
 				<a class="pointerBtn" onclick="goSelect(<%=ADCode%>);" ><%=ADCtt %></a><br>
 				<% if (!ADTools.isNull(ADURL)) { %> <a href="<%=ADURL %>"><font size="0.7em" >링크 확인</font></a> <%} %>
-			</div></span>
-			<span class="ADBonus_col"><%=ADBonus %> </span>
-			<span class="ADStat_col"> <%=isADing %></span>
-		</div>
+			</ul></li>
+			<li class="ADBonus_col AD_main_li"><%=ADBonus %> </li>
+			<li class="ADStat_col AD_main_li"> <%=isADing %></li>
+		</ul>
 		<%
 	}
 }

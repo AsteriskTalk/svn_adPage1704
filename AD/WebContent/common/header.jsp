@@ -8,7 +8,7 @@
 <!--  desktop Setting -->
 
 </head>
-<body id="body_index_header" class="homepage">
+<body id="body_index_header" class="homepage" >
 	<!-- btn function - header -->
 	<script type="text/javascript">
 		function main() {
@@ -93,7 +93,7 @@
 
 	<header id="header">
 		<nav id="main-menu" class="navbar navbar-default navbar-fixed-top"
-			role="banner">
+			role="banner" >
 			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -136,7 +136,7 @@
 
 
 
-				<div class="collapse navbar-collapse navbar-right">
+				<div class="collapse navbar-collapse navbar-right" >
 
 					<ul class="nav navbar-nav">
 						<li class="scroll"><a href="#" onclick="main();">메인</a></li>

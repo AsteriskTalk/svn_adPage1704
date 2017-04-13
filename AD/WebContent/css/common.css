@@ -386,14 +386,11 @@ scale
 		-webkit-box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.1);
 		box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.1);
 	}
-	#main-menu.navbar-default .navbar-nav>li>a {
-		padding-top: 40px;
-		padding-bottom: 40px;
-	}
+	
 	#main-menu.navbar-default .navbar-nav>li.active>a, #main-menu.navbar-default .navbar-nav>li.open>a,
 		#main-menu.navbar-default .navbar-nav>li:hover>a {
 		background: transparent;
-		padding-top: 37px;
+	
 		border-top: 3px solid #45aed6;
 	}
 	#main-menu.navbar-default .dropdown-menu {

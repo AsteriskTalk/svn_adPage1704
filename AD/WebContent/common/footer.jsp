@@ -8,7 +8,7 @@
 
 </head>
 <body>
-	<footer id="footer">
+	<footer id="footer" class="navbar-fixed-bottom">
 	<div class="container">
 		<div class="row">
 			<div class="text-center">

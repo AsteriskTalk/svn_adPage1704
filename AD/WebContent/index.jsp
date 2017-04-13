@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko" >
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -45,7 +45,10 @@
 </script>
 <script type="text/javascript"
 	src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
+<style>
+html { min-width:1200px; }
+* { overflow:hidden; }
+</style>
 <title>ASTK AD</title>
 <%
 
@@ -58,8 +61,8 @@ viewPath = (String)request.getAttribute(ATTR_NAME);
 
 </head>
 
-<body id="body_index">
-<div id="div_index">
+<body id="body_index" >
+<div id="div_index" style="margin-top: 40px;">
 	<div id="div_index_header" class="div_index"> <jsp:include page="common/header.jsp" flush="false" /> </div>
 	<div id="div_index_body" class="div_index"> <jsp:include page="<%=viewPath %>" flush="false" /></div>
 	<div id="div_index_footer" class="div_index"> <jsp:include page="common/footer.jsp" flush="false" /></div>
