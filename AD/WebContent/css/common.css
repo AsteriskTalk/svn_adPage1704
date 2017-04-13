@@ -1,0 +1,593 @@
+/* 웹폰트 CSS */
+@font-face {
+	font-family: 'Nanum Gothic';
+	src: url(../fonts/NanumGothic.eot)
+}
+
+@font-face {
+	font-family: 'Nanum Gothic';
+	src: url(../fonts/NanumGothic.woff)
+}
+
+
+/*기본 레이아웃*/
+
+#header .nav a{
+	font-size: 16px;
+	
+}
+
+#header .nav li{
+	margin-left: 30px;
+}
+
+#footer {
+	background-color: #f8f8f8;
+	border-top: 2px solid #c56666;
+	overflow: hidden;
+}
+
+
+/*기본 글꼴 및 링크 텍스트 꾸미기*/
+body {
+	padding-top: 100px;
+	background: #fff;
+	font-family: NanumGothic, 나눔고딕, 'Nanum Gothic', '맑은 고딕', HelveticaNeue,
+		DroidSans, Sans-serif, Helvetica;
+	font-weight: 500;
+	color: #64686d;
+	/* line-height: 26px; */
+	margin-top: 40px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 600;
+	font-family: NanumGothic, 나눔고딕, 'Nanum Gothic', '맑은 고딕', HelveticaNeue,
+		DroidSans, Sans-serif, Helvetica;
+	color: #272727;
+}
+
+a {
+	color: #ff3333;
+	-webkit-transition: color 400ms, background-color 400ms;
+	-moz-transition: color 400ms, background-color 400ms;
+	-o-transition: color 400ms, background-color 400ms;
+	transition: color 400ms, background-color 400ms;
+}
+
+a:hover, a:focus {
+	text-decoration: none;
+	color: #2a95be;
+}
+
+hr {
+	border-top: 1px solid #e5e5e5;
+	border-bottom: 1px solid #fff;
+}
+
+p, ul, ol {
+	margin: 0 0 20px;
+}
+
+ul, ol {
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+
+
+
+@
+-webkit-keyframes scaleIn { 0% {
+	opacity: 0;
+	-webkit-transform: scale(0);
+	transform: scale(0);
+}
+
+100%
+{
+opacity
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+1;
+-webkit-transform
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+scale
+
+
+
+
+
+
+
+
+
+
+
+
+(1);
+transform
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+scale
+
+
+
+
+
+
+
+
+
+
+
+
+(1);
+}
+}
+@
+keyframes scaleIn { 0% {
+	opacity: 0;
+	-webkit-transform: scale(0);
+	-ms-transform: scale(0);
+	transform: scale(0);
+}
+
+100%
+{
+opacity
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+1;
+-webkit-transform
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+scale
+
+
+
+
+
+
+
+
+
+
+
+
+(1);
+-ms-transform
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+scale
+
+
+
+
+
+
+
+
+
+
+
+
+(1);
+transform
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+scale
+
+
+
+
+
+
+
+
+
+
+
+
+(1);
+}
+}
+
+/*************************
+*******Header******
+**************************/
+.navbar.navbar-default {
+	border: 0;
+	border-radius: 0;
+	margin-bottom: 0;
+}
+
+.navbar.navbar-default .navbar-toggle {
+	margin-top: 32px;
+}
+
+.navbar.navbar-default .navbar-brand {
+	height: auto;
+	padding: 22px 15px 21px;
+}
+
+@media only screen and (min-width: 768px) {
+	#main-menu.navbar-default {
+		background: rgba(255, 255, 255, 0.9);
+		-webkit-box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.1);
+		box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.1);
+	}
+	#main-menu.navbar-default .navbar-nav>li>a {
+		padding-top: 40px;
+		padding-bottom: 40px;
+	}
+	#main-menu.navbar-default .navbar-nav>li.active>a, #main-menu.navbar-default .navbar-nav>li.open>a,
+		#main-menu.navbar-default .navbar-nav>li:hover>a {
+		background: transparent;
+		padding-top: 37px;
+		border-top: 3px solid #45aed6;
+	}
+	#main-menu.navbar-default .dropdown-menu {
+		padding: 0 20px;
+		min-width: 220px;
+		background-color: rgba(26, 28, 40, 0.9);
+		border: 0;
+		border-radius: 0;
+		box-shadow: none;
+		-webkit-box-shadow: none;
+		background-clip: inherit;
+	}
+	#main-menu.navbar-default .dropdown-menu>li {
+		border-left: 3px solid transparent;
+		margin-left: -20px;
+		padding-left: 17px;
+		-webit-transition: border-color 400ms;
+		transition: border-color 400ms;
+	}
+	#main-menu.navbar-default .dropdown-menu>li>a {
+		border-top: 1px solid #404455;
+		padding: 15px 0;
+		color: #eeeeee;
+	}
+	#main-menu.navbar-default .dropdown-menu>li:first-child>a {
+		border-top: 0;
+	}
+	#main-menu.navbar-default .dropdown-menu>li.active, #main-menu.navbar-default .dropdown-menu>li.open,
+		#main-menu.navbar-default .dropdown-menu>li:hover {
+		border-left-color: #45aed6;
+	}
+	#main-menu.navbar-default .dropdown-menu>li.active>a, #main-menu.navbar-default .dropdown-menu>li.open>a,
+		#main-menu.navbar-default .dropdown-menu>li:hover>a {
+		color: #45aed6;
+		background-color: transparent;
+	}
+}
+
+/*로그인 영역*/
+.login_wrap {
+	position: relative;
+}
+
+#login_f {
+	width: 305px;
+	height: 161px;
+	background: url("../images/login_bg.png");
+	position: absolute;
+	left: -110px;
+	top: -500px;
+	z-index: 15;
+	padding: 40px 0 0 30px;
+}
+
+.user_id, .user_pw {
+	position: relative;
+}
+
+.user_id label, .user_pw label {
+	position: absolute;
+	top: 3px;
+	left: 1px;
+}
+
+.user_pw {
+	margin-bottom: 8px;
+}
+
+#user_id, #user_pw {
+	width: 170px;
+	height: 33px;
+	line-height: 33px;
+	padding-left: 3px;
+	border: 1px solid #aaa;
+	margin: 2px 0;
+}
+
+#login_f img {
+	vertical-align: middle;
+}
+
+.log_btn {
+	position: absolute;
+	top: 39px;
+	right: 40px;
+}
+
+.login_close_btn {
+	position: absolute;
+	bottom: 20px;
+	right: 22px;
+}
+
+.join_btn_wrap {
+	margin: 10px 0;
+}
+
+.join_btn_wrap a {
+	padding-left: 10px;
+	background: url("../images/login_bullet.gif") no-repeat;
+}
+
+.sch_id_btn {
+	margin-left: 20px;
+}
+
+/*유틸 메뉴 영역*/
+#util_menu  {
+	float: left;
+	padding: 0 5px;
+	margin:20px 50px;
+	
+}
+
+.util_first li {
+	margin-left: 10px;
+	display: inline;
+}
+
+#util_menu li {
+	float: left;
+}
+
+
+#util_menu {
+	
+	position: absolute;
+	top: 4px;
+	right: 3px;
+}
+
+#google_translate_element{
+	float:right;
+	margin:5px 0 0 25px;
+	padding: 0;
+}
+
+
+#keyword {
+	border: 2px solid #d82824;
+	height: 27px;
+	line-height: 27px;
+	width: 295px;
+	background: url("../images/sch_guide.gif") no-repeat;
+	padding-left: 5px;
+}
+
+
+
+#topMenu{
+	height: 50px;
+	width: 850px;
+	
+}
+
+
+
+#topMenu ul li {
+	
+	list-style: none;
+	color: white;
+	background-color: #2d2d2d;
+	float: left;
+	line-height: 30px;
+	vertical-align: middle;
+	text-align: center;
+	
+	
+}
+
+
+
+/*푸터 영역*/
+/***********************
+********* Footer ******
+************************/
+
+#bottom_menu{
+	margin:auto 0;
+	overflow: hidden;
+	margin:25px 10px;
+}
+
+
+
+#bottom_menu li{
+	float:left;
+	
+}
+
+
+
+
+address p{
+	margin-top: 20px;
+	font-size: 14px;
+}

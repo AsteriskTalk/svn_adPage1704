@@ -1,136 +1,156 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html >
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title> header </title>
+<title>header</title>
 <!--  desktop Setting -->
-<style>
-#body_index_header { }
-span { display: inline-block; }
-#header_logo { font-size: 2.5em; }
-#header_menu { display:block; padding:5% 0 3% 0; }
-#header_signIn_signOut { float: right; margin : 0 0 0 50px; }
-#header_menu_button { float: right; }
-#header_logo_title > .title_point { color: red; }
-#header_logo_title > a { font-weight: bold; }
-.span_title_menu { padding: 0 9px 2px 4px; marign :0; border-right: 1px solid #777; }
-.span_title_menu:nth-last-child(1) { border:none; }
-</style>
 
 </head>
-<body id="body_index_header">
-<!-- btn function - header -->
-<script type="text/javascript" >
+<body id="body_index_header" class="homepage">
+	<!-- btn function - header -->
+	<script type="text/javascript">
+		function main() {
+			var form = document.getElementById("headerClick");
+			var viewPath = document.getElementById("viewPath");
+			var pagePath = document.getElementById("pagePath");
+			pagePath.value = "index.jsp";
+			viewPath.value = "main.jsp";
+			form.submit();
+		}
 
-function main() {
-	var form = document.getElementById("headerClick");
-	var viewPath = document.getElementById("viewPath");
-	var pagePath = document.getElementById("pagePath");
-	pagePath.value = "index.jsp";
-	viewPath.value = "main.jsp";
-	form.submit();
-}
+		function mypage() {
+			var form = document.getElementById("headerClick");
+			var viewPath = document.getElementById("viewPath");
+			var pagePath = document.getElementById("pagePath");
+			pagePath.value = "index.jsp";
+			viewPath.value = "mypage.jsp";
+			form.submit();
+		}
+		function ad() {
+			var form = document.getElementById("headerClick");
+			var viewPath = document.getElementById("viewPath");
+			var pagePath = document.getElementById("pagePath");
+			pagePath.value = "ADClick.ad";
+			viewPath.value = "adMain.jsp";
+			form.submit();
 
-function mypage() {
-	var form = document.getElementById("headerClick");
-	var viewPath = document.getElementById("viewPath");
-	var pagePath = document.getElementById("pagePath");
-	pagePath.value = "index.jsp";
-	viewPath.value = "mypage.jsp";
-	form.submit();
-}
-function ad() {
-	var form = document.getElementById("headerClick");
-	var viewPath = document.getElementById("viewPath");
-	var pagePath = document.getElementById("pagePath");
-	pagePath.value = "ADClick.ad";
-	viewPath.value = "adMain.jsp";
-	form.submit();
-	
-}
-function history() {
-	var form = document.getElementById("headerClick");
-	var viewPath = document.getElementById("viewPath");
-	var pagePath = document.getElementById("pagePath");
-	pagePath.value = "historyClick.ad";
-	viewPath.value = "history.jsp";
-	form.submit();
-	
-}
-function statistics() {
-	var form = document.getElementById("headerClick");
-	var viewPath = document.getElementById("viewPath");
-	var pagePath = document.getElementById("pagePath");
-	pagePath.value = "staticsClick.ad";
-	viewPath.value = "statics.jsp";
-	form.submit();
-	
-}
+		}
+		function history() {
+			var form = document.getElementById("headerClick");
+			var viewPath = document.getElementById("viewPath");
+			var pagePath = document.getElementById("pagePath");
+			pagePath.value = "historyClick.ad";
+			viewPath.value = "history.jsp";
+			form.submit();
 
-function pointRecharge() {
-	var form = document.getElementById("headerClick");
-	var viewPath = document.getElementById("viewPath");
-	var pagePath = document.getElementById("pagePath");
-	pagePath.value = "index.jsp";
-	viewPath.value = "point.jsp"
-	form.submit();
-}
-</script>
+		}
+		function statistics() {
+			var form = document.getElementById("headerClick");
+			var viewPath = document.getElementById("viewPath");
+			var pagePath = document.getElementById("pagePath");
+			pagePath.value = "staticsClick.ad";
+			viewPath.value = "statics.jsp";
+			form.submit();
 
-<!-- btn function - signIn-Out -->
-<script type="text/javascript">
-function doSignIn() {
-	location.href="signInClick.ad";
-}
+		}
 
-function doSignOut() {
-	location.href="doSignOut.ad";
-}
+		function pointRecharge() {
+			var form = document.getElementById("headerClick");
+			var viewPath = document.getElementById("viewPath");
+			var pagePath = document.getElementById("pagePath");
+			pagePath.value = "index.jsp";
+			viewPath.value = "point.jsp"
+			form.submit();
+		}
+	</script>
 
-function myInfo() {
-	location.href="myProfile.ad";
-}
-function goTitle() {
-	location.href="index.ad";
-}
-</script>
+	<!-- btn function - signIn-Out -->
+	<script type="text/javascript">
+		function doSignIn() {
+			location.href = "signInClick.ad";
+		}
+
+		function doSignOut() {
+			location.href = "doSignOut.ad";
+		}
+
+		function myInfo() {
+			location.href = "myProfile.ad";
+		}
+		function goTitle() {
+			location.href = "index.ad";
+		}
+	</script>
 
 
-<span id="header_logo" > 
-	<span id="header_logo_title" class="pointBtn" onclick="goTitle();"> <a class="title_point ">A</a>sterisk<a class="title_point" >So</a>ft<a class="title_point">Ko</a>rea </span> 
-</span>
+	<form id="headerClick" method="post" action="menu.ad">
+		<input type="hidden" id="viewPath" name="viewPath"> <input
+			type="hidden" id="pagePath" name="pagePath">
+	</form>
 
-<span id="header_signIn_signOut">
 
-<%
-HttpSession ses = request.getSession();
-String clientID = (String)session.getAttribute("clientID");
-if (clientID==null || clientID.equals("") || clientID=="" || clientID.equals(null)) {
-	out.println("<button id='signInBtn' onclick='doSignIn();' > 로그인 </button>");
-} else {
-	out.println("<a id='welcome'>"+ clientID + "님, 환영합니다. </a>");
-	out.println("<button id='myInfoBtn' onclick='myInfo();'> 내 정보 </button>");
-	out.println("<button id='signOutBtn' onclick='doSignOut();''> 로그아웃 </button>");
-}
-%>	
-</span>
+	<header id="header">
+		<nav id="main-menu" class="navbar navbar-default navbar-fixed-top"
+			role="banner">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#" onclick="goTitle();"><img
+						src="#" alt="logo"></a>
+				</div>
 
-<form id="headerClick" method="post" action="menu.ad">
-	<input type="hidden" id="viewPath" name="viewPath" >
-	<input type="hidden" id="pagePath" name="pagePath" >
-</form>
+				<div id="util_meun">
+					<div id="google_translate_element"></div>
+					<div class="util_first navbar-right">
+						<ul>
 
-<div id="header_menu" > 
-	<div id="header_menu_button">
-		<span class="span_title_menu pointBtn" onclick="main();" > 메인 </span>
-		<span class="span_title_menu pointBtn" onclick="mypage();" > 마이페이지 </span>
-		<span class="span_title_menu pointBtn" onclick="ad();" > 광고관리 </span>
-		<span class="span_title_menu pointBtn" onclick="history();"> 기록 </span>
-		<span class="span_title_menu pointBtn" onclick="statistics();"> 통계 </span>
-		<span class="span_title_menu pointBtn" onclick="pointRecharge();"> 포인트 충전 </span>
-	</div>
-</div>
+							<li id="header_signIn_signOut">
+								<%
+									HttpSession ses = request.getSession();
+									String clientID = (String) session.getAttribute("clientID");
+									if (clientID == null || clientID.equals("") || clientID == ""
+											|| clientID.equals(null)) {
+										out.println("<a href='#' id='signInBtn' onclick='doSignIn();' > 로그인 </a>");
+									} else {
+										out.println("<a href='#' id='welcome'>" + clientID + "님, 환영합니다. </a>");
+										out.println("<a href='#' id='myInfoBtn' onclick='myInfo();'> 내 정보 </a>");
+										out.println("<a href='#' id='signOutBtn' onclick='doSignOut();''> 로그아웃 </a>");
+									}
+								%>
+							</li>
+							<li><a href="#">회원가입</a></li>
+							<li><a href="#">사이트맵</a></li>
+
+						</ul>
+
+					</div>
+
+				</div>
+
+
+
+				<div class="collapse navbar-collapse navbar-right">
+
+					<ul class="nav navbar-nav">
+						<li class="scroll"><a href="#" onclick="main();">메인</a></li>
+						<li class="scroll"><a href="#" onclick="ad();">광고관리</a></li>
+						<li class="scroll"><a href="#" onclick="history();">나의 기록</a></li>
+						<li class="scroll"><a href="#" onclick="statistics();">나의
+								통계</a></li>
+						<li class="scroll"><a href="#" onclick="pointRecharge();">포인트
+								충전</a></li>
+						<li class="scroll"><a href="#" onclick="mypage();">마이 페이지</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
 </body>
 </html>
