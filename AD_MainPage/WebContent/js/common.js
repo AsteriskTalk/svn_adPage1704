@@ -72,5 +72,5 @@ $(function(){
    if(beforeEl) beforeEl.children("img").attr("src",beforeEl
    .children("img").attr("src").replace("over.gif","out.gif"));
   });
-
+});
   

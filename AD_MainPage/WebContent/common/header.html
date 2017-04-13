@@ -1,32 +1,3 @@
-<head>
-
-
-
-
-
-<SCRIPT LANGUAGE=JAVASCRIPT TYPE="TEXT/JAVASCRIPT">
-	expireDate = new Date
-	expireDate.setMonth(expireDate.getMonth() + 6)
-	hitCt = eval(cookieVal("pageHit"))
-	hitCt++
-	document.cookie = "pageHit=" + hitCt + ";expires="
-			+ expireDate.toGMTString()
-
-	function cookieVal(cookieName) {
-		thiscookie = document.cookie.split("; ")
-		for (i = 0; i < thiscookie.length; i++) {
-			if (cookieName == thiscookie[i].split("=")[0]) {
-				return thiscookie[i].split("=")[1]
-			}
-		}
-		return 0
-	}
-</script>
-
-
-</head>
-<body>
-
 
 	<header>
 		<div id="wrap">
@@ -97,15 +68,7 @@
 					</dd>
 					<dd>
 						<div id="google_translate_element"></div>
-					</dd>
-					<dd>
-						<script>
-						<!--
-							document.write("방문자수 :<font color=red>" + hitCt
-									+ "</font>")
-						//-->
-						</script>
-					</dd>
+					</dd>					
 				</dl>
 				<h2 class="hide">메인메뉴</h2>
 				<ul id="gnb">
@@ -215,4 +178,3 @@
 			</div>
 		</div>
 	</header>
-</body>
