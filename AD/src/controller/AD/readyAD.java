@@ -1,6 +1,7 @@
 package controller.AD;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -13,32 +14,33 @@ import javax.servlet.http.HttpServletResponse;
 import DAO.ADManager;
 import util.ASTKLogManager;
 
-public class editAD  extends HttpServlet {
+public class readyAD  extends HttpServlet {
 
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("\nlog : doGP.." + ASTKLogManager.getClassName_now());
 		ServletContext sc = req.getServletContext();
 		String pagePath = (String)sc.getAttribute("INDEX_PAGE");
-		String viewPath =	"ad/editAD.jsp";
+		String viewPath =	"ad/main.jsp";
 		
 		long ADCode = 0;
 		long clientCode = 0;
 		
 		ADManager am = (ADManager) sc.getAttribute("am");
 		
-		HashMap<String, Object> ADInfoSet = new HashMap<String ,Object>();
-		HashMap<String ,Object> ADTargetSet = new HashMap<String, Object>();
+		HashMap<String, Object> map = new HashMap<String ,Object>();
 		
 		try {
 			ADCode = Long.parseLong(req.getParameter("ADCode"));
 			clientCode = Long.parseLong(req.getParameter("clientCode"));
+			viewPath = req.getParameter("viewPage");
 			
-			ADInfoSet = am.selectAD_someAD(ADCode, clientCode);
-			ADTargetSet = am.selectADTarget_someAD_allTarget(ADCode, clientCode);
-			
-			req.setAttribute("ADInfoMap_some", ADInfoSet);
-			req.setAttribute("ADTargetMap_some", ADTargetSet);
+			map = am.selectAD_someAD(ADCode, clientCode);
+			req.setAttribute("ADInfoMap_some", map);
+			map = am.selectADTarget_someAD_allTarget(ADCode, clientCode);
+			req.setAttribute("ADTargetMap_some", map);
+			map = am.selectADHistory_someAD(ADCode, clientCode);
+			req.setAttribute("ADHistoryMap_some", map);
 			
 		} catch (Exception ex) {
 			System.out.println("log : try-catch.."+ASTKLogManager.getClassName_now()+"\n"+ex);

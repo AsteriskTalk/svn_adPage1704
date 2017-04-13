@@ -26,9 +26,9 @@ public class headerClick  extends HttpServlet {
 //		String pagePath = (String)sc.getAttribute("INDEX_PAGE");
 		String pagePath = "";
 		String viewPath = "";
-		final String HISTORY_MAIN_PAGE = "all.jsp";
-		final String STATICS_MAIN_PAGE = "all.jsp";
-		final String AD_MAIN_PAGE = "main.jsp";
+		final String HISTORY_INSIDE_PAGE = "clientHistory.jsp";
+		final String STATICS_INSIDE_PAGE = "all.jsp";
+		final String AD_INSIDE_PAGE = "main.jsp";
 		String insidePage = "";
 		
 		boolean isSignIn = false;
@@ -40,7 +40,6 @@ public class headerClick  extends HttpServlet {
 			
 			/** SignIn 이 필요한 Page의 경우에 대한 처리 */
 			if (viewPath.equals("adMain.jsp") || viewPath.equals("history.jsp") || viewPath.equals("statics.jsp") || viewPath.equals("mypage.jsp") ) {
-
 				/** signIn에 대한 ResultSet 이 없는 경우에는 signIn 으로 보낸다. 
 				 * 이때, 기존의 path 값을 보존하기 위해 setAttribute 해둔다.*/
 				if (!isSignIn) {
@@ -53,9 +52,9 @@ public class headerClick  extends HttpServlet {
 				/** signIn 되어 있는 경우 
 				 * */
 				if (isSignIn) { 
-					if (viewPath.startsWith("adMain")) { insidePage = AD_MAIN_PAGE;}
-					else if (viewPath.startsWith("history")) { insidePage = HISTORY_MAIN_PAGE; }
-					else if (viewPath.startsWith("statics")) { insidePage = STATICS_MAIN_PAGE; }
+					if (viewPath.startsWith("adMain")) { insidePage = AD_INSIDE_PAGE;}
+					else if (viewPath.startsWith("history")) { insidePage = HISTORY_INSIDE_PAGE; }
+					else if (viewPath.startsWith("statics")) { insidePage = STATICS_INSIDE_PAGE; }
 					else {  }
 					
 					req.setAttribute("insidePage", insidePage);

@@ -1,7 +1,6 @@
 package controller.AD;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -13,40 +12,39 @@ import javax.servlet.http.HttpServletResponse;
 import DAO.ADManager;
 import util.ASTKLogManager;
 
-public class editAD  extends HttpServlet {
+public class deprecated_deleteAD extends HttpServlet {
 
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("\nlog : doGP.." + ASTKLogManager.getClassName_now());
 		ServletContext sc = req.getServletContext();
-		String pagePath = (String)sc.getAttribute("INDEX_PAGE");
-		String viewPath =	"ad/editAD.jsp";
+		String pagePath = (String)req.getAttribute("indexPath");
+		String viewPath = "";
 		
-		long ADCode = 0;
 		long clientCode = 0;
+		long ADCode = 0;
 		
 		ADManager am = (ADManager) sc.getAttribute("am");
 		
-		HashMap<String, Object> ADInfoSet = new HashMap<String ,Object>();
-		HashMap<String ,Object> ADTargetSet = new HashMap<String, Object>();
+		boolean result = false;
 		
 		try {
-			ADCode = Long.parseLong(req.getParameter("ADCode"));
 			clientCode = Long.parseLong(req.getParameter("clientCode"));
+			ADCode = Long.parseLong(req.getParameter("ADCode"));
 			
-			ADInfoSet = am.selectAD_someAD(ADCode, clientCode);
-			ADTargetSet = am.selectADTarget_someAD_allTarget(ADCode, clientCode);
-			
-			req.setAttribute("ADInfoMap_some", ADInfoSet);
-			req.setAttribute("ADTargetMap_some", ADTargetSet);
+			result = am.disconnectAD(ADCode, clientCode);
+			if (result) { viewPath = "common/success.jsp"; }
+			else { viewPath = "common/failed.jsp"; }
 			
 		} catch (Exception ex) {
-			System.out.println("log : try-catch.."+ASTKLogManager.getClassName_now()+"\n"+ex);
-			viewPath = (String) sc.getAttribute("ERROR_PAGE");
-			req.setAttribute("ex", ex);
+			System.out.println("log : try-catch.."+ ASTKLogManager.getClassName_now() +"\n"+ex);
+			result = false;
+			viewPath = "common/error.jsp";
 			
 		} finally {
 			req.setAttribute("viewPath", viewPath);
+			req.setAttribute("result", result);
+			
 			RequestDispatcher rd = req.getRequestDispatcher(pagePath);
 			rd.forward(req, resp);
 			
@@ -69,6 +67,6 @@ public class editAD  extends HttpServlet {
 		this.doGP(req, resp);
 		
 	}
-	
+
 
 }

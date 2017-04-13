@@ -250,6 +250,7 @@ span { display: inline-block; }
 </head>
 <body id="ADInsertBody">
 <%
+ServletContext sc = request.getServletContext();
 
 final String oo = "<option value='";
 final String om = "'>";
@@ -259,6 +260,8 @@ String option_ADBonus = "";
 String checkbox_ADLocal = "";
 
 HashMap<String, String> localMap = new HashMap<String, String>();
+
+localMap = (HashMap<String, String>) sc.getAttribute("localMap");
 
 final int MAX_BONUS = 100;
 final int BONUS_INTERVAL = 10;
@@ -277,14 +280,6 @@ for (int i=POINT_INTERVAL ; i<=MAX_POINT ; i+=POINT_INTERVAL ) {
 	String val = ADTools.toNumString(i);
 	option_ADPoint += oo + i + om + val + oc;
 }
-
-localMap.put("서울", "SEOUL");
-localMap.put("대구", "DEAGU");
-localMap.put("대전", "DEAGEON");
-localMap.put("광주", "GWANGJU");
-localMap.put("부산", "BUSAN");
-localMap.put("울산", "ULSAN");
-localMap.put("인천", "INCHEON");
 
 for(Map.Entry<String, String> tmp : localMap.entrySet()) {
 	checkbox_ADLocal

@@ -8,11 +8,9 @@
 
 </head>
 <body>
-	<footer id="footer">
+	<footer id="footer" class="navbar-fixed-bottom">
 	<div class="container">
-		<div class="row">
-			<div class="text-center">
-				
+		<div class="row">			
 				<ul id="bottom_menu">
 					<li><a href="#">제휴제안</a></li>
 					<li><a href="#">이용약관</a></li>
@@ -32,7 +30,7 @@
 					</p>
 				</address>
 
-			</div>
+		
 		</div>
 	</div>
 

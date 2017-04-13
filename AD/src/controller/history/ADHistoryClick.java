@@ -1,7 +1,6 @@
-package controller.AD;
+package controller.history;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -10,35 +9,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import DAO.ADManager;
 import util.ASTKLogManager;
 
-public class editAD  extends HttpServlet {
+public class ADHistoryClick extends HttpServlet {
 
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("\nlog : doGP.." + ASTKLogManager.getClassName_now());
 		ServletContext sc = req.getServletContext();
 		String pagePath = (String)sc.getAttribute("INDEX_PAGE");
-		String viewPath =	"ad/editAD.jsp";
-		
-		long ADCode = 0;
-		long clientCode = 0;
-		
-		ADManager am = (ADManager) sc.getAttribute("am");
-		
-		HashMap<String, Object> ADInfoSet = new HashMap<String ,Object>();
-		HashMap<String ,Object> ADTargetSet = new HashMap<String, Object>();
+		String viewPath =	"history.jsp";
+		String insidePage = "ADHistory.jsp";
+		String ADHistoryPage = "AD/allADHistory.jsp";
 		
 		try {
-			ADCode = Long.parseLong(req.getParameter("ADCode"));
-			clientCode = Long.parseLong(req.getParameter("clientCode"));
+			ADHistoryPage = req.getParameter("ADHistoryPage");
 			
-			ADInfoSet = am.selectAD_someAD(ADCode, clientCode);
-			ADTargetSet = am.selectADTarget_someAD_allTarget(ADCode, clientCode);
-			
-			req.setAttribute("ADInfoMap_some", ADInfoSet);
-			req.setAttribute("ADTargetMap_some", ADTargetSet);
+			req.setAttribute("insidePage", insidePage);
+			req.setAttribute("ADHistoryPage", ADHistoryPage);
 			
 		} catch (Exception ex) {
 			System.out.println("log : try-catch.."+ASTKLogManager.getClassName_now()+"\n"+ex);
@@ -69,6 +57,5 @@ public class editAD  extends HttpServlet {
 		this.doGP(req, resp);
 		
 	}
-	
 
 }

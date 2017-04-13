@@ -8,43 +8,49 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import DAO.ADManager;
+import DAO.ClientManager;
+import DAO.FunctionManager;
 import util.ASTKLogManager;
 
-public class deleteAD extends HttpServlet {
+public class functionAD extends HttpServlet {
 
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("\nlog : doGP.." + ASTKLogManager.getClassName_now());
 		ServletContext sc = req.getServletContext();
-		String pagePath = (String)req.getAttribute("indexPath");
-		String viewPath = "";
+		HttpSession ses = req.getSession();
+		String pagePath = (String)sc.getAttribute("INDEX_PAGE");
+		String viewPath =	"common/result.jsp";
 		
-		long clientCode = 0;
 		long ADCode = 0;
+		long clientCode = 0;
+		String clientID = "";
+		String ADFunction = "";
 		
-		ADManager am = (ADManager) sc.getAttribute("am");
+		FunctionManager fm = (FunctionManager) sc.getAttribute("fm");
+		ClientManager cm = (ClientManager) sc.getAttribute("cm");
 		
 		boolean result = false;
 		
 		try {
-			clientCode = Long.parseLong(req.getParameter("clientCode"));
+			clientID = (String) ses.getAttribute("clientID");
+			clientCode = cm.getClientCode(clientID);
 			ADCode = Long.parseLong(req.getParameter("ADCode"));
+			ADFunction = req.getParameter("ADFunction");
 			
-			result = am.disconnectAD(ADCode, clientCode);
-			if (result) { viewPath = "common/success.jsp"; }
-			else { viewPath = "common/failed.jsp"; }
+//			result = fm.functionAD(ADCode, clientCode, ADFunction);
+			
+			req.setAttribute("result", result);
 			
 		} catch (Exception ex) {
-			System.out.println("log : try-catch.."+ ASTKLogManager.getClassName_now() +"\n"+ex);
-			result = false;
-			viewPath = "common/error.jsp";
+			System.out.println("log : try-catch.."+ASTKLogManager.getClassName_now()+"\n"+ex);
+			viewPath = (String) sc.getAttribute("ERROR_PAGE");
+			req.setAttribute("ex", ex);
 			
 		} finally {
 			req.setAttribute("viewPath", viewPath);
-			req.setAttribute("result", result);
-			
 			RequestDispatcher rd = req.getRequestDispatcher(pagePath);
 			rd.forward(req, resp);
 			
@@ -67,6 +73,5 @@ public class deleteAD extends HttpServlet {
 		this.doGP(req, resp);
 		
 	}
-
 
 }

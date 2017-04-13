@@ -1,5 +1,7 @@
 package listener;
 
+import java.util.HashMap;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -32,6 +34,16 @@ public class ContextLoaderListener  implements ServletContextListener {
 					sc.getInitParameter("oid"),
 					sc.getInitParameter("opw")
 			);
+			
+			HashMap<String, String> localMap = new HashMap<String,String>();
+			localMap.put("서울", "SEOUL");
+			localMap.put("대구", "DEAGU");
+			localMap.put("대전", "DEAGEON");
+			localMap.put("광주", "GWANGJU");
+			localMap.put("부산", "BUSAN");
+			localMap.put("울산", "ULSAN");
+			localMap.put("인천", "INCHEON");
+			sc.setAttribute("localMap", localMap);
 
 			final String ASTK_URL = "www.asterisktalk.net";
 			sc.setAttribute("ASTK_URL", ASTK_URL);

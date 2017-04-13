@@ -1,4 +1,4 @@
-package controller.main;
+package controller.history;
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -22,42 +22,58 @@ public class historyClick  extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("\nlog : doGP..historyClickController");
 		ServletContext sc = req.getServletContext();
-		HttpSession session = req.getSession();
+		HttpSession ses = req.getSession();
 		
 		String pagePath = (String)sc.getAttribute("INDEX_PAGE");
 		String viewPath = "history.jsp";
 
-		String insidePage = "all.jsp";
+		String insidePage = "clientHistory.jsp";
+		String ADHistoryPage = "AD/allADHistory.jsp";
 
 		String clientID = "";
 		long clientCode = 0;
 		long ADCode = 0;
 		int histPage = 1;
 		
+		HashMap<String, Object> tmp = new HashMap<String ,Object>();
+		boolean hasAllADHistory = false;
+		
 		ClientManager cm = (ClientManager)sc.getAttribute("cm");
 		ADManager am = (ADManager) sc.getAttribute("am");
 
 		try {
-			clientID = (String)session.getAttribute("clientID");
+			clientID = (String)ses.getAttribute("clientID");
 			clientCode = cm.getClientCode(clientID);
 			
 			Enumeration<String> e = req.getParameterNames();
 			while (e.hasMoreElements()) {
 				String s = (String)e.nextElement();
-				if (s.equals("historyPath")) { insidePage = req.getParameter(s); }
+				if (s.equals("insidePage")) { insidePage = req.getParameter(s); }
 				if (s.equals("histPage")) { histPage = Integer.parseInt(req.getParameter(s)); }
 			}
 			
-			if (insidePage.startsWith("all")) {
-				
-			} else if (insidePage.startsWith("some")) {
-				ADCode = Long.parseLong(req.getParameter("ADCode"));
-				HashMap<String, Object> someADInfo = am.selectAD_someAD(ADCode, clientCode);
-				HashMap<String, Object> someADHistory = am.selectADHistory_someAD(ADCode, clientCode);
-				req.setAttribute("someADHistory", someADHistory);
-				req.setAttribute("someADInfo", someADInfo);
+			if (insidePage.startsWith("AD")) {
+				e = ses.getAttributeNames();
+				while (e.hasMoreElements()) {
+					String s = (String) e.nextElement();
+					if (s.equals("ADHistoryMap_all")) { tmp=(HashMap<String, Object>)ses.getAttribute(s); hasAllADHistory = true; break; }
+				}
+				if (!hasAllADHistory) { tmp = am.selectADHistory_all(clientCode); }
+				ses.setAttribute("ADHistoryMap_all", tmp);
 			}
-
+			
+			if (ADHistoryPage.equals("AD/someADHistory.jsp") ) {
+				HashMap<String, Object> map = new HashMap<String ,Object>();
+				ADCode = Long.parseLong(req.getParameter("ADCode"));
+				
+				map = am.selectAD_someAD(ADCode, clientCode);
+				req.setAttribute("ADInfoMap_some", map);
+				
+				map = am.selectADHistory_someAD(ADCode, clientCode);
+				req.setAttribute("ADHistoryMap_some", map);
+				
+			}
+			
 			req.setAttribute("insidePage", insidePage);
 			req.setAttribute("histPage", histPage);
 			

@@ -68,7 +68,6 @@ public class TimeManager {
 			System.out.println("log : try-catch.."+ ASTKLogManager.getMethodName_now() +"\n"+ex);
 			return -1;
 		}
-		System.out.println("log : date - " + date + " and start - " + dayStart + " start_toString = " + d.toString());
 		return dayStart;
 		
 	}

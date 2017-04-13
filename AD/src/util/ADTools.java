@@ -141,6 +141,7 @@ public class ADTools {
 	}
 	
 	public static boolean isSignIn(HttpSession ses) {
+		final String SESSION_VALUE_NAME = "clientInfoMap";
 		boolean hasId= false;
 		boolean hasInfo = false;
 		
@@ -152,11 +153,11 @@ public class ADTools {
 		while (e.hasMoreElements()) {
 			String s = e.nextElement();
 			if (s.equals("clientID")) { hasId = true; }
-			else if (s.equals("clientInfoSet")) { hasInfo = true; }
+			else if (s.equals(SESSION_VALUE_NAME)) { hasInfo = true; }
 		}
 		
 		if (hasId) { clientId = (String)ses.getAttribute("clientID"); }
-		if (hasInfo) { resultSet = (HashMap<String, Object>)ses.getAttribute("clientInfoSet"); }
+		if (hasInfo) { resultSet = (HashMap<String, Object>)ses.getAttribute(SESSION_VALUE_NAME); }
 		
 		if (isNull(clientId) || resultSet.size() == 0) {  ses.invalidate(); return false; }
 		return true;

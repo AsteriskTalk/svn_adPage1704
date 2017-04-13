@@ -11,7 +11,7 @@
 HttpSession ses = request.getSession();
 String option = "";
 
-HashMap<String, Object> resultSet = (HashMap<String, Object>)ses.getAttribute("allADInfo");
+HashMap<String, Object> resultSet = (HashMap<String, Object>)ses.getAttribute("ADInfoMap_all");
 ArrayList<ADInfo> ADInfoList = new ArrayList<ADInfo>();
 
 if (resultSet.get("result").equals("T")) {

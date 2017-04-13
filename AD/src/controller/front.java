@@ -27,41 +27,51 @@ public class front extends HttpServlet {
 		String reqPath = req.getServletPath();
 		String[] tmp = reqPath.split("\\.");
 		String SERVLET_PATH = tmp[0];
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
 			
 		ClientManager cm = (ClientManager) sc.getAttribute("cm");
 		ADManager am = (ADManager) sc.getAttribute("am");
 		
 		String clientID = "";
 		boolean isSignIn = false;
+		boolean hasUpdate = false;
 		
 		try {
 			Enumeration e = ses.getAttributeNames();
 			while (e.hasMoreElements()) {
 				String s = (String)e.nextElement();
-				if (s.equals("clientID")) { isSignIn = true; break; } 
+				if (s.equals("clientID")) { isSignIn = true; } 
+				else if (s.equals("updateTime")) { hasUpdate = true; }
 			}
 			
 			if (isSignIn) {
-				final long lastUpdate = (Long) ses.getAttribute("updateTime");
+				final long lastUpdate = hasUpdate ? (Long) ses.getAttribute("updateTime") : 0;
 				final long NOW = System.currentTimeMillis();
 				final long UPDATE_INTERVAL = 1000 * 60 * 5;
-				if ( ( lastUpdate - NOW ) > UPDATE_INTERVAL ) {
+				
+				if ( lastUpdate < ( NOW - UPDATE_INTERVAL ) || !hasUpdate ) {
+					ses.setAttribute("updateTime", NOW);
+					
 					clientID = (String) ses.getAttribute("clientID");
 					final long CLIENT_CODE= cm.getClientCode(clientID);
 					
-					HashMap<String, Object> clientInfoSet = cm.getClientProfile_someClient_all(CLIENT_CODE);
-					HashMap<String, Object> allADInfo = am.selectAD_allAD(CLIENT_CODE);
-					HashMap<String, Object> todayADHistory = am.selectADHistory_today(CLIENT_CODE);
-					HashMap<String, Object> allADHistory = am.selectADHistory_all(CLIENT_CODE);
-
-					ses.setAttribute("updateTime", NOW);
-					ses.setAttribute("clientInfoSet", clientInfoSet);
-					ses.setAttribute("allADInfo", allADInfo);
-					ses.setAttribute("todayADHistory", todayADHistory);
-					ses.setAttribute("allADHistory", allADHistory);
+					map = cm.getClientProfile_someClient_all(CLIENT_CODE);
+					ses.setAttribute("clientInfoMap", map);
+					
+					map = am.selectAD_allAD(CLIENT_CODE);
+					ses.setAttribute("ADInfoMap_all", map);
+					
+					map = am.selectADHistory_all_today(CLIENT_CODE);
+					ses.setAttribute("ADHistoryMap_all_today", map);
+					
+					map = am.selectADHistory_all(CLIENT_CODE);
+					ses.setAttribute("ADHistoryMap_all", map);
+					
 				}
 				
 			} else {
+				System.out.println("do invalidate!");
 				ses.invalidate();
 			}
 

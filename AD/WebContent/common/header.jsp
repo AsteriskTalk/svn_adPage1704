@@ -37,7 +37,7 @@
 			form.submit();
 
 		}
-		function history() {
+		function goHistory() {
 			var form = document.getElementById("headerClick");
 			var viewPath = document.getElementById("viewPath");
 			var pagePath = document.getElementById("pagePath");
@@ -92,7 +92,7 @@
 
 
 	<header id="header">
-		<nav id="main-menu" class="navbar navbar-default navbar-fixed-top"
+		<nav id="main-menu" class="navbar navbar-default"
 			role="banner">
 			<div class="container">
 				<div class="navbar-header">
@@ -141,7 +141,8 @@
 					<ul class="nav navbar-nav">
 						<li class="scroll"><a href="#" onclick="main();">메인</a></li>
 						<li class="scroll"><a href="#" onclick="ad();">광고관리</a></li>
-						<li class="scroll"><a href="#" onclick="history();">나의 기록</a></li>
+						<li class="scroll"><a href="#" onclick="goHistory();">나의
+								기록</a></li>
 						<li class="scroll"><a href="#" onclick="statistics();">나의
 								통계</a></li>
 						<li class="scroll"><a href="#" onclick="pointRecharge();">포인트
