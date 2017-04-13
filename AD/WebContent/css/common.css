@@ -387,10 +387,11 @@ scale
 		box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.1);
 	}
 	
+	
 	#main-menu.navbar-default .navbar-nav>li.active>a, #main-menu.navbar-default .navbar-nav>li.open>a,
 		#main-menu.navbar-default .navbar-nav>li:hover>a {
 		background: transparent;
-	
+			
 		border-top: 3px solid #45aed6;
 	}
 	#main-menu.navbar-default .dropdown-menu {
