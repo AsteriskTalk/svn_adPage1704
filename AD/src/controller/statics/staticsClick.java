@@ -49,11 +49,11 @@ public class staticsClick  extends HttpServlet {
 			
 			if (insidePage.startsWith("all")) {
 				tmp = am.selectAD_forStatics(clientCode);
-				req.setAttribute("ADStatics_all", tmp);
+				req.setAttribute("ADStaticsMap_all", tmp);
 			} else if (insidePage.startsWith("some")) {
 				ADCode = Long.parseLong(req.getParameter("ADCode"));
 				tmp = am.selectAD_forStatics(ADCode, clientCode);
-				req.setAttribute("ADStatics_some", tmp);
+				req.setAttribute("ADStaticsMap_some", tmp);
 			}
 
 			req.setAttribute("insidePage", insidePage);

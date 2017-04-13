@@ -131,8 +131,8 @@ public class addAD  extends HttpServlet {
 					if (result.equals("T")) { 
 						outPrintMsg = "업로드에 성공하였습니다.";
 						viewPath = SUCCESS_PATH; 
-						HashMap<String, Object> allADInfo = am.selectAD_allAD(clientCode);
-						ses.setAttribute("allADInfo", allADInfo); //업뎃 직후 인포셋 교체
+						HashMap<String, Object> map = am.selectAD_allAD(clientCode);
+						ses.setAttribute("ADInfoMap_all", map); //업뎃 직후 인포셋 교체
 						
 					} else {
 						if (result.equals("N")) { outPrintMsg = "포인트가 부족합니다."; }

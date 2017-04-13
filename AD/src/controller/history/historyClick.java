@@ -56,18 +56,22 @@ public class historyClick  extends HttpServlet {
 				e = ses.getAttributeNames();
 				while (e.hasMoreElements()) {
 					String s = (String) e.nextElement();
-					if (s.equals("ADHistory_all")) { tmp=(HashMap<String, Object>)ses.getAttribute(s); hasAllADHistory = true; break; }
+					if (s.equals("ADHistoryMap_all")) { tmp=(HashMap<String, Object>)ses.getAttribute(s); hasAllADHistory = true; break; }
 				}
 				if (!hasAllADHistory) { tmp = am.selectADHistory_all(clientCode); }
-				ses.setAttribute("ADHistory_all", tmp);
+				ses.setAttribute("ADHistoryMap_all", tmp);
 			}
 			
 			if (ADHistoryPage.equals("AD/someADHistory.jsp") ) {
+				HashMap<String, Object> map = new HashMap<String ,Object>();
 				ADCode = Long.parseLong(req.getParameter("ADCode"));
-				HashMap<String, Object> someADInfo = am.selectAD_someAD(ADCode, clientCode);
-				HashMap<String, Object> someADHistory = am.selectADHistory_someAD(ADCode, clientCode);
-				req.setAttribute("someADHistory", someADHistory);
-				req.setAttribute("someADInfo", someADInfo);
+				
+				map = am.selectAD_someAD(ADCode, clientCode);
+				req.setAttribute("ADInfoMap_some", map);
+				
+				map = am.selectADHistory_someAD(ADCode, clientCode);
+				req.setAttribute("ADHistoryMap_some", map);
+				
 			}
 			
 			req.setAttribute("insidePage", insidePage);

@@ -36,7 +36,7 @@ public class ADManager {
 		this.connPool = connPool;
 	}
 
-	public HashMap<String, Object> selectADHistory_today(long clientCode) {
+	public HashMap<String, Object> selectADHistory_all_today(long clientCode) {
 		final long todayStart = TimeManager.getMillis_todayStart();
 		String sql_where
 			= " WHERE CLIENT_CODE="+ clientCode + " AND HIST_DATE > "+ todayStart;

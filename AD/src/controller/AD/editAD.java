@@ -37,8 +37,8 @@ public class editAD  extends HttpServlet {
 			ADInfoSet = am.selectAD_someAD(ADCode, clientCode);
 			ADTargetSet = am.selectADTarget_someAD_allTarget(ADCode, clientCode);
 			
-			req.setAttribute("ADInfoSet", ADInfoSet);
-			req.setAttribute("ADTargetSet", ADTargetSet);
+			req.setAttribute("ADInfoMap_some", ADInfoSet);
+			req.setAttribute("ADTargetMap_some", ADTargetSet);
 			
 		} catch (Exception ex) {
 			System.out.println("log : try-catch.."+ASTKLogManager.getClassName_now()+"\n"+ex);

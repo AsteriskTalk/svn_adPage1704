@@ -40,7 +40,6 @@ public class headerClick  extends HttpServlet {
 			
 			/** SignIn 이 필요한 Page의 경우에 대한 처리 */
 			if (viewPath.equals("adMain.jsp") || viewPath.equals("history.jsp") || viewPath.equals("statics.jsp") || viewPath.equals("mypage.jsp") ) {
-
 				/** signIn에 대한 ResultSet 이 없는 경우에는 signIn 으로 보낸다. 
 				 * 이때, 기존의 path 값을 보존하기 위해 setAttribute 해둔다.*/
 				if (!isSignIn) {

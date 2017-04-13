@@ -16,7 +16,7 @@ long touchCount = 0;
 long viewCount = 0;
 
 
-tmp = (HashMap<String, Object>) request.getAttribute("ADStatics_all");
+tmp = (HashMap<String, Object>) request.getAttribute("ADStaticsMap_all");
 Iterator<String> i = tmp.keySet().iterator();
 
 while (i.hasNext()) {

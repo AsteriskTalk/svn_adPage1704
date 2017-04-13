@@ -47,7 +47,6 @@ public class doSignIn extends HttpServlet {
 			clientID = CharManager.beforeOracle_removeSpace(req.getParameter("clientID"));
 			clientPW = CharManager.beforeOracle_removeSpace(req.getParameter("clientPW"));
 			
-			
 			viewPath = req.getParameter("savedViewPath");
 			pagePath = req.getParameter("savedPagePath");
 			if (ADTools.isNull(viewPath)) { viewPath = "main.jsp"; }
@@ -55,29 +54,31 @@ public class doSignIn extends HttpServlet {
 			result = cm.doSignIn(clientID, clientPW);
 
 			if (result) {
+				HashMap<String, Object> tmp = new HashMap<String, Object>();
+				
 				final long NOW = System.currentTimeMillis();
 				final long CLIENT_CODE = cm.getClientCode(clientID);
+
+				ses.setAttribute("clientID", clientID);
+				ses.setAttribute("updateTime", NOW);
 				
-				HashMap<String, Object> clientInfoSet = cm.getClientProfile_someClient_all(CLIENT_CODE);
-				HashMap<String, Object> allADInfo = am.selectAD_allAD(CLIENT_CODE);
-				HashMap<String, Object> todayADHistory = am.selectADHistory_today(CLIENT_CODE);
-				HashMap<String, Object> allADHistory = am.selectADHistory_all(CLIENT_CODE);
+				tmp = cm.getClientProfile_someClient_all(CLIENT_CODE);
+				ses.setAttribute("clientInfoMap", tmp);
+				
+				tmp = am.selectAD_allAD(CLIENT_CODE);
+				ses.setAttribute("ADInfoMap_all", tmp);
+
+				tmp = am.selectADHistory_all_today(CLIENT_CODE);
+				ses.setAttribute("ADHistoryMap_all_today", tmp);
+				
+				tmp = am.selectADHistory_all(CLIENT_CODE);
+				ses.setAttribute("ADHistoryMap_all", tmp);
 				
 				if (viewPath.startsWith("adMain")) { insidePage = AD_MAIN_PAGE; useInside = true; } 
 				else if (viewPath.startsWith("history")) { insidePage = HISTORY_MAIN_PAGE; useInside = true; } 
 				else if (viewPath.startsWith("statics")) { insidePage = STATICS_MAIN_PAGE; useInside = true; }
 				
 				if (useInside) { req.setAttribute("insidePage", insidePage); }
-				
-				ses.setAttribute("clientID", clientID);
-				ses.setAttribute("updateTime", NOW);
-				
-				ses.setAttribute("clientInfoSet", clientInfoSet);
-				
-				ses.setAttribute("allADInfo", allADInfo);
-				
-				ses.setAttribute("todayADHistory", todayADHistory);
-				ses.setAttribute("allADHistory", allADHistory);
 				
 			} else { viewPath = "management/signInFailed.html"; }
 			

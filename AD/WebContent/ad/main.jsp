@@ -42,7 +42,7 @@ function goSelect(i) {
 	</div>
 <%
 HttpSession ses = request.getSession();
-HashMap<String, Object> tmp = (HashMap<String ,Object>)ses.getAttribute("allADInfo");
+HashMap<String, Object> tmp = (HashMap<String ,Object>)ses.getAttribute("ADInfoMap_all");
 ArrayList<ADInfo> list = new ArrayList<ADInfo>();
 //System.out.println("log : "+ tmp.toString());
 if (tmp.get("result").equals("T")) { 

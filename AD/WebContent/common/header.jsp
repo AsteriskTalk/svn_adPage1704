@@ -125,7 +125,7 @@ if (clientID==null || clientID.equals("") || clientID=="" || clientID.equals(nul
 <div id="header_menu" > 
 	<div id="header_menu_button">
 		<span class="span_title_menu pointBtn" onclick="main();" > 메인 </span>
-		<span class="span_title_menu pointBtn" onclick="mypage();" > 마이페이지 </span>
+		<span class="span_title_menu pointBtn" onclick="goNotice();" > 새소식 </span>
 		<span class="span_title_menu pointBtn" onclick="ad();" > 광고관리 </span>
 		<span class="span_title_menu pointBtn" onclick="goHistory();"> 기록 </span>
 		<span class="span_title_menu pointBtn" onclick="statistics();"> 통계 </span>

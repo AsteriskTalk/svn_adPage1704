@@ -50,8 +50,8 @@ public class ADClick extends HttpServlet {
 			
 			if(insidePage.startsWith("select")) {
 				ADCode = Long.parseLong(req.getParameter("ADCode"));
-				HashMap<String, Object> ADInfoSet = am.selectAD_someAD_withTarget(ADCode, clientCode);
-				req.setAttribute("ADInfoSet", ADInfoSet);
+				HashMap<String, Object> ADInfoMap = am.selectAD_someAD_withTarget(ADCode, clientCode);
+				req.setAttribute("ADInfo", ADInfoMap);
 				
 			} else if (insidePage.startsWith("status")) {
 			
