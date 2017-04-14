@@ -117,11 +117,11 @@
 									String clientID = (String) session.getAttribute("clientID");
 									if (clientID == null || clientID.equals("") || clientID == ""
 											|| clientID.equals(null)) {
-										out.println("<a href='#' id='signInBtn' onclick='doSignIn();' > 로그인 </a>");
+										out.println("<a id='signInBtn' class='pointer' onclick='doSignIn();' > 로그인 </a>");
 									} else {
-										out.println("<a href='#' id='welcome'>" + clientID + "님, 환영합니다. </a>");
-										out.println("<a href='#' id='myInfoBtn' onclick='myInfo();'> 내 정보 </a>");
-										out.println("<a href='#' id='signOutBtn' onclick='doSignOut();''> 로그아웃 </a>");
+										out.println("<a id='welcome' class='pointer' >" + clientID + "님, 환영합니다. </a>");
+										out.println("<a id='myInfoBtn' class='pointer' onclick='myInfo();'> 내 정보 </a>");
+										out.println("<a id='signOutBtn' class='pointer' onclick='doSignOut();''> 로그아웃 </a>");
 									}
 								%>
 							</li>
@@ -139,15 +139,15 @@
 				<div class="collapse navbar-collapse navbar-right" >
 
 					<ul class="nav navbar-nav">
-						<li class="scroll"><a onclick="main();">메인</a></li>
-						<li class="scroll"><a onclick="ad();">광고관리</a></li>
-						<li class="scroll"><a onclick="goHistory();">나의
+						<li class="scroll"><a class='pointer' onclick="main();">메인</a></li>
+						<li class="scroll"><a class='pointer' onclick="ad();">광고관리</a></li>
+						<li class="scroll"><a class='pointer' onclick="goHistory();">나의
 								기록</a></li>
-						<li class="scroll"><a onclick="statistics();">나의
+						<li class="scroll"><a class='pointer' onclick="statistics();">나의
 								통계</a></li>
-						<li class="scroll"><a onclick="pointRecharge();">포인트
+						<li class="scroll"><a class='pointer' onclick="pointRecharge();">포인트
 								충전</a></li>
-						<li class="scroll"><a onclick="mypage();">마이 페이지</a></li>
+						<li class="scroll"><a class='pointer' onclick="mypage();">마이 페이지</a></li>
 					</ul>
 				</div>
 			</div>

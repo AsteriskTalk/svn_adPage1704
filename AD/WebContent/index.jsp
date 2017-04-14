@@ -48,6 +48,7 @@
 <style>
 html { min-width:1200px; }
 * { overflow:hidden; }
+.pointer { cursor: pointer; }
 </style>
 <title>ASTK AD</title>
 <%
