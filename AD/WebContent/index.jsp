@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko" >
 <head>
@@ -53,11 +53,15 @@ html { min-width:1200px; }
 <title>ASTK AD</title>
 <%
 
-final String ATTR_NAME = "viewPath";
+final String ATTR_NAME = "view";
 boolean hasViewPath = false;
-String viewPath = "";
+String view = "";
 
-viewPath = (String)request.getAttribute(ATTR_NAME);
+Enumeration<String> e = request.getAttributeNames();
+while (e.hasMoreElements()) {
+	String s = (String) e.nextElement();
+	if (s.startsWith(ATTR_NAME)) { view = (String)request.getAttribute(s); }
+}
 %>
 
 </head>
@@ -65,7 +69,7 @@ viewPath = (String)request.getAttribute(ATTR_NAME);
 <body id="body_index" >
 <div id="div_index" style="margin-top: 40px;">
 	<div id="div_index_header" class="div_index"> <jsp:include page="common/header.jsp" flush="false" /> </div>
-	<div id="div_index_body" class="div_index"> <jsp:include page="<%=viewPath %>" flush="false" /></div>
+	<div id="div_index_body" class="div_index"> <jsp:include page="<%=view %>" flush="false" /></div>
 	<div id="div_index_footer" class="div_index"> <jsp:include page="common/footer.jsp" flush="false" /></div>
 </div>
 </body>

@@ -28,7 +28,7 @@ function goADHistory() {
 <button onclick="goClientHistory();" > 내 기록 </button>
 <button onclick="goADHistory();" > 광고 기록 </button>
 	
-<form id="historyClick" method="post" action="historyClick.ad">
+<form id="historyClick" method="post" action="myHistory.ad">
 	<input type="hidden" id="insidePage" name="insidePage">
 </form>
 </body>

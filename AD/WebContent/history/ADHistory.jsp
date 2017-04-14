@@ -7,46 +7,42 @@
 <title> AD History </title>
 </head>
 <body>
-<!-- 
-
-History 에서 일어나는 모든 viewPath 는  history.jsp 이다. viewPath > insidePage > ADHistoryPage 순이다. 
-만일 없을 경우 AD/all.jsp
-
--->
 <script type="text/javascript">
 function selectHistory_all() {
 	var form = document.getElementById("form_ADHistory");
-	var inputPage = document.getElementById("input_page");
-	inputPage.value = "AD/allADHistory.jsp";
+	var input_insidePage_AD = document.getElementById("input_insidePage_AD");
+	input_insidePage_AD.value = "all";
 	form.submit();
 }
 
 function selectHistory_some() {
 	var form = document.getElementById("form_ADHistory");
-	var inputPage = document.getElementById("input_page");
-	inputPage.value = "AD/someADHistory.jsp";
+	var input_insidePage_AD = document.getElementById("input_insidePage_AD");
+	input_insidePage_AD.value = "list";
 	form.submit();
 }
 
 </script>
 
 <%
-	String ADHistoryPage = "AD/allADHistory.jsp";
+	String insidePage_AD = "all.jsp";
 	Enumeration<String> e = request.getAttributeNames();
 	while (e.hasMoreElements()) {
 		String s = (String)e.nextElement();
-		if ( s.equals("ADHistoryPage") ) { ADHistoryPage = (String)request.getAttribute(s); }
+		if ( s.equals("insidePage_AD") ) { insidePage_AD = (String)request.getAttribute(s); }
 	}
 	
 %>
+
 <button onclick="selectHistory_all();" > 전체 기록 </button>
 <button onclick="selectHistory_some();" > 개별 기록 </button>
 
-<form id="form_ADHistory" action="ADHistory.ad" method="post" >
-	<input id="input_page" name="ADHistoryPage" type="hidden" />
+<form id="form_ADHistory" action="myHistory.ad" method="post" >
+	<input name="insidePage" type="hidden" value="ADHistory.jsp" />
+	<input id="input_insidePage_AD" name="insidePage_AD" type="hidden" value="all" />
 </form>
 
-<jsp:include page="<%=ADHistoryPage %>" />
+<jsp:include page="<%=insidePage_AD %>" />
 
 </body>
 </html>

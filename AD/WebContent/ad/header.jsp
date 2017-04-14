@@ -8,33 +8,29 @@
 </head>
 <body>
 
-<%
-
-%>
-
 <script type="text/javascript">
-function ADmain() {
+function goADList() {
 	var form = document.getElementById("ADClickForm");
-	var ADPath = document.getElementById("ADPath");
-	ADPath.value = "main.jsp";
+	var insidePage = document.getElementById("insidePage");
+	insidePage.value = "main";
 	form.submit();
 }
 
-function insert() {
+function goADInsert() {
 	var form = document.getElementById("ADClickForm");
-	var ADPath = document.getElementById("ADPath");
-	ADPath.value = "insert.jsp";
+//	form.innerHTML = "<input type='hidden' id='insidePage' name='insidePage' value='insert.jsp'>";
+	var insidePage = document.getElementById("insidePage");
+	insidePage.value = "insert";
 	form.submit();
 }
 
 </script>
 
-<button onclick="ADmain();">ad main</button>
-<button onclick="insert();">ad insert</button>
+<button onclick="goADList();">광고 목록</button>
+<button onclick="goADInsert();">광고 삽입</button>
 
-<form id="ADClickForm" method="post" action="ADClick.ad">
-	<input type="hidden" id="ADPath" name="ADPath">
-	<input type="hidden" id="ADSelected_param" name="ADCode" value="0">
+<form id="ADClickForm" method="post" action="myAD.ad"> 
+	<input type="hidden" id="insidePage" name="insidePage" value="insert">
 </form>
 </body>
 </html>

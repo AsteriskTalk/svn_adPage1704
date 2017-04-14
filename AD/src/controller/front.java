@@ -22,11 +22,10 @@ public class front extends HttpServlet {
 		req.setCharacterEncoding("utf-8");
 		ServletContext sc = req.getServletContext();
 		HttpSession ses = req.getSession();
-		String pagePath = (String) sc.getAttribute("INDEX_PAGE");
 		
 		String reqPath = req.getServletPath();
 		String[] tmp = reqPath.split("\\.");
-		String SERVLET_PATH = tmp[0];
+		String servletPath = tmp[0].substring(1); //맨 앞의 /(slash) 제거
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 			
@@ -70,18 +69,24 @@ public class front extends HttpServlet {
 					
 				}
 				
-			} else {
-				System.out.println("do invalidate!");
+			} else { //로그인 되어있지 않은 경우
+				/** SignIn 이 필요한 Page의 경우에 대한 처리 */
+				if ( servletPath.startsWith("my")) {
+					req.setAttribute("servletPath", servletPath);
+					servletPath = "signIn.ad";
+					}
+					
 				ses.invalidate();
 			}
 
 			
 		} catch (Exception ex) {
 			System.out.println("log : FRONT\n"+ex);
-			SERVLET_PATH = "/index.jsp";
+			servletPath = "/index.jsp";
 			
 		} finally {
-			RequestDispatcher rd = req.getRequestDispatcher(SERVLET_PATH);
+			System.out.println("front..rd : " + servletPath);
+			RequestDispatcher rd = req.getRequestDispatcher(servletPath);
 			rd.forward(req, resp);
 			
 		}

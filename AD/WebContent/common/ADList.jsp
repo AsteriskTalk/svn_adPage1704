@@ -4,14 +4,26 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>  </title>
+<title> ADList </title>
+<style>
+.ADInfo_row { display: inline-block; width: 70% }
+.ADCount_col { width: 150px; text-align: right; }
+.ADCtt_col { width: 400px; }
+.ADBonus_col { width: 100px; text-align: center; } 
+.ADStat_col { width: 100px; text-align: center; }
+.ADURL_col { width: 100px; }
+.ADImgURL_col { width: 100px; text-align: center; }
+.ADEdit_col { width: 50px; text-align: center; }
+.pointerBtn { cursor: pointer; }
+.AD_main_li { display:inline-block; }
+</style>
 </head>
 <body>
 <script type="text/javascript" >
 function goSelect(i) {
-	var form = document.getElementById("goSelectForm");
-	var ADCodeInput = document.getElementById("ADCodeInput");
-	ADCodeInput.value = i;
+	var form = document.getElementById("form_select");
+	var input_ADCode = document.getElementById("input_ADCode");
+	input_ADCode.value = i;
 	form.submit();
 }
 </script>
@@ -23,7 +35,9 @@ function goSelect(i) {
 	<li class="ADStat_col AD_main_li"> 광고 상태 </li>
 	<li class="ADEdit_col AD_main_li">&nbsp; </li>
 </ul>
+
 	<%
+	//Init
 	HttpSession ses = request.getSession();
 	HashMap<String, Object> map = new HashMap<String, Object>();
 	ArrayList<ADInfo> list = new ArrayList<ADInfo>();
@@ -35,8 +49,8 @@ function goSelect(i) {
 	//Session Init
 	e = ses.getAttributeNames();
 	while (e.hasMoreElements()) {
-		String attrName = (String) e.nextElement();
-		if (attrName.equals("ADInfoMap_all")) { map = (HashMap<String ,Object>)ses.getAttribute(attrName); }
+		String s = (String) e.nextElement();
+		if (s.equals("ADInfoMap_all")) { map = (HashMap<String ,Object>)ses.getAttribute(s); }
 	}
 	%>
 	
@@ -44,8 +58,8 @@ function goSelect(i) {
 	//request Init
 	e = request.getAttributeNames();
 	while (e.hasMoreElements()) {
-		String attrName = (String) e.nextElement();
-		if (attrName.equals("servletPath")) { map = (HashMap<String ,Object>)ses.getAttribute(attrName); }
+		String s = (String) e.nextElement();
+		if (s.equals("servletPath")) { servletPath = (String)request.getAttribute(s); }
 	}
 	%>
 	
@@ -86,8 +100,10 @@ function goSelect(i) {
 	
 	%>
 	<br>
-<form id="goSelectForm" action="<%=servletPath %>" method="post" >
-	<input id="ADCodeInput" name="ADCode" type="hidden" value="-1" />
+	
+<form id="form_select" action="<%=servletPath %>" method="post" >
+	<input id="input_ADCode" name="ADCode" type="hidden" value="-1" />
+	<input id="input_ADSelect" name="ADSelect" type="hidden" value="select.jsp" />
 </form>
 </body>
 </html>

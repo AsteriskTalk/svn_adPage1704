@@ -45,6 +45,10 @@ public class ContextLoaderListener  implements ServletContextListener {
 			localMap.put("인천", "INCHEON");
 			sc.setAttribute("localMap", localMap);
 
+			final String INDEX_SERVLET_PATH = "index.ad";
+			sc.setAttribute("INDEX_SERVLET_PATH", INDEX_SERVLET_PATH);
+			final String ERROR_SERVLET_PATH = "erorr.ad";
+			sc.setAttribute("ERROR_SERVLET_PATH", ERROR_SERVLET_PATH);
 			final String ASTK_URL = "www.asterisktalk.net";
 			sc.setAttribute("ASTK_URL", ASTK_URL);
 			final String INDEX_PAGE = "index.jsp";

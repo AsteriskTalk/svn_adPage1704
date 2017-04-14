@@ -8,9 +8,9 @@
 </head>
 <body>
 <%
-String insidePage = "history/" + (String)request.getAttribute("insidePage");
+String insidePage = (String)request.getAttribute("insidePage");
 %>
-<jsp:include page="history/header.jsp" flush="false" /><br>
+<jsp:include page="header.jsp" flush="false" /><br>
 <jsp:include page="<%=insidePage %>" flush="false" />
 </body>
 </html>

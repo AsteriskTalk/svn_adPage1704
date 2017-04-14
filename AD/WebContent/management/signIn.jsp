@@ -53,28 +53,27 @@ background-color:#be3535;
 	}
 </script>
 
+<%
+	String servletPath = "index.jsp";
+  
+  Enumeration e = request.getAttributeNames();
+  while (e.hasMoreElements()) {
+  	String s = (String) e.nextElement();
+  	if (s.equals("servletPath")) { servletPath = (String)request.getAttribute(s); }
+  }
+  
+	out.println("<input type='hidden' name='servletPath' value='"+servletPath+"'>");
+%>
+
 <center > 
 	<img id="signIn_logo" src="image/logo.png" >
 </center >
 <center >
 	<form id="signIn_form" method="post" action="doSignIn.ad" >
-<%
-	String savedPagePath = "index.jsp";
-  String savedViewPath = "main.jsp";
-  
-  Enumeration e = request.getAttributeNames();
-  while (e.hasMoreElements()) {
-  	String s = (String) e.nextElement();
-  	if (s.equals("savedPagePath")) { savedPagePath = (String)request.getAttribute(s); }
-  	else if (s.equals("savedViewPath")) { savedViewPath = (String)request.getAttribute(s); }
-  }
-  
-	out.println("<input type='hidden' name='savedViewPath' value='"+savedViewPath+"'>");
-	out.println("<input type='hidden' name='savedPagePath' value='"+savedPagePath+"'>");
-%>
 		<input type="text" id="signIn_ID" name="clientID" ><br>
 		<input type="password" id="signIn_PW" name="clientPW"><br>
-	</form>
+		<input type="text" name="servletPath" value="<%=servletPath %>" readonly >
+	</form><br>
 		<button class="signIn_Btn" id="signIn_summit" onclick="formCheck();">로그인</button><br>
 		<button class="signIn_Btn" id="signIn_goSignUp" onclick="goSignUp();">회원가입</button><br>
 		<button class="signIn_Btn" id="signIn_forget" onclick="goHelp();">아이디/비밀번호 찾기</button>

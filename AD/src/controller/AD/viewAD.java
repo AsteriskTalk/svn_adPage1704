@@ -19,7 +19,7 @@ import DTO.ADInfo;
 import DTO.ADTarget;
 import util.ASTKLogManager;
 
-public class ADClick extends HttpServlet {
+public class viewAD extends HttpServlet {
 
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -27,10 +27,14 @@ public class ADClick extends HttpServlet {
 		ServletContext sc = req.getServletContext();
 		HttpSession session = req.getSession();
 		
-		String indexPath = (String)sc.getAttribute("INDEX_PAGE");
-		String viewPath = "adMain.jsp";
+		String page = (String)sc.getAttribute("INDEX_PAGE");
+		String view = "ad/ADMain.jsp";
+		final String AD_MAIN = "../common/ADList.jsp";
 		
-		String insidePage = "main.jsp";
+		String insidePage = "main";
+		String selectPage = "";
+		
+		boolean selected = false;
 		
 		String clientID = "";
 		long clientCode = 0;
@@ -42,21 +46,34 @@ public class ADClick extends HttpServlet {
 		try {
 			clientID = (String)session.getAttribute("clientID");
 			clientCode = cm.getClientCode(clientID);
+			
 			Enumeration<String> e = req.getParameterNames();
 			while (e.hasMoreElements()) {
 				String s = (String)e.nextElement();
-				if (s.equals("ADPath")) { insidePage = req.getParameter(s); break; }
+				if (s.equals("insidePage")) { insidePage = req.getParameter(s); break; }
+				else if (s.equals("ADSelect")) { selected = true; }
 			}
 			
-			if(insidePage.startsWith("select")) {
-				ADCode = Long.parseLong(req.getParameter("ADCode"));
-				HashMap<String, Object> ADInfoMap = am.selectAD_someAD_withTarget(ADCode, clientCode);
-				req.setAttribute("ADInfo", ADInfoMap);
-				
-			} else if (insidePage.startsWith("status")) {
+			if(selected) { insidePage = req.getParameter("ADSelect"); }
 			
-			} else if (insidePage.startsWith("main")) {
+			
+			if(insidePage.startsWith("select")) {
+				insidePage = "select.jsp";
+				ADCode = Long.parseLong(req.getParameter("ADCode"));
+				HashMap<String, Object> tmp = new HashMap<String ,Object>();
 				
+				tmp = am.selectAD_someAD(ADCode, clientCode);
+				req.setAttribute("ADInfoMap_some", tmp);
+				
+				tmp = am.selectADTarget_someAD_allTarget(ADCode, clientCode);
+				req.setAttribute("ADTargetMap_some", tmp);
+				
+			} else if (insidePage.startsWith("main")) {
+				insidePage = AD_MAIN;
+				req.setAttribute("servletPath", "myAD.ad");
+				
+			} else if (insidePage.startsWith("insert")) {
+				insidePage = "insert.jsp";
 			}
 			
 			req.setAttribute("insidePage", insidePage);
@@ -64,11 +81,11 @@ public class ADClick extends HttpServlet {
 			
 		} catch (Exception ex) {
 			System.out.println("log : try-catch.."+ ASTKLogManager.getClassName_now() +"\n"+ex);
-			viewPath = (String)sc.getAttribute("ERROR_PAGE");
+			view = (String)sc.getAttribute("ERROR_PAGE");
 			
 		} finally {
-			req.setAttribute("viewPath", viewPath);
-			RequestDispatcher rd = req.getRequestDispatcher(indexPath);
+			req.setAttribute("view", view);
+			RequestDispatcher rd = req.getRequestDispatcher(page);
 			rd.forward(req, resp);
 			
 		}

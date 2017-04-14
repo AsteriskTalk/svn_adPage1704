@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import util.ASTKLogManager;
 
-public class signUpClick extends HttpServlet {
+public class viewSignUp extends HttpServlet {
 
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
