@@ -19,7 +19,6 @@ import util.ASTKLogManager;
 import util.CharManager;
 
 public class doSignIn extends HttpServlet {
-
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("\nlog : doGP..doSignInController");
@@ -69,7 +68,8 @@ public class doSignIn extends HttpServlet {
 				ses.setAttribute("ADHistoryMap_all", tmp);
 				
 			} else {
-				servletPath = "management/signInFailed.html"; 
+				servletPath = "failedSignIn.ad"; 
+				req.setAttribute("clientID", clientID);
 				
 			}
 			

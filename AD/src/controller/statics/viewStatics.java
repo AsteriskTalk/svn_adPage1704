@@ -20,16 +20,18 @@ public class viewStatics  extends HttpServlet {
 
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		System.out.println("\nlog : doGP..historyClickController");
+		System.out.println("\nlog : doGP.."+ ASTKLogManager.getClassName_now());
 		ServletContext sc = req.getServletContext();
 		HttpSession session = req.getSession();
 		
-		String pagePath = (String)sc.getAttribute("INDEX_PAGE");
-		String viewPath = "statics.jsp";
+		String page = (String)sc.getAttribute("INDEX_PAGE");
+		String view = "statics/main.jsp";
 		String insidePage = "all.jsp";
+		String goTo = "all";
 
 		String clientID = "";
 		long clientCode = 0;
+		long ADCode = 0;
 		
 		ClientManager cm = (ClientManager)sc.getAttribute("cm");
 		ADManager am = (ADManager) sc.getAttribute("am");
@@ -43,26 +45,35 @@ public class viewStatics  extends HttpServlet {
 			Enumeration<String> e = req.getParameterNames();
 			while (e.hasMoreElements()) {
 				String s = (String)e.nextElement();
-				if (s.equals("insidePage")) { insidePage = req.getParameter(s); break; }
+				if (s.equals("goTo")) { goTo = req.getParameter(s); }
+				else if (s.equals("ADCode")) { ADCode = Long.parseLong(req.getParameter(s)); }
 			}
 			
-			if (insidePage.startsWith("all")) {
+			if (goTo.startsWith("all")) {
+				insidePage = "all.jsp";
 				tmp = am.selectAD_forStatics(clientCode);
 				req.setAttribute("ADStaticsMap_all", tmp);
-			} else if (insidePage.startsWith("some")) {
 				
-				req.setAttribute("servletPath", "statics.ad");
+			} else if (goTo.startsWith("list")) {
+				insidePage = "../common/ADList.jsp";
+				req.setAttribute("servletPath", "myStatics.ad");
+				
+			} else if (goTo.startsWith("select")) {
+				insidePage = "select.jsp";
+				tmp = am.selectAD_forStatics(ADCode, clientCode);
+				req.setAttribute("ADStaticsMap_some", tmp);
+				
 			}
 
 			req.setAttribute("insidePage", insidePage);
 			
 		} catch (Exception ex) {
 			System.out.println("log : try-catch.."+ ASTKLogManager.getClassName_now() +"\n"+ex);
-			viewPath = (String)sc.getAttribute("ERROR_PAGE");
+			view = (String)sc.getAttribute("ERROR_PAGE");
 			
 		} finally {
-			req.setAttribute("viewPath", viewPath);
-			RequestDispatcher rd = req.getRequestDispatcher(pagePath);
+			req.setAttribute("view", view);
+			RequestDispatcher rd = req.getRequestDispatcher(page);
 			rd.forward(req, resp);
 			
 		}

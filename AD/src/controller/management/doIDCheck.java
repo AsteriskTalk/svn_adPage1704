@@ -19,7 +19,7 @@ public class doIDCheck  extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("\nlog : doGP.." + ASTKLogManager.getClassName_now());
 		ServletContext sc = req.getServletContext();
-		String pagePath = "management/IDCheck.jsp";
+		String pagePath = "webpages/management/IDCheck.jsp";
 		String viewPath =	"";
 		
 		String clientID = "";

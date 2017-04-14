@@ -30,12 +30,12 @@
 
 		function goPoint() {
 			var servletPath = document.getElementById("servletPath");
-			servletPath.action = "index.jsp";
+			servletPath.action = "myPoint.ad";
 			servletPath.submit();
 		}
 
 		function doSignIn() {
-			location.href = "signInClick.ad";
+			location.href = "signIn.ad";
 		}
 
 		function doSignOut() {

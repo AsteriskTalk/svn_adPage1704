@@ -28,6 +28,7 @@ public class viewHistory  extends HttpServlet {
 		String view = "history/main.jsp"; //view
 		String insidePage = "clientHistory.jsp"; // client OR AD
 		String insidePage_AD = "all.jsp"; // only used in AD..all OR some
+		String goTo = "all";
 
 		String clientID = "";
 		long clientCode = 0;
@@ -51,12 +52,12 @@ public class viewHistory  extends HttpServlet {
 				if (s.equals("insidePage")) { insidePage = req.getParameter(s); }
 				else if (s.equals("histPage")) { histPage = Integer.parseInt(req.getParameter(s)); }
 				else if (s.equals("insidePage_AD")) { insidePage_AD = req.getParameter(s); }
-				else if (s.equals("ADSelect")) { selected = true; }
+				else if (s.equals("goTo")) { goTo = req.getParameter(s); }
 				
 			}
 
-			if(selected) {
-				insidePage_AD = req.getParameter("ADSelect"); 
+			if(goTo.equals("select")) {
+				insidePage_AD = "select.jsp";
 				insidePage = "ADHistory.jsp";
 			}
 			
@@ -74,6 +75,7 @@ public class viewHistory  extends HttpServlet {
 						
 						if (!hasAllADHistory) { tmp = am.selectADHistory_all(clientCode); }
 						ses.setAttribute("ADHistoryMap_all", tmp);
+						
 				} else if (insidePage_AD.startsWith("list") ) { //ADList.jsp 에서 사용할 것들 req.setAttr
 					insidePage_AD = "../common/ADList.jsp";
 					String servletPath = "myHistory.ad";

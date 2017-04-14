@@ -51,7 +51,7 @@ public class ContextLoaderListener  implements ServletContextListener {
 			sc.setAttribute("ERROR_SERVLET_PATH", ERROR_SERVLET_PATH);
 			final String ASTK_URL = "www.asterisktalk.net";
 			sc.setAttribute("ASTK_URL", ASTK_URL);
-			final String INDEX_PAGE = "index.jsp";
+			final String INDEX_PAGE = "webpages/index.jsp";
 			sc.setAttribute("INDEX_PAGE", INDEX_PAGE);
 			final String DEFAULT_IMG_NAME = "default.png";
 			sc.setAttribute("DEFAULT_IMG_NAME", DEFAULT_IMG_NAME);

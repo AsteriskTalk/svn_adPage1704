@@ -22,7 +22,7 @@ public class base_view  extends HttpServlet {
 		
 		try {
 
-			req.setAttribute("viewPage", view);
+			req.setAttribute("view", view);
 			
 		} catch (Exception ex) {
 			System.out.println("log : try-catch.."+ASTKLogManager.getClassName_now()+"\n"+ex);

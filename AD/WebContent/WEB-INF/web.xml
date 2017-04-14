@@ -66,6 +66,10 @@
   	<servlet-name>ViewPoint</servlet-name>
   	<servlet-class>controller.point.viewPoint</servlet-class>
   </servlet>
+  <servlet-mapping>
+  	<servlet-name>ViewPoint</servlet-name>
+  	<url-pattern>/myPoint</url-pattern>
+  </servlet-mapping>
   
   
   <servlet>

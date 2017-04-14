@@ -18,7 +18,7 @@ public class viewSignUp extends HttpServlet {
 		System.out.println("\nlog : doGP.." + ASTKLogManager.getClassName_now());
 		ServletContext sc = req.getServletContext();
 		String pagePath = (String)sc.getAttribute("INDEX_PAGE");
-		String viewPath =	"signUp.html";
+		String viewPath =	"management/signUp.html";
 		
 		try {
 			

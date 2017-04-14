@@ -1,4 +1,5 @@
 $(function(){
+	
   /*로그인 버튼*/
   $(".login_wrap>a").on("click",function(){
     $("#login_f").animate({top:"20px"},500);
@@ -66,11 +67,12 @@ $(function(){
    $(this).next().stop().slideDown("normal");
     beforeEl=$(this);
   });
+  
   $("#gnb").on("mouseleave",function(){
      $("#gnb ul:visible").slideUp("fast");
 
    if(beforeEl) beforeEl.children("img").attr("src",beforeEl
    .children("img").attr("src").replace("over.gif","out.gif"));
   });
-
   
+});
