@@ -92,13 +92,8 @@
 
 
 	<header id="header">
-<<<<<<< HEAD
-		<nav id="main-menu" class="navbar navbar-default navbar-fixed-top"
-			role="banner" >
-=======
 		<nav id="main-menu" class="navbar navbar-default"
 			role="banner">
->>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704/
 			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -144,15 +139,15 @@
 				<div class="collapse navbar-collapse navbar-right" >
 
 					<ul class="nav navbar-nav">
-						<li class="scroll"><a href="#" onclick="main();">메인</a></li>
-						<li class="scroll"><a href="#" onclick="ad();">광고관리</a></li>
-						<li class="scroll"><a href="#" onclick="goHistory();">나의
+						<li class="scroll"><a onclick="main();">메인</a></li>
+						<li class="scroll"><a onclick="ad();">광고관리</a></li>
+						<li class="scroll"><a onclick="goHistory();">나의
 								기록</a></li>
-						<li class="scroll"><a href="#" onclick="statistics();">나의
+						<li class="scroll"><a onclick="statistics();">나의
 								통계</a></li>
-						<li class="scroll"><a href="#" onclick="pointRecharge();">포인트
+						<li class="scroll"><a onclick="pointRecharge();">포인트
 								충전</a></li>
-						<li class="scroll"><a href="#" onclick="mypage();">마이 페이지</a></li>
+						<li class="scroll"><a onclick="mypage();">마이 페이지</a></li>
 					</ul>
 				</div>
 			</div>
