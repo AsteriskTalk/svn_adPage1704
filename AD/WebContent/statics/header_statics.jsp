@@ -7,23 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
-HttpSession ses = request.getSession();
-String option = "";
-
-HashMap<String, Object> resultSet = (HashMap<String, Object>)ses.getAttribute("ADInfoMap_all");
-ArrayList<ADInfo> ADInfoList = new ArrayList<ADInfo>();
-
-if (resultSet.get("result").equals("T")) {
-	ADInfoList = (ArrayList<ADInfo>)resultSet.get("ADInfoList"); 
-	for (ADInfo a : ADInfoList) {
-		option += "<option value='"+ a.getADCode() +"'>" + (  a.getADCtt().length()>10 ? a.getADCtt().substring(0, 8) : a.getADCtt() ) + "</option>";
-	}
-} 
-%>
-
-<body>
-
 <script type="text/javascript">
 function getAll() {
 	var form = document.getElementById("staticsClick");
@@ -35,19 +18,14 @@ function getAll() {
 function getSome() {
 	var form = document.getElementById("staticsClick");
 	var staticsPath = document.getElementById("staticsPath");
-	var selected = document.getElementById("selected");
-	var selected_form = document.getElementById("selected_form");
 	selected_form.value = selected.value;
-	staticsPath.value = "some.jsp";
+	staticsPath.value = "common/ADList.jsp";
 	form.submit();
 }
 </script>
 
-<button onclick="getAll();">ALL statics</button>
-<select id="selected" onchange="getSome(); ">
-<option>---- AD List ---- </option>
-	<%=option %>
-</select>
+<button onclick="getAll();">전체 통계</button>
+<button onclick="getSome();">개별 통계</button>
 
 <form id="staticsClick" method="post" action="staticsClick.ad">
 	<input type="hidden" id="staticsPath" name="staticsPath">

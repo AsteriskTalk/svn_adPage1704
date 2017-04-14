@@ -89,10 +89,8 @@
 		<input type="hidden" id="viewPath" name="viewPath"> <input
 			type="hidden" id="pagePath" name="pagePath">
 	</form>
-
-
 	<header id="header">
-		<nav id="main-menu" class="navbar navbar-default"
+		<nav id="main-menu" class="navbar navbar-default "
 			role="banner">
 			<div class="container">
 				<div class="navbar-header">

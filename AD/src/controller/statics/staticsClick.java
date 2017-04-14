@@ -26,7 +26,6 @@ public class staticsClick  extends HttpServlet {
 		
 		String pagePath = (String)sc.getAttribute("INDEX_PAGE");
 		String viewPath = "statics.jsp";
-
 		String insidePage = "all.jsp";
 
 		String clientID = "";
@@ -51,9 +50,7 @@ public class staticsClick  extends HttpServlet {
 				tmp = am.selectAD_forStatics(clientCode);
 				req.setAttribute("ADStaticsMap_all", tmp);
 			} else if (insidePage.startsWith("some")) {
-				ADCode = Long.parseLong(req.getParameter("ADCode"));
-				tmp = am.selectAD_forStatics(ADCode, clientCode);
-				req.setAttribute("ADStaticsMap_some", tmp);
+				req.setAttribute("servletPath", "statics.ad");
 			}
 
 			req.setAttribute("insidePage", insidePage);

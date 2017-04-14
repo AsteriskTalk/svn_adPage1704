@@ -10,7 +10,7 @@
 <%
 String insidePage = "statics/" + (String)request.getAttribute("insidePage");
 %>
-<center><jsp:include page="statics/header.jsp" flush="false" /></center><br>
+<center><jsp:include page="statics/header_statics.jsp" flush="false" /></center><br>
 <center><jsp:include page="<%=insidePage %>" flush="false" /></center>
 </body>
 </html>

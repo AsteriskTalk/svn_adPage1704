@@ -30,8 +30,8 @@ function goSelect(i) {
 	ADCodeInput.value = i;
 	form.submit();
 }
-
 </script>
+
 <br>
 	<ul class="ADInfo_row" > 
 		<li class="ADCount_col AD_main_li">잔여 광고 횟수</li> 
