@@ -6,95 +6,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>header</title>
 <!--  desktop Setting -->
-
+<script type="text/javascript" src="js/astk/headerMenuClick.js"></script>
 </head>
 <body id="body_index_header" class="homepage">
 	<!-- btn function - header -->
-	<script type="text/javascript">
-		function main() {
-			var form = document.getElementById("headerClick");
-			var viewPath = document.getElementById("viewPath");
-			var pagePath = document.getElementById("pagePath");
-			pagePath.value = "index.jsp";
-			viewPath.value = "main.jsp";
-			form.submit();
-		}
+	
 
-		function mypage() {
-			var form = document.getElementById("headerClick");
-			var viewPath = document.getElementById("viewPath");
-			var pagePath = document.getElementById("pagePath");
-			pagePath.value = "index.jsp";
-			viewPath.value = "mypage.jsp";
-			form.submit();
-		}
-		function ad() {
-			var form = document.getElementById("headerClick");
-			var viewPath = document.getElementById("viewPath");
-			var pagePath = document.getElementById("pagePath");
-			pagePath.value = "ADClick.ad";
-			viewPath.value = "adMain.jsp";
-			form.submit();
-
-		}
-		function goHistory() {
-			var form = document.getElementById("headerClick");
-			var viewPath = document.getElementById("viewPath");
-			var pagePath = document.getElementById("pagePath");
-			pagePath.value = "historyClick.ad";
-			viewPath.value = "history.jsp";
-			form.submit();
-
-		}
-		function statistics() {
-			var form = document.getElementById("headerClick");
-			var viewPath = document.getElementById("viewPath");
-			var pagePath = document.getElementById("pagePath");
-			pagePath.value = "staticsClick.ad";
-			viewPath.value = "statics.jsp";
-			form.submit();
-
-		}
-
-		function pointRecharge() {
-			var form = document.getElementById("headerClick");
-			var viewPath = document.getElementById("viewPath");
-			var pagePath = document.getElementById("pagePath");
-			pagePath.value = "index.jsp";
-			viewPath.value = "point.jsp"
-			form.submit();
-		}
-	</script>
-
-	<!-- btn function - signIn-Out -->
-	<script type="text/javascript">
-		function doSignIn() {
-			location.href = "signInClick.ad";
-		}
-
-		function doSignOut() {
-			location.href = "doSignOut.ad";
-		}
-
-		function myInfo() {
-			location.href = "myProfile.ad";
-		}
-		function goTitle() {
-			location.href = "index.ad";
-		}
-	</script>
-
-
-	<form id="headerClick" method="post" action="menu.ad">
-		<input type="hidden" id="viewPath" name="viewPath"> <input
-			type="hidden" id="pagePath" name="pagePath">
-	</form>
+	<form id="servletPath" method="post" action="#"> </form>
 
 
 	<div id="wrap">
 		<div id="header">
 			<h1>
-				<a class="pointer" onclick="goTitle();"><img src="#" alt="logo"></a>
+				<a class="pointer" onclick="goHome();"><img src="#" alt="logo"></a>
 			</h1>
 
 			<dl id="util_menu">
@@ -135,15 +59,15 @@
 			</form>
 			<h2 class="hide">메인메뉴</h2>
 			<ul id="gnb">
-				<li class="scroll"><a class='pointer' onclick="main();">메인</a></li>
-				<li class="scroll"><a class='pointer' onclick="ad();">광고관리</a></li>
+				<li class="scroll"><a class='pointer' onclick="goHome();">메인</a></li>
+				<li class="scroll"><a class='pointer' onclick="goAD();">광고관리</a></li>
 				<li class="scroll"><a class='pointer' onclick="goHistory();">나의
 						기록</a></li>
-				<li class="scroll"><a class='pointer' onclick="statistics();">나의
+				<li class="scroll"><a class='pointer' onclick="goStatics();">나의
 						통계</a></li>
-				<li class="scroll"><a class='pointer'
-					onclick="pointRecharge();">포인트 충전</a></li>
-				<li class="scroll"><a class='pointer' onclick="mypage();">마이
+				<li class="scroll"><a class='pointer' onclick="goPoint();">포인트 충전
+				</a></li>
+				<li class="scroll"><a class='pointer' onclick="goNews();">마이
 						페이지</a></li>
 			</ul>
 
