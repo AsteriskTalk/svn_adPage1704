@@ -50,20 +50,15 @@ public class DBManager {
 		}
 	}
 	
-	public boolean updateSQL(String sql_table, String sql_set, String sql_where, int result) {
+	public boolean update(String sql_update, int result) {
 		Connection conn = null;
 		Statement st = null;
 		int rs = 0;
 		
-		String sql_update = "";
-
 		try {
 			conn = connPool.getConn();
 			conn.setAutoCommit(false);
 			st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			
-			sql_update
-				= " UPDATE " + sql_table + " " + sql_set + " " + sql_where;
 			
 			rs = st.executeUpdate(sql_update);
 			if (rs != result) { 
@@ -81,6 +76,13 @@ public class DBManager {
 			try { if (st != null) st.close(); } catch (Exception ex) { }
 			try { if (conn != null) conn.close(); } catch (Exception ex) { }
 		}
+	}
+	
+	public boolean updateSQL(String sql_table, String sql_set, String sql_where, int result) {
+		String sql_update
+		= " UPDATE " + sql_table + " " + sql_set + " " + sql_where;
+		return this.update(sql_update, result);
+	
 	}
 	
 	public boolean deleteSQL(String sql_table, String sql_where, int result) {

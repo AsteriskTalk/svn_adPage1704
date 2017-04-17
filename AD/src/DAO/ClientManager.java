@@ -10,9 +10,10 @@ import DTO.ADInfo;
 import DTO.ClientInfo;
 import DTO.ClientPoint;
 import DTO.ClientProfile;
+import util.ADTools;
 import util.ASTKLogManager;
 import util.DBConnectionPool;
-import util.EmailManager;
+import util.MailManager;
 
 public class ClientManager {
 	DBConnectionPool connPool;
@@ -171,7 +172,7 @@ public class ClientManager {
 		
 		final long OTP = new DBManager(connPool).insertOTPQuery(sql_OTPQuery_SQL);
 		
-		return EmailManager.sendEmail_changeEmail(OTP, newEmail);
+		return MailManager.sendEmail_changeEmail(OTP, newEmail);
 		
 	}
 	
@@ -187,16 +188,22 @@ public class ClientManager {
 		return true;
 	}
 	
-	public boolean doSignUp(String clientID, String clientPW, String clientName, String clientEmail, String clientPhone, String clientCtt) {
+	public HashMap<String, Object> doSignUp(String clientID, String clientPW, String clientName, String clientEmail, String clientPhone, String clientCtt) {
 		Connection conn = null;
 		Statement st = null;
 		ResultSet rs = null;
 		int rs2 = 0;
 		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("result", "F");
+		
 		String sql_getNextClientCode = "";
-		String sql_insertClientProfile = "";
+		String sql_insertClientInfo = "";
 		String sql_insertClientProf = "";
 		String sql_insertClientPoint = "";
+		String sql_updateClientInfo = "";
+		String sql_insertOTC = "";
 		
 		long clientCode = 0;
 		
@@ -211,33 +218,57 @@ public class ClientManager {
 			clientCode = rs.getLong("NEXTVAL");
 			rs.close();
 			
-			sql_insertClientProfile
+			/* */
+			sql_insertClientInfo
 				= " INSERT INTO ASTK_CLIENT_INFO(CLIENT_CODE, CLIENT_ID, CLIENT_PW) VALUES";
-			sql_insertClientProfile
+			sql_insertClientInfo
 				+= " ("+ clientCode +",'"+ clientID +"','"+ clientPW +"')";
-			rs2 = st.executeUpdate(sql_insertClientProfile);
-			if (rs2 != 1) { conn.rollback(); return false; }
+			rs2 = st.executeUpdate(sql_insertClientInfo);
+			if (rs2 != 1) { conn.rollback(); return map; }
 			
+			/* */
 			sql_insertClientProf
 				= " INSERT INTO ASTK_CLIENT_PROFILE(CLIENT_CODE, CLIENT_EMAIL, CLIENT_PHONE, CLIENT_NAME, CLIENT_CTT) VALUES ";
 			sql_insertClientProf
 				+= " ("+ clientCode +",'"+ clientEmail +"','"+ clientPhone +"','"+ clientName +"','"+ clientCtt +"')";
 			rs2 = st.executeUpdate(sql_insertClientProf);
-			if (rs2 != 1) { conn.rollback(); return false; }
+			if (rs2 != 1) { conn.rollback(); return map; }
 			
+			/* */
 			sql_insertClientPoint
 				= " INSERT INTO ASTK_CLIENT_POINT(CLIENT_CODE) VALUES ";
 			sql_insertClientPoint
 				+= " ("+ clientCode +") ";
 			rs2 = st.executeUpdate(sql_insertClientPoint);
-			if (rs2 != 1) { conn.rollback(); return false; }
+			if (rs2 != 1) { conn.rollback(); return map; }
 			
+			/*  */
+			final String OTC = ADTools.getOTC(10);
+			final long NOW = System.currentTimeMillis();
+			sql_updateClientInfo
+				= " UPDATE ASTK_CLIENT_INFO ";
+			sql_updateClientInfo
+				+= " SET IS_CONN='T' ";
+			sql_updateClientInfo
+				+= " WHERE CLIENT_CODE="+ clientCode + " AND IS_CONN='N' ";
+			
+			sql_insertOTC
+				= " INSERT INTO ASTK_OTC_INFO(OTC, OTC_QUERY, PK_CODE, OTC_DATE) VALUES ";
+			sql_insertOTC
+				+= " ("+ OTC +",'"+ sql_updateClientInfo +"',"+ clientCode +","+ NOW +")";
+			rs2 = st.executeUpdate(sql_insertOTC);
+			if (rs2 != 1) { conn.rollback(); return map; }
+			
+			map.put("OTC", OTC);
+			map.put("clientCode", clientCode);
+			map.put("result", "T");
 			conn.commit();
-			return true;
+			return map;
 			
 		} catch (Exception ex) {
 			System.out.println("log : try-catch.."+ ASTKLogManager.getMethodName_withClassName() +"\n" + ex);
-			return false;
+			map.put("result", "E");
+			return map;
 			
 		} finally {
 			try { if(rs != null) rs.close(); } catch (Exception ex) { }
@@ -511,4 +542,6 @@ public class ClientManager {
 			try { if (conn != null) conn.close(); } catch (Exception ex) { }
 		}
 	}
+	
+	
 }

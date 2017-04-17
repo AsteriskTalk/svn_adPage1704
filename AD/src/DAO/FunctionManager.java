@@ -10,8 +10,8 @@ import org.json.simple.JSONObject;
 
 import DTO.ADInfo;
 import DTO.ADSended;
+import DTO.OTCInfo;
 import util.ADParser;
-import util.ADTools;
 import util.ASTKLogManager;
 import util.DBConnectionPool;
 import util.FCMPushManager;
@@ -24,6 +24,24 @@ public class FunctionManager {
 	
 	public FunctionManager(DBConnectionPool connPool) {
 		this.connPool = connPool;
+	}
+	
+	public String doEmailCheck(String OTC) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String sql_update = "";
+		
+		map = new ETCManager(connPool).selectOTC(OTC);
+		if (map.get("result").equals("N")) { return "N"; }
+		else if (!map.get("result").equals("T")) { return "F"; }
+		OTCInfo o = (OTCInfo)map.get("OTCInfo");
+		
+		if (o.isUsed()) { return "U"; }
+		
+		sql_update = o.getOTCQuery();
+		
+		if (new DBManager(connPool).update(sql_update, 1) ) { return "T"; }
+		
+		return "F";
 	}
 	
 	public JSONObject getProfile(long userId)  {

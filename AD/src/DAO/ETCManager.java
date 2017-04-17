@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import DTO.OTCInfo;
 import DTO.OpenedChatGroup;
 import util.ASTKLogManager;
 import util.DBConnectionPool;
@@ -41,6 +42,65 @@ public class ETCManager {
 			
 		} finally {
 			try { if (rs!=null) rs.close(); } catch (Exception ex) { }
+		}
+		
+	}
+	
+	public HashMap<String ,Object> selectOTC(String OTC) {
+		String sql_where
+			= " WHERE OTC='"+ OTC + "' AND IS_USED='F'";
+		return this.base_selectOTC(sql_where, 1);
+	}
+	
+	private HashMap<String, Object> base_selectOTC(String sql_where, int result) {
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		
+		String sql_selectOTC = "";
+		
+		HashMap<String ,Object> map = new HashMap<String, Object>();
+		
+		try {
+			conn = connPool.getConn();
+			conn.setAutoCommit(false);
+			st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			
+			sql_selectOTC
+				= " SELECT * FROM ASTK_OTC_INFO "+ sql_where;
+			rs = st.executeQuery(sql_selectOTC);
+			rs.last();
+			if (rs.getRow() == 0) { map.put("result", "N"); return map; }
+			switch (result) {
+			case 0 :
+				if (rs.getRow() < 0) { map.put("result", "F"); return map; }
+				break;
+			default :
+				if (rs.getRow() < result) { map.put("result", "F"); return map; }
+				break;
+			}
+			rs.beforeFirst();
+			if (result == 1	){
+				rs.next();
+				map.put("OTCInfo", new OTCInfo().setAll(rs));
+			} else {
+				ArrayList<OTCInfo> list = new ArrayList<OTCInfo>();
+				while (rs.next()) { list.add(new OTCInfo().setAll(rs)); }
+				map.put("OTCInfoList", list);
+			}
+			map.put("result", "T");
+			return map;
+			 
+		} catch (Exception ex) {
+			System.out.println("log : try-catch.."+ ASTKLogManager.getMethodName_withClassName() + "\n"+ ex);
+			map.put("result", "E");
+			return map;
+			
+		} finally {
+			try { if (rs != null)	rs.close(); } catch (Exception ex) { }
+			try { if (st != null)	st.close(); } catch (Exception ex) { }
+			try { if (conn != null)	conn.close(); } catch (Exception ex) { }
+			
 		}
 		
 	}

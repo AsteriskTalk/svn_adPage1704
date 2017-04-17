@@ -1,8 +1,6 @@
 package controller.management;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -16,9 +14,12 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import DAO.ClientManager;
+import DAO.ETCManager;
+import DAO.FunctionManager;
 import util.ASTKLogManager;
 import util.CharManager;
 import util.FileManager;
+import util.MailManager;
 import util.TimeManager;
 
 public class doSignUp extends HttpServlet {
@@ -63,10 +64,13 @@ public class doSignUp extends HttpServlet {
 		MultipartRequest multi = new MultipartRequest(req, FULL_URI, FILE_SIZE, ENC_TYPE, new DefaultFileRenamePolicy());
 		
 		ClientManager cm = (ClientManager)sc.getAttribute("cm");
+		FunctionManager fm = (FunctionManager) sc.getAttribute("fm");
+		ETCManager etc = (ETCManager) sc.getAttribute("etc");
 		
 		boolean fileResult = false;
 		boolean result = false;
 		boolean useLogo = false;
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		try {
 			clientID = CharManager.beforeOracle_removeSpace(multi.getParameter("clientID"));
@@ -79,13 +83,14 @@ public class doSignUp extends HttpServlet {
 			
 		  useLogo = clientLogo!=null;
 		  
-		  /* Step 1. 회원가입 - 포인트, 프로필, 인포 작성 */
-			result = cm.doSignUp(clientID, clientPW, clientName, clientEmail, clientPhone, clientCtt);
+		  /* Step 1. 회원가입 - 포인트, 프로필, 인포 작성 및 가입 승인 대기 쿼리 작성 */
+			map = cm.doSignUp(clientID, clientPW, clientName, clientEmail, clientPhone, clientCtt);
+			result = map.get("result").equals("T");
 			
 			/* Step 2. 가입 성공 및 로고가 있을 경우와 없을경우에 따른 DB내 경로 수정 */
 			if (result) { 
 				if (useLogo) {
-					clientCode =cm.getClientCode(clientID);
+					clientCode = (Long)map.get("clientCode");
 					oldFilePath = FULL_URI;
 					oldFileName = clientLogo;
 					final String EXT = FileManager.getEXT(oldFileName);
@@ -103,7 +108,13 @@ public class doSignUp extends HttpServlet {
 			/* Step 2. 가입 실패 혹은 가입 성공했으나 파일 이미지 업데이트 실패 => 기존 해당 유저 정보 삭제 
 			 * 이미지 업로드 실패의 경우, 파일 기준 아닌 DB 기준이므로 DB 입력 실패는 회원가입 실패로 간주
 			 * */
-			if (result) { viewPath = "management/successSignUp.html"; }
+			if (result) { 
+				String OTC = (String)map.get("OTC");
+				result = MailManager.sendCheckEmail(OTC); 
+			}
+			
+			
+			if ( result) { viewPath = "management/successSignUp.html"; }
 			else { cm.removeSignUp(clientCode); viewPath ="management/failedSignUp.html"; }
 			
 			

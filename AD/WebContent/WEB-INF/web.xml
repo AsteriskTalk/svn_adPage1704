@@ -29,6 +29,14 @@
   	<url-pattern>/index</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>EmailCheck</servlet-name>
+  	<servlet-class>controller.management.doEmailCheck</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>EmailCheck</servlet-name>
+  	<url-pattern>/EmailCheck</url-pattern>
+  </servlet-mapping>
   
   <servlet>
   	<servlet-name>ViewHistory</servlet-name>
