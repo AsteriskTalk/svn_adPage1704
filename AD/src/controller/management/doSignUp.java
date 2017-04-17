@@ -110,7 +110,7 @@ public class doSignUp extends HttpServlet {
 			 * */
 			if (result) { 
 				String OTC = (String)map.get("OTC");
-				result = MailManager.sendCheckEmail(OTC); 
+				result = MailManager.sendCheckEmail(OTC, clientEmail); 
 			}
 			
 			

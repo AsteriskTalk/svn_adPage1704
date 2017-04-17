@@ -48,7 +48,7 @@ public class ETCManager {
 	
 	public HashMap<String ,Object> selectOTC(String OTC) {
 		String sql_where
-			= " WHERE OTC='"+ OTC + "' AND IS_USED='F'";
+			= " WHERE OTC='"+ OTC + "' ";
 		return this.base_selectOTC(sql_where, 1);
 	}
 	
@@ -68,6 +68,7 @@ public class ETCManager {
 			
 			sql_selectOTC
 				= " SELECT * FROM ASTK_OTC_INFO "+ sql_where;
+			System.out.println(sql_selectOTC);
 			rs = st.executeQuery(sql_selectOTC);
 			rs.last();
 			if (rs.getRow() == 0) { map.put("result", "N"); return map; }
@@ -76,7 +77,7 @@ public class ETCManager {
 				if (rs.getRow() < 0) { map.put("result", "F"); return map; }
 				break;
 			default :
-				if (rs.getRow() < result) { map.put("result", "F"); return map; }
+				if (rs.getRow() != result) { map.put("result", "F"); return map; }
 				break;
 			}
 			rs.beforeFirst();
@@ -88,6 +89,7 @@ public class ETCManager {
 				while (rs.next()) { list.add(new OTCInfo().setAll(rs)); }
 				map.put("OTCInfoList", list);
 			}
+			System.out.println("success!! "+ ASTKLogManager.getMethodName_withClassName());
 			map.put("result", "T");
 			return map;
 			 

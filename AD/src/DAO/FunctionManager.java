@@ -38,10 +38,44 @@ public class FunctionManager {
 		if (o.isUsed()) { return "U"; }
 		
 		sql_update = o.getOTCQuery();
+
+		Connection conn = null;
+		Statement st = null;
+		int rs = 0;
+		try {
+			conn = connPool.getConn();
+			conn.setAutoCommit(false);
+			st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			
+			try {
+				rs = st.executeUpdate(sql_update);
+				if (rs != 1) { conn.rollback(); return "F"; }
+				
+				sql_update
+				= " UPDATE ASTK_OTC_INFO SET IS_USED='T' WHERE OTC='"+ OTC +"' ";
+				rs = st.executeUpdate(sql_update);
+				if (rs != 1) { conn.rollback(); return "F"; }
+				
+				conn.commit();
+				return "T";
+				
+			} catch (Exception ex) {
+				System.out.println("log : try-catch.."+ ASTKLogManager.getMethodName_withClassName() + "\n"+ex);
+				conn.rollback();
+				return "E";
+				
+			} finally {
+				try { if (st != null) st.close();} catch (Exception ex) { }
+				try { if (conn != null) conn.close();} catch (Exception ex) { }
+				
+			}
+			
+		} catch (Exception ex) {
+			System.out.println("log : try-catch.."+ ASTKLogManager.getMethodName_withClassName() + "\n"+ex);
+			return "E";
+			
+		}
 		
-		if (new DBManager(connPool).update(sql_update, 1) ) { return "T"; }
-		
-		return "F";
 	}
 	
 	public JSONObject getProfile(long userId)  {

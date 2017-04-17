@@ -95,7 +95,7 @@ public class front extends HttpServlet {
 			servletPath = "/index";
 			
 		} finally {
-			System.out.println("front..rd : " + servletPath);
+//			System.out.println("front..rd : " + servletPath);
 			RequestDispatcher rd = req.getRequestDispatcher(servletPath);
 			rd.forward(req, resp);
 			

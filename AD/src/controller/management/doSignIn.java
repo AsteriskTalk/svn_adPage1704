@@ -68,7 +68,7 @@ public class doSignIn extends HttpServlet {
 				ses.setAttribute("ADHistoryMap_all", tmp);
 				
 			} else {
-				servletPath = "failedSignIn.ad"; 
+				servletPath = "index.ad"; 
 				req.setAttribute("clientID", clientID);
 				
 			}

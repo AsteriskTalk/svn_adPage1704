@@ -10,17 +10,14 @@
 </head>
 <body id="body_index_header" class="homepage">
 	<!-- btn function - header -->
-	
 
 	<form id="servletPath" method="post" action="#"> </form>
-
 
 	<div id="wrap">
 		<div id="header">
 			<h1>
-				<a class="pointer" onclick="goHome();"><img src="#" alt="logo"></a>
+				<a class="pointer" onclick="goHome();"><img  alt="logo"></a>
 			</h1>
-
 			<dl id="util_menu">
 				<!-- <dt class="hide">유틸메뉴</dt> -->
 				<dd class="util_first">
@@ -70,7 +67,7 @@
 				<li class="scroll"><a class='pointer' onclick="goNews();">마이
 						페이지</a></li>
 			</ul>
-
+			
 		</div>
 	</div>
 </body>

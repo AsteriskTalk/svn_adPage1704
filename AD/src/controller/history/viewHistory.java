@@ -21,7 +21,7 @@ public class viewHistory  extends HttpServlet {
 
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		System.out.println("\nlog : doGP..historyClickController");
+		System.out.println("\nlog : doGP.."+ ASTKLogManager.getClassName_now());
 		ServletContext sc = req.getServletContext();
 		HttpSession ses = req.getSession();
 		String page = (String)sc.getAttribute("INDEX_PAGE");

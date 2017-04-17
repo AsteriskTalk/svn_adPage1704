@@ -12,6 +12,7 @@ import DTO.ClientPoint;
 import DTO.ClientProfile;
 import util.ADTools;
 import util.ASTKLogManager;
+import util.CharManager;
 import util.DBConnectionPool;
 import util.MailManager;
 
@@ -211,70 +212,81 @@ public class ClientManager {
 			conn = connPool.getConn();
 			conn.setAutoCommit(false);
 			st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			sql_getNextClientCode
-				= " SELECT SQ_CLIENT_CODE.NEXTVAL FROM DUAL";
-			rs = st.executeQuery(sql_getNextClientCode);
-			rs.next();
-			clientCode = rs.getLong("NEXTVAL");
-			rs.close();
-			
-			/* */
-			sql_insertClientInfo
-				= " INSERT INTO ASTK_CLIENT_INFO(CLIENT_CODE, CLIENT_ID, CLIENT_PW) VALUES";
-			sql_insertClientInfo
-				+= " ("+ clientCode +",'"+ clientID +"','"+ clientPW +"')";
-			rs2 = st.executeUpdate(sql_insertClientInfo);
-			if (rs2 != 1) { conn.rollback(); return map; }
-			
-			/* */
-			sql_insertClientProf
-				= " INSERT INTO ASTK_CLIENT_PROFILE(CLIENT_CODE, CLIENT_EMAIL, CLIENT_PHONE, CLIENT_NAME, CLIENT_CTT) VALUES ";
-			sql_insertClientProf
-				+= " ("+ clientCode +",'"+ clientEmail +"','"+ clientPhone +"','"+ clientName +"','"+ clientCtt +"')";
-			rs2 = st.executeUpdate(sql_insertClientProf);
-			if (rs2 != 1) { conn.rollback(); return map; }
-			
-			/* */
-			sql_insertClientPoint
-				= " INSERT INTO ASTK_CLIENT_POINT(CLIENT_CODE) VALUES ";
-			sql_insertClientPoint
-				+= " ("+ clientCode +") ";
-			rs2 = st.executeUpdate(sql_insertClientPoint);
-			if (rs2 != 1) { conn.rollback(); return map; }
-			
-			/*  */
-			final String OTC = ADTools.getOTC(10);
-			final long NOW = System.currentTimeMillis();
-			sql_updateClientInfo
-				= " UPDATE ASTK_CLIENT_INFO ";
-			sql_updateClientInfo
-				+= " SET IS_CONN='T' ";
-			sql_updateClientInfo
-				+= " WHERE CLIENT_CODE="+ clientCode + " AND IS_CONN='N' ";
-			
-			sql_insertOTC
-				= " INSERT INTO ASTK_OTC_INFO(OTC, OTC_QUERY, PK_CODE, OTC_DATE) VALUES ";
-			sql_insertOTC
-				+= " ("+ OTC +",'"+ sql_updateClientInfo +"',"+ clientCode +","+ NOW +")";
-			rs2 = st.executeUpdate(sql_insertOTC);
-			if (rs2 != 1) { conn.rollback(); return map; }
-			
-			map.put("OTC", OTC);
-			map.put("clientCode", clientCode);
-			map.put("result", "T");
-			conn.commit();
-			return map;
+
+			try {
+				sql_getNextClientCode
+					= " SELECT SQ_CLIENT_CODE.NEXTVAL FROM DUAL";
+				rs = st.executeQuery(sql_getNextClientCode);
+				rs.next();
+				clientCode = rs.getLong("NEXTVAL");
+				rs.close();
+				
+				/* */
+				sql_insertClientInfo
+					= " INSERT INTO ASTK_CLIENT_INFO(CLIENT_CODE, CLIENT_ID, CLIENT_PW, IS_CONN) VALUES";
+				sql_insertClientInfo
+					+= " ("+ clientCode +",'"+ clientID +"','"+ clientPW +"','N')";
+				rs2 = st.executeUpdate(sql_insertClientInfo);
+				if (rs2 != 1) { conn.rollback(); return map; }
+				
+				/* */
+				sql_insertClientProf
+					= " INSERT INTO ASTK_CLIENT_PROFILE(CLIENT_CODE, CLIENT_EMAIL, CLIENT_PHONE, CLIENT_NAME, CLIENT_CTT) VALUES ";
+				sql_insertClientProf
+					+= " ("+ clientCode +",'"+ clientEmail +"','"+ clientPhone +"','"+ clientName +"','"+ clientCtt +"')";
+				rs2 = st.executeUpdate(sql_insertClientProf);
+				if (rs2 != 1) { conn.rollback(); return map; }
+				
+				/* */
+				sql_insertClientPoint
+					= " INSERT INTO ASTK_CLIENT_POINT(CLIENT_CODE) VALUES ";
+				sql_insertClientPoint
+					+= " ("+ clientCode +") ";
+				rs2 = st.executeUpdate(sql_insertClientPoint);
+				if (rs2 != 1) { conn.rollback(); return map; }
+				
+				/*  */
+				final String OTC = ADTools.getOTC(10);
+				final long NOW = System.currentTimeMillis();
+				sql_updateClientInfo
+					= " UPDATE ASTK_CLIENT_INFO ";
+				sql_updateClientInfo
+					+= " SET IS_CONN='T' ";
+				sql_updateClientInfo
+					+= " WHERE CLIENT_CODE="+ clientCode + " AND IS_CONN='N' ";
+				
+				sql_insertOTC
+					= " INSERT INTO ASTK_OTC_INFO(OTC, OTC_QUERY, PK_CODE, OTC_DATE) VALUES ";
+				sql_insertOTC
+					+= " ('"+ OTC +"','"+ CharManager.beforeOracle_withSpace(sql_updateClientInfo) +"',"+ clientCode +","+ NOW +")";
+				//System.out.println(sql_insertOTC);
+				rs2 = st.executeUpdate(sql_insertOTC);
+				if (rs2 != 1) { conn.rollback(); return map; }
+				
+				map.put("OTC", OTC);
+				map.put("clientCode", clientCode);
+				map.put("result", "T");
+				conn.commit();
+				return map;
+				
+			} catch (Exception ex) {
+				System.out.println("log : try-catch.."+ ASTKLogManager.getMethodName_withClassName() +"\n" + ex);
+				conn.rollback();
+				map.put("result", "E");
+				return map;
+				
+			} finally {
+				try { if(rs != null) rs.close(); } catch (Exception ex) { }
+				try { if(st != null) st.close(); } catch (Exception ex) { }
+				try { if(conn != null) conn.close(); } catch (Exception ex) { }
+			}
 			
 		} catch (Exception ex) {
-			System.out.println("log : try-catch.."+ ASTKLogManager.getMethodName_withClassName() +"\n" + ex);
+			System.out.println("log : try-catch.."+ ASTKLogManager.getMethodName_withClassName() +"\n"+ex);
 			map.put("result", "E");
 			return map;
-			
-		} finally {
-			try { if(rs != null) rs.close(); } catch (Exception ex) { }
-			try { if(st != null) st.close(); } catch (Exception ex) { }
-			try { if(conn != null) conn.close(); } catch (Exception ex) { }
 		}
+		
 		
 	}
 	

@@ -1,7 +1,6 @@
-package controller.management;
+package controller.tester;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -11,31 +10,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import util.ASTKLogManager;
+import util.MailManager;
 
-public class viewSignIn  extends HttpServlet {
+public class mailSendTest extends HttpServlet {
 
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		System.out.println("\nlog : doGP.."+ ASTKLogManager.getClassName_now());
+		System.out.println("\nlog : doGP.." + ASTKLogManager.getClassName_now());
 		ServletContext sc = req.getServletContext();
-		String pagePath = (String)sc.getAttribute("INDEX_PAGE");
-		String viewPath = "management/signIn.jsp";
+		String servletPath = (String)sc.getAttribute("INDEX_SERVLET_PATH");
+		
 		
 		try {
-			Enumeration<String> e = req.getAttributeNames();
-			while (e.hasMoreElements()) {
-				String s = (String) e.nextElement();
-				if (s.equals("servletPath")) { req.setAttribute("servletPath", req.getAttribute(s)); }
-			}
-			
+			MailManager.sendTest();
 			
 		} catch (Exception ex) {
-			System.out.println("log : try-catch.."+ ASTKLogManager.getClassName_now() +"\n"+ex);
-			viewPath = (String)sc.getAttribute("ERROR_PAGE");
+			System.out.println("log : try-catch.."+ASTKLogManager.getClassName_now()+"\n"+ex);
+			servletPath = (String) sc.getAttribute("ERROR_SERVLET_PATH");
+			req.setAttribute("ex", ex);
 			
 		} finally {
-			req.setAttribute("viewPath", viewPath);
-			RequestDispatcher rd = req.getRequestDispatcher(pagePath);
+			RequestDispatcher rd = req.getRequestDispatcher(servletPath);
 			rd.forward(req, resp);
 			
 		}
