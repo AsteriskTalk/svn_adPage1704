@@ -1,6 +1,6 @@
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, del, dfn, em, img, ins, kbd, q, samp, small, strong, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, table, tbody, tfoot, thead, tr, th, td, article, aside, footer, header, nav, section {
   margin:0;
-  
+  padding:0;
   border:0;
   outline:0;
   font-size:100%;
@@ -10,7 +10,7 @@ html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, del, dfn, em, 
 
 body {
   -webkit-text-size-adjust:none;
-  font-family:NanumGothic, 나눔고딕, 'Nanum Gothic', '맑은 고딕', HelveticaNeue;
+  font-family:sans-serif;
   min-height:416px;
 }
 h1 {
@@ -58,7 +58,7 @@ html, body {
   font-size:20px;
   text-align:center;
   margin:10px;
-  padding:100px 10px;
+  /*padding:100px 10px;*/
   box-shadow: 0 1px #EBEBEB;
   background: #fff;
   border-radius: 3px;
