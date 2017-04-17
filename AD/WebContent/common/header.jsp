@@ -8,7 +8,7 @@
 <!--  desktop Setting -->
 
 </head>
-<body id="body_index_header" class="homepage" >
+<body id="body_index_header" class="homepage">
 	<!-- btn function - header -->
 	<script type="text/javascript">
 		function main() {
@@ -91,67 +91,63 @@
 	</form>
 
 
-	<header id="header">
-		<nav id="main-menu" class="navbar navbar-default"
-			role="banner">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse"
-						data-target=".navbar-collapse">
-						<span class="sr-only">Toggle navigation</span> <span
-							class="icon-bar"></span> <span class="icon-bar"></span> <span
-							class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="#" onclick="goTitle();"><img
-						src="#" alt="logo"></a>
-				</div>
+	<div id="wrap">
+		<div id="header">
+			<h1>
+				<a class="pointer" onclick="goTitle();"><img src="#" alt="logo"></a>
+			</h1>
 
-				<div id="util_meun">
-					<div id="google_translate_element"></div>
-					<div class="util_first navbar-right">
-						<ul>
-
-							<li id="header_signIn_signOut">
-								<%
-									HttpSession ses = request.getSession();
-									String clientID = (String) session.getAttribute("clientID");
-									if (clientID == null || clientID.equals("") || clientID == ""
-											|| clientID.equals(null)) {
-										out.println("<a id='signInBtn' class='pointer' onclick='doSignIn();' > 로그인 </a>");
-									} else {
-										out.println("<a id='welcome' class='pointer' >" + clientID + "님, 환영합니다. </a>");
-										out.println("<a id='myInfoBtn' class='pointer' onclick='myInfo();'> 내 정보 </a>");
-										out.println("<a id='signOutBtn' class='pointer' onclick='doSignOut();''> 로그아웃 </a>");
-									}
-								%>
-							</li>
-							<li><a href="#">회원가입</a></li>
-							<li><a href="#">사이트맵</a></li>
-
-						</ul>
-
-					</div>
-
-				</div>
-
-
-
-				<div class="collapse navbar-collapse navbar-right" >
-
-					<ul class="nav navbar-nav">
-						<li class="scroll"><a class='pointer' onclick="main();">메인</a></li>
-						<li class="scroll"><a class='pointer' onclick="ad();">광고관리</a></li>
-						<li class="scroll"><a class='pointer' onclick="goHistory();">나의
-								기록</a></li>
-						<li class="scroll"><a class='pointer' onclick="statistics();">나의
-								통계</a></li>
-						<li class="scroll"><a class='pointer' onclick="pointRecharge();">포인트
-								충전</a></li>
-						<li class="scroll"><a class='pointer' onclick="mypage();">마이 페이지</a></li>
+			<dl id="util_menu">
+				<!-- <dt class="hide">유틸메뉴</dt> -->
+				<dd class="util_first">
+					<ul>
+						<li id="header_signIn_signOut">
+							<%
+								HttpSession ses = request.getSession();
+								String clientID = (String) session.getAttribute("clientID");
+								if (clientID == null || clientID.equals("") || clientID == ""
+										|| clientID.equals(null)) {
+									out.println("<a id='signInBtn' class='pointer' onclick='doSignIn();' > 로그인 </a>");
+								} else {
+									out.println("<a id='welcome' class='pointer' >" + clientID
+											+ "님, 환영합니다. </a>");
+									out.println("<a id='myInfoBtn' class='pointer' onclick='myInfo();'> 내 정보 </a>");
+									out.println("<a id='signOutBtn' class='pointer' onclick='doSignOut();''> 로그아웃 </a>");
+								}
+							%>
+						</li>
+						<li><a class="pointer">회원가입</a></li>
+						<li><a class="pointer">사이트맵</a></li>
 					</ul>
-				</div>
-			</div>
-		</nav>
-	</header>
+				</dd>
+				<dd>
+					<div id="google_translate_element"></div>
+				</dd>
+			</dl>
+			<form action="#" method="get" name="sch_f" id="sch_f">
+				<fieldset>
+					<legend>검색폼</legend>
+					<p>
+						<input type="text" name="keyword" id="keyword" title="검색어입력" /><input
+							type="image" src="images/header_sch_btn.gif" alt="검색" />
+					</p>
+				</fieldset>
+			</form>
+			<h2 class="hide">메인메뉴</h2>
+			<ul id="gnb">
+				<li class="scroll"><a class='pointer' onclick="main();">메인</a></li>
+				<li class="scroll"><a class='pointer' onclick="ad();">광고관리</a></li>
+				<li class="scroll"><a class='pointer' onclick="goHistory();">나의
+						기록</a></li>
+				<li class="scroll"><a class='pointer' onclick="statistics();">나의
+						통계</a></li>
+				<li class="scroll"><a class='pointer'
+					onclick="pointRecharge();">포인트 충전</a></li>
+				<li class="scroll"><a class='pointer' onclick="mypage();">마이
+						페이지</a></li>
+			</ul>
+
+		</div>
+	</div>
 </body>
 </html>

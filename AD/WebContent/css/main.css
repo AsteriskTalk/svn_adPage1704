@@ -1,8 +1,18 @@
 #visual {
+	height: 263px;
 	position: relative;
 }
 
+.touch_bullet {
+	position: absolute;
+	top: 230px;
+	left: 50%;
+	margin-left: -27px;
+}
 
+.touch_bullet li {
+	float: left;
+}
 
 .touch_left_btn {
 	position: absolute;
@@ -121,6 +131,8 @@
 }
 
 #bestbook_zone h3 {
+	margin-left:5px;
+	font: 16px NanumGothic, 나눔고딕, 'Nanum Gothic', '맑은 고딕', HelveticaNeue;
 	margin-bottom: 10px;
 }
 
@@ -252,12 +264,12 @@
 
 .swipe-wrap>li {
 	float: left;
-	width: 80%;
+	width: 100%;
 	position: relative;
 }
 
 /* END required styles */
 #mySwipe img {
 	width: 100%;
-	min-width: 100%;
+	max-width: 100%;
 }
