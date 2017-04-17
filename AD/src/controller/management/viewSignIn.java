@@ -1,6 +1,7 @@
 package controller.management;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -9,34 +10,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import DAO.ClientManager;
 import util.ASTKLogManager;
-import util.CharManager;
 
-public class doIDCheck  extends HttpServlet {
+public class viewSignIn  extends HttpServlet {
 
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		System.out.println("\nlog : doGP.." + ASTKLogManager.getClassName_now());
+		System.out.println("\nlog : doGP..headerClickController");
 		ServletContext sc = req.getServletContext();
-		String pagePath = "webpages/management/IDCheck.jsp";
-		String viewPath =	"";
-		
-		String clientID = "";
-		
-		ClientManager cm = (ClientManager) sc.getAttribute("cm");
-		
-		boolean result = false;
+		String pagePath = (String)sc.getAttribute("INDEX_PAGE");
+		String viewPath = "management/signIn.jsp";
 		
 		try {
-			clientID = CharManager.beforeOracle_removeSpace(req.getParameter("clientID"));
-			result = cm.checkClientID(clientID);
+			Enumeration<String> e = req.getAttributeNames();
+			while (e.hasMoreElements()) {
+				String s = (String) e.nextElement();
+				if (s.equals("servletPath")) { req.setAttribute("servletPath", req.getAttribute(s)); }
+			}
 			
-			req.setAttribute("result", result);
+			
 		} catch (Exception ex) {
-			viewPath ="error.jsp";
+			System.out.println("log : try-catch.."+ ASTKLogManager.getClassName_now() +"\n"+ex);
+			viewPath = (String)sc.getAttribute("ERROR_PAGE");
 			
 		} finally {
+			req.setAttribute("viewPath", viewPath);
 			RequestDispatcher rd = req.getRequestDispatcher(pagePath);
 			rd.forward(req, resp);
 			

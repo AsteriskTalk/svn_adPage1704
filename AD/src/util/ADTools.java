@@ -141,25 +141,35 @@ public class ADTools {
 	}
 	
 	public static boolean isSignIn(HttpSession ses) {
-		final String SESSION_VALUE_NAME = "clientInfoMap";
+		final String CLIENT_INFO_MAP_NAME = "clientInfoMap";
+		final String AD_INFO_MAP_NAME = "ADInfoMap_all";
+		
 		boolean hasId= false;
-		boolean hasInfo = false;
+		boolean hasClientInfo = false;
+		boolean hasADInfo = false;
 		
 		String clientId = "";
-		HashMap<String, Object> resultSet = new HashMap<String, Object>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		Enumeration<String> e = ses.getAttributeNames();
 		ses :
 		while (e.hasMoreElements()) {
 			String s = e.nextElement();
 			if (s.equals("clientID")) { hasId = true; }
-			else if (s.equals(SESSION_VALUE_NAME)) { hasInfo = true; }
+			else if (s.equals(CLIENT_INFO_MAP_NAME)) {  
+				map = (HashMap<String, Object>)ses.getAttribute(s); 
+				hasClientInfo = (map.size() != 0);
+			}
+			else if (s.equals(AD_INFO_MAP_NAME)) { 
+				map = (HashMap<String, Object>)ses.getAttribute(s); 
+				hasADInfo = (map.size() != 0);
+			}
 		}
 		
 		if (hasId) { clientId = (String)ses.getAttribute("clientID"); }
-		if (hasInfo) { resultSet = (HashMap<String, Object>)ses.getAttribute(SESSION_VALUE_NAME); }
+		if (hasClientInfo) {  }
 		
-		if (isNull(clientId) || resultSet.size() == 0) {  ses.invalidate(); return false; }
+		if (isNull(clientId) || !hasClientInfo || !hasADInfo) {  ses.invalidate(); return false; }
 		return true;
 		
 	}
@@ -177,5 +187,6 @@ public class ADTools {
 		if (ADTools.isNull(clientId)) { return false; }
 		return true;
 	}
+	
 	
 }

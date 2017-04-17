@@ -1,0 +1,15 @@
+@CHARSET "UTF-8";
+
+span { display: inline-block; }
+#ADInsertBody { height: 100%; overflow:hidden }
+.div_selected_view {display:none; }
+.label_local { padding: 0 5px 0 5px; border-right: 1px solid #bbbbbb; }
+.label_local:nth-last-child(1) { border: none; }
+.insertADRow { width: 100%; display: inline-block; }
+.insertADCol_header { width: 100px; text-align: right; margin: 3px; }
+.insertADCol_value { width: 500px; text-align: left; margin: 3px; }
+#div_calcPoint { width: 100%; text-align:right; }
+.bigStr { font-size: 2em; color: red; }
+.smallStr { font-size: 1em; color: gray; }
+.normalStr { font-size: 1.5em; color: black; }
+.warningMsg { font-size: 1em; color: red; }

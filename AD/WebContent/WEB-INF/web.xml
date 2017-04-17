@@ -14,7 +14,7 @@
   </servlet-mapping>
   <servlet>
   	<servlet-name>menu</servlet-name>
-  	<servlet-class>controller.main.headerClick</servlet-class>
+  	<servlet-class>controller.main.menu</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>menu</servlet-name>
@@ -31,55 +31,62 @@
   
   
   <servlet>
-  	<servlet-name>HistoryClick</servlet-name>
-  	<servlet-class>controller.history.historyClick</servlet-class>
+  	<servlet-name>ViewHistory</servlet-name>
+  	<servlet-class>controller.history.viewHistory</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>HistoryClick</servlet-name>
-  	<url-pattern>/historyClick</url-pattern>
+  	<servlet-name>ViewHistory</servlet-name>
+  	<url-pattern>/myHistory</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>ADHistoryClick</servlet-name>
-  	<servlet-class>controller.history.ADHistoryClick</servlet-class>
+  	<servlet-name>ViewStatics</servlet-name>
+  	<servlet-class>controller.statics.viewStatics</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>ADHistoryClick</servlet-name>
-  	<url-pattern>/ADHistory</url-pattern>
+  	<servlet-name>ViewStatics</servlet-name>
+  	<url-pattern>/myStatics</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>ViewAD</servlet-name>
+  	<servlet-class>controller.AD.viewAD</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ViewAD</servlet-name>
+  	<url-pattern>/myAD</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>ViewNews</servlet-name>
+  	<servlet-class>controller.news.viewNews</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ViewNews</servlet-name>
+  	<url-pattern>/news</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>ViewPoint</servlet-name>
+  	<servlet-class>controller.point.viewPoint</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ViewPoint</servlet-name>
+  	<url-pattern>/myPoint</url-pattern>
   </servlet-mapping>
   
-  <servlet>
-  	<servlet-name>StaticsClick</servlet-name>
-  	<servlet-class>controller.statics.staticsClick</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>StaticsClick</servlet-name>
-  	<url-pattern>/staticsClick</url-pattern>
-  </servlet-mapping>
-  <servlet>
-  	<servlet-name>ADClick</servlet-name>
-  	<servlet-class>controller.AD.ADClick</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>ADClick</servlet-name>
-  	<url-pattern>/ADClick</url-pattern>
-  </servlet-mapping>
-  
   
   <servlet>
-  	<servlet-name>SignInClick</servlet-name>
-  	<servlet-class>controller.management.signInClick</servlet-class>
+  	<servlet-name>ViewSignIn</servlet-name>
+  	<servlet-class>controller.management.viewSignIn</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>SignInClick</servlet-name>
-  	<url-pattern>/signInClick</url-pattern>
+  	<servlet-name>ViewSignIn</servlet-name>
+  	<url-pattern>/signIn</url-pattern>
   </servlet-mapping>
 
 	<servlet>
-		<servlet-name>SignUpClick</servlet-name>
-		<servlet-class>controller.management.signUpClick</servlet-class>
+		<servlet-name>ViewSignUp</servlet-name>
+		<servlet-class>controller.management.viewSignUp</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>SignUpClick</servlet-name>
+		<servlet-name>ViewSignUp</servlet-name>
 		<url-pattern>/signUp</url-pattern>
 	</servlet-mapping>
 	

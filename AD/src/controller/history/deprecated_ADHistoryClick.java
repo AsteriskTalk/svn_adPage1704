@@ -1,4 +1,4 @@
-package controller.management;
+package controller.history;
 
 import java.io.IOException;
 
@@ -9,34 +9,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import DAO.ClientManager;
 import util.ASTKLogManager;
-import util.CharManager;
 
-public class doIDCheck  extends HttpServlet {
+public class deprecated_ADHistoryClick extends HttpServlet {
 
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("\nlog : doGP.." + ASTKLogManager.getClassName_now());
 		ServletContext sc = req.getServletContext();
-		String pagePath = "webpages/management/IDCheck.jsp";
-		String viewPath =	"";
-		
-		String clientID = "";
-		
-		ClientManager cm = (ClientManager) sc.getAttribute("cm");
-		
-		boolean result = false;
+		String pagePath = (String)sc.getAttribute("INDEX_PAGE");
+		String viewPath =	"history.jsp";
+		String insidePage = "ADHistory.jsp";
+		String ADHistoryPage = "AD/allADHistory.jsp";
 		
 		try {
-			clientID = CharManager.beforeOracle_removeSpace(req.getParameter("clientID"));
-			result = cm.checkClientID(clientID);
+			ADHistoryPage = req.getParameter("ADHistoryPage");
 			
-			req.setAttribute("result", result);
+			req.setAttribute("insidePage", insidePage);
+			req.setAttribute("ADHistoryPage", ADHistoryPage);
+			
 		} catch (Exception ex) {
-			viewPath ="error.jsp";
+			System.out.println("log : try-catch.."+ASTKLogManager.getClassName_now()+"\n"+ex);
+			viewPath = (String) sc.getAttribute("ERROR_PAGE");
+			req.setAttribute("ex", ex);
 			
 		} finally {
+			req.setAttribute("viewPath", viewPath);
 			RequestDispatcher rd = req.getRequestDispatcher(pagePath);
 			rd.forward(req, resp);
 			

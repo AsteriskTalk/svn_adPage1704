@@ -9,35 +9,35 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import DAO.ClientManager;
+import DAO.UserManager;
 import util.ASTKLogManager;
-import util.CharManager;
 
-public class doIDCheck  extends HttpServlet {
+public class failedSignIn extends HttpServlet {
 
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("\nlog : doGP.." + ASTKLogManager.getClassName_now());
 		ServletContext sc = req.getServletContext();
-		String pagePath = "webpages/management/IDCheck.jsp";
-		String viewPath =	"";
+		String page = (String)sc.getAttribute("INDEX_PAGE");
+		String view = "management/failedSignIn.jsp";
 		
 		String clientID = "";
 		
-		ClientManager cm = (ClientManager) sc.getAttribute("cm");
-		
-		boolean result = false;
+		UserManager um = (UserManager) sc.getAttribute("um");
 		
 		try {
-			clientID = CharManager.beforeOracle_removeSpace(req.getParameter("clientID"));
-			result = cm.checkClientID(clientID);
+			clientID = (String)req.getAttribute("clientID");
+			//TODO 비밀번호 오류 발생 등에 대하여...여러가지 방안 강구
 			
-			req.setAttribute("result", result);
+			req.setAttribute("view", view);
+			
 		} catch (Exception ex) {
-			viewPath ="error.jsp";
+			System.out.println("log : try-catch.."+ASTKLogManager.getClassName_now()+"\n"+ex);
+			page = (String) sc.getAttribute("ERROR_SERVLET_PATH");
+			req.setAttribute("ex", ex);
 			
 		} finally {
-			RequestDispatcher rd = req.getRequestDispatcher(pagePath);
+			RequestDispatcher rd = req.getRequestDispatcher(page);
 			rd.forward(req, resp);
 			
 		}
