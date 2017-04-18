@@ -18,7 +18,7 @@
 	<div id="wrap">
 		<div id="header">
 			<h1>
-				<a class="pointer" onclick="goHome();"><img src="#" alt="logo"></a>
+				<a class="pointer" onclick="goHome();"><img alt="logo"></a>
 			</h1>
 
 			<dl id="util_menu">

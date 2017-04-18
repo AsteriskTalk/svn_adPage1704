@@ -2,21 +2,21 @@ $(function(){
 	
   /*로그인 버튼*/
   $(".login_wrap>a").on("click",function(){
-    $("#login_f").animate({top:"20px"},500);
+    $("#signIn_form").animate({top:"20px"},500);
     return false;
   });
 
   $(".login_wrap .login_close_btn, input[alt='로그인버튼']")
   .on("click",function(){
-    $("#login_f").animate({top:"-500px"},500);
+    $("#signIn_form").animate({top:"-500px"},500);
     return false;
   });
 
-  $("#user_id, #user_pw").on("focus",function(){
+  $("#signIn_ID, #signIn_PW").on("focus",function(){
      $(this).prev().css("left","-9999px");
   });
 
-  $("#user_id, #user_pw").on("blur",function(){
+  $("#signIn_ID, #signIn_PW").on("blur",function(){
      if($(this).val()=="") $(this).prev().css("left","2px");
   });
 
