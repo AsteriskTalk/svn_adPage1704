@@ -10,34 +10,49 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import DAO.SystemManager;
+import DAO.UserManager;
 import util.ASTKLogManager;
+import util.CharManager;
 
-public class viewSignUp extends HttpServlet {
+public class doFindID extends HttpServlet {
 
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("\nlog : doGP.." + ASTKLogManager.getClassName_now());
 		ServletContext sc = req.getServletContext();
-		String pagePath = (String)sc.getAttribute("INDEX_PAGE");
-		String viewPath =	"management/signUp.jsp";
+		String page = "management/findResult.jsp";
 		
-		SystemManager sm =(SystemManager)sc.getAttribute("sm");
-			
+		String email = "";
+		String phone = "";
+		
+		UserManager um = (UserManager) sc.getAttribute("um");
+		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
+		String userId = "";
+		String msg = "";
+		
+		boolean result = false;
+		
 		try {
-			map = sm.selectPasswordQuestion_all();
+			email = CharManager.beforeOracle_removeSpace(req.getParameter("email"));
+			phone = CharManager.beforeOracle_removeSpace(req.getParameter("phone"));
 			
-			req.setAttribute("questions", map);
+			map = um.findUserID(email, phone);
+			result = (Boolean)map.get("result");
+			
+			if (result) { userId = (String) map.get("userId"); msg = " 아이디는 "+ userId +" 입니다."; } 
+			else { msg = "조건에 맞는 아이디가 없습니다."; }
+			
+			req.setAttribute("msg", msg); 
 			
 		} catch (Exception ex) {
-			System.out.println("log : try-catch.."+ ASTKLogManager.getClassName_now() +"\n"+ex);
-			viewPath = (String)sc.getAttribute("ERROR_PAGE");
+			System.out.println("log : try-catch.."+ASTKLogManager.getClassName_now()+"\n"+ex);
+			page = (String) sc.getAttribute("ERROR_SERVLET_PATH");
+			req.setAttribute("ex", ex);
 			
 		} finally {
-			req.setAttribute("viewPath", viewPath);
-			RequestDispatcher rd = req.getRequestDispatcher(pagePath);
+			RequestDispatcher rd = req.getRequestDispatcher(page);
 			rd.forward(req, resp);
 			
 		}
@@ -59,6 +74,5 @@ public class viewSignUp extends HttpServlet {
 		this.doGP(req, resp);
 		
 	}
-
 
 }

@@ -1,7 +1,6 @@
 package controller.management;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -10,34 +9,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import DAO.SystemManager;
 import util.ASTKLogManager;
 
-public class viewSignUp extends HttpServlet {
+public class viewFindIDPW extends HttpServlet {
 
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("\nlog : doGP.." + ASTKLogManager.getClassName_now());
 		ServletContext sc = req.getServletContext();
-		String pagePath = (String)sc.getAttribute("INDEX_PAGE");
-		String viewPath =	"management/signUp.jsp";
-		
-		SystemManager sm =(SystemManager)sc.getAttribute("sm");
-			
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		String page = "management/findIDPW.jsp";
 		
 		try {
-			map = sm.selectPasswordQuestion_all();
-			
-			req.setAttribute("questions", map);
 			
 		} catch (Exception ex) {
-			System.out.println("log : try-catch.."+ ASTKLogManager.getClassName_now() +"\n"+ex);
-			viewPath = (String)sc.getAttribute("ERROR_PAGE");
+			System.out.println("log : try-catch.."+ASTKLogManager.getClassName_now()+"\n"+ex);
+			page = (String) sc.getAttribute("ERROR_SERVLET_PATH");
+			req.setAttribute("ex", ex);
 			
 		} finally {
-			req.setAttribute("viewPath", viewPath);
-			RequestDispatcher rd = req.getRequestDispatcher(pagePath);
+			RequestDispatcher rd = req.getRequestDispatcher(page);
 			rd.forward(req, resp);
 			
 		}
@@ -59,6 +49,5 @@ public class viewSignUp extends HttpServlet {
 		this.doGP(req, resp);
 		
 	}
-
 
 }

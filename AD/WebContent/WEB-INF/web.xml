@@ -235,6 +235,23 @@
   	<url-pattern>/userHistory</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>GoSystem</servlet-name>
+  	<servlet-class>controller.system.goSystemManagement</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>GoSystem</servlet-name>
+  	<url-pattern>/goSystem</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>AddClientPWQuestion</servlet-name>
+  	<servlet-class>controller.system.addClientPWQuestion</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AddClientPWQuestion</servlet-name>
+  	<url-pattern>/addClientPWQuestion</url-pattern>
+  </servlet-mapping>
+  
   <context-param>
     <param-name>driver</param-name>
     <param-value>oracle.jdbc.driver.OracleDriver</param-value>

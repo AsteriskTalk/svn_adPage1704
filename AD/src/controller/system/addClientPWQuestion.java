@@ -1,7 +1,6 @@
-package controller.management;
+package controller.system;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -13,31 +12,37 @@ import javax.servlet.http.HttpServletResponse;
 import DAO.SystemManager;
 import util.ASTKLogManager;
 
-public class viewSignUp extends HttpServlet {
+public class addClientPWQuestion extends HttpServlet {
 
 	protected void doGP(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("\nlog : doGP.." + ASTKLogManager.getClassName_now());
 		ServletContext sc = req.getServletContext();
-		String pagePath = (String)sc.getAttribute("INDEX_PAGE");
-		String viewPath =	"management/signUp.jsp";
+		String page = (String)sc.getAttribute("INDEX_PAGE");
+		String view = "system/result.jsp";
 		
-		SystemManager sm =(SystemManager)sc.getAttribute("sm");
-			
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		String question = "";
+		
+		SystemManager sm = (SystemManager) sc.getAttribute("sm");
+		
+		boolean result = false;
 		
 		try {
-			map = sm.selectPasswordQuestion_all();
+			question = req.getParameter("question");
 			
-			req.setAttribute("questions", map);
+			result = sm.insertClientPasswordQuestion(question);
+			
+			req.setAttribute("result", result);
 			
 		} catch (Exception ex) {
-			System.out.println("log : try-catch.."+ ASTKLogManager.getClassName_now() +"\n"+ex);
-			viewPath = (String)sc.getAttribute("ERROR_PAGE");
+			System.out.println("log : try-catch.."+ASTKLogManager.getClassName_now()+"\n"+ex);
+			view = (String) sc.getAttribute("ERROR_PAGE");
+			req.setAttribute("ex", ex);
 			
 		} finally {
-			req.setAttribute("viewPath", viewPath);
-			RequestDispatcher rd = req.getRequestDispatcher(pagePath);
+			req.setAttribute("view", view);
+			RequestDispatcher rd = req.getRequestDispatcher(page);
 			rd.forward(req, resp);
 			
 		}
@@ -59,6 +64,5 @@ public class viewSignUp extends HttpServlet {
 		this.doGP(req, resp);
 		
 	}
-
 
 }

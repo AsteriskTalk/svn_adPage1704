@@ -30,6 +30,12 @@ public class MailManager {
 		return sendMail(TITLE, CONTENT, target);
 	}
 	
+	public static boolean sendTmpPWEmail(String NEW_PW, String target) {
+		final String TITLE = "[아소코리아] 임시 비밀번호가 발급되었습니다.";
+		final String CONTENT = "임시 비밀번호는 <b>"+ NEW_PW + "</b> 입니다. ";
+		return sendMail(TITLE, CONTENT, target);
+	}
+	
 	public static boolean sendTest() {
 		final String TITLE = "테스트 메일";
 		final String CONTENT = "테스트 내용<br>하이 <a href='#'>짠</a>";

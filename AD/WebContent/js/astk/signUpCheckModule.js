@@ -325,9 +325,35 @@ function checkName() {
 
 <!-- Do SignUp -->
 
+function checkString_Eng_Kor_Num(str) {
+	//일부 특수문자(@, 괄호, 대괄호, -, + ) 가 가능한 경우..";
+	//if ( str.match(/[\[\]\(\)@+\{\}\/?,;:|*~`!^_!#$%&\\]/) ) {
+	//	return false;
+	//}
+	if (str.match(/[^가-힣a-zA-Z0-9]/) ) { return false; }
+	return true;
+}
+
+function checkLength(str, min, max) {
+	if (str.length < min) {  return false; }
+	if (str.length > max) { return false; }
+	return true;
+}
 
 function checkNum() {
 	
+}
+
+function checkAnswer() {
+	var msg = document.getElementById("a_warningMsg_answer");
+	var clientAnswer = document.getElementById("input_answer");
+	var answerResult = false;
+	
+	answerResult = checkString_Eng_Kor_Num(clientAnswer.value);
+	if (answerResult) { answerResult = checkLength(clientAnswer.value, 2, 20); }
+	
+	if (answerResult) { msg.innerHTML = ""; }
+	else { msg.innerHTML = "비밀번호 찾기 답변은 2~20자리의 문자, 숫자, 영문자만 입력 가능합니다."; }
 }
 
 function doSignUp() {
@@ -342,11 +368,13 @@ function doSignUp() {
 	var clientName = document.getElementById("clientName");
 	var clientCtt_area = document.getElementById("clientCtt_area");
 	var clientCtt= document.getElementById("clientCtt");
+	var clientQuestion = document.getElementById("select_question");
+	var clientAnswer = document.getElementById("input_answer");
 	
 	var PWResult = false;
 	var IDResult = "false";
 	var EmailResult = false;
-	
+	var answerResult = false;
 	
 	IDResult = clientIDCheck.value;
 	if (IDResult == "false") { 
@@ -354,13 +382,20 @@ function doSignUp() {
 		clientID.focus(); return;
 	}
 	PWResult = checkPW(clientID, clientPW, clientPW2);
-	
 	EmailResult = checkString(clientEmail.value, 4, 16);
+	answerResult = checkString_Eng_Kor_Num(clientAnswer.value);
+	answerResult = checkLength(clientAnswer.value, 2, 20);
 	
 	if (clientCtt_area.value.length ==0 ){ clientCtt.value= "nope"; } 
 	else { clientCtt.value = clientCtt_area.value; }
 
-	if (IDResult == "true" && PWResult && EmailResult ) { signUpForm.submit(); }
+	if (!answerResult) {
+		alert("비밀번호 찾기 답변은 최소 2글자, 최대 20글자의 한/영문만 가능합니다. ");
+		clientAnswer.focus(); return;
+	}
+	
+	if (IDResult == "true" && PWResult && EmailResult && answerResult) { signUpForm.submit(); }
+	
 	
 }
 

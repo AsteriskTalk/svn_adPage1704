@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import DTO.ADInfo;
 import DTO.ClientInfo;
+import DTO.ClientPasswordQnA;
 import DTO.ClientPoint;
 import DTO.ClientProfile;
 import util.ADTools;
@@ -21,6 +22,144 @@ public class ClientManager {
 	
 	public ClientManager(DBConnectionPool connPool) {
 		this.connPool = connPool;
+	}
+	
+	public boolean matchClientQnA(long clientCode, long question, String answer) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String sql_where
+			= " WHERE CLIENT_CODE="+ clientCode + " AND QUESTION="+ question + " AND ANSWER='"+ answer +"' ";
+		map = this.base_selectClientPasswordQnA(sql_where, 1);
+		if (map.get("result").equals("T")) { return true; }
+		return false;
+	}
+	
+	public boolean changeClientPW_withEmail(long clientCode) {
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		int rs2 = 0;
+		
+		try {
+			conn = connPool.getConn();
+			conn.setAutoCommit(false);
+			st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			
+			try {
+				String sql_selectClientProfile = "";
+				String sql_updateClientInfo = "";
+				
+				String clientEmail = "";
+				final String NEW_PW = ADTools.getOTC(8);
+				boolean mailResult = false;
+				
+				
+				sql_selectClientProfile
+					= " SELECT CLIENT_EMAIL FROM ASTK_CLIENT_PROFILE WHERE CLIENT_CODE="+ clientCode;
+				rs= st.executeQuery(sql_selectClientProfile);
+				rs.last();
+				if (rs.getRow() != 1) { return false; }
+				rs.beforeFirst();
+				rs.next();
+				clientEmail = rs.getString("CLIENT_EMAIL");
+				
+				sql_updateClientInfo 
+					= " UPDATE ASTK_CLIENT_INFO SET CLIENT_PW='"+ NEW_PW +"' WHERE CLIENT_CODE="+ clientCode;
+				rs2 = st.executeUpdate(sql_updateClientInfo);
+				if (rs2 != 1) { conn.rollback(); return false; }
+				
+				mailResult = MailManager.sendTmpPWEmail(NEW_PW, clientEmail);
+				if (mailResult) { conn.rollback(); return false; }
+				
+				conn.commit();
+				return true;
+				
+				
+			} catch (Exception ex) {
+				System.out.println("log : try-catch.."+ ASTKLogManager.getMethodName_withClassName() + "\n"+ex);
+				conn.rollback();
+				return false;
+				
+			} finally {
+				try { if (rs!=null) rs.close(); } catch (Exception ex) { }
+				try { if (st!=null) st.close(); } catch (Exception ex) { }
+				try { if (conn!=null) conn.close(); } catch (Exception ex) { }
+				
+			}
+			
+		} catch (Exception ex) {
+			System.out.println("log : try-catch.."+ ASTKLogManager.getMethodName_withClassName() +"\n"+ex);
+			return false;
+		}
+		
+	}
+	
+	public boolean changeClientPW(long clientCode, String clientPW) {
+		String sql_table
+			= " ASTK_CLIENT_INFO ";
+		String sql_set
+			= " SET CLIENT_PW='"+ clientPW +"' ";
+		String sql_where
+			= " WHERE CLIENT_CODE="+ clientCode;
+		return new DBManager(connPool).updateSQL(sql_table, sql_set, sql_where, 1);
+	}
+	
+	
+	public HashMap<String ,Object> base_selectClientPasswordQnA(String sql_where, int result) {
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		String sql_selectClientPasswordQnA = "";
+		
+		try {
+			conn = connPool.getConn();
+			conn.setAutoCommit(false);
+			st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			
+			try {
+				sql_selectClientPasswordQnA
+					= " SELECT * FROM ASTK_CLIENT_PASSWORD_QNA " + sql_where;
+				rs = st.executeQuery(sql_selectClientPasswordQnA);
+				rs.last();
+				if (rs.getRow() == 0) { conn.rollback(); map.put("result", "N"); return map; } 
+				switch (result) {
+				case 0 :
+					if (rs.getRow() < 0) { conn.rollback(); map.put("result", "F"); return map; } break;
+				default :
+					if (rs.getRow() != result) { conn.rollback(); map.put("result", "F"); return map; } break;
+				}
+				rs.beforeFirst();
+				if (result == 1) {
+					rs.next();
+					map.put("clientPasswordQnA", new ClientPasswordQnA().setAll(rs));
+				} else {
+					ArrayList<ClientPasswordQnA> list = new ArrayList<ClientPasswordQnA>();
+					while ( rs.next() ) { list.add(new ClientPasswordQnA().setAll(rs)); }
+					map.put("clientPasswordQnAList", list);
+				}
+				map.put("result", "T");
+				conn.commit();
+				
+			} catch (Exception ex) {
+				System.out.println("log : try-catch.."+ ASTKLogManager.getMethodName_withClassName() +"\n"+ex);
+				conn.rollback();
+				map.put("result", "E");
+				
+			} finally {
+				try { if (rs != null) rs.close(); } catch (Exception ex) { }
+				try { if (st != null) st.close(); } catch (Exception ex) { }
+				try { if (conn != null) conn.close(); } catch (Exception ex) { }
+			}
+			
+		} catch (Exception ex) {
+			map.put("result", "E");
+			
+		}
+		
+		return map;
+		
 	}
 	
 	public HashMap<String, Object> getClientProfile_Point(long clientCode){
@@ -189,7 +328,8 @@ public class ClientManager {
 		return true;
 	}
 	
-	public HashMap<String, Object> doSignUp(String clientID, String clientPW, String clientName, String clientEmail, String clientPhone, String clientCtt) {
+	public HashMap<String, Object> doSignUp(String clientID, String clientPW, String clientName, String clientEmail, String clientPhone, String clientCtt
+			, long clientQuestion, String clientAnswer) {
 		Connection conn = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -197,23 +337,22 @@ public class ClientManager {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		map.put("result", "F");
-		
-		String sql_getNextClientCode = "";
-		String sql_insertClientInfo = "";
-		String sql_insertClientProf = "";
-		String sql_insertClientPoint = "";
-		String sql_updateClientInfo = "";
-		String sql_insertOTC = "";
-		
-		long clientCode = 0;
-		
 		try {
 			conn = connPool.getConn();
 			conn.setAutoCommit(false);
 			st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
 			try {
+				long clientCode = 0;
+				
+				String sql_getNextClientCode = "";
+				String sql_insertClientInfo = "";
+				String sql_insertClientProf = "";
+				String sql_insertClientPoint = "";
+				String sql_updateClientInfo = "";
+				String sql_insertClientPWQnA = "";
+				String sql_insertOTC = "";
+				
 				sql_getNextClientCode
 					= " SELECT SQ_CLIENT_CODE.NEXTVAL FROM DUAL";
 				rs = st.executeQuery(sql_getNextClientCode);
@@ -221,31 +360,39 @@ public class ClientManager {
 				clientCode = rs.getLong("NEXTVAL");
 				rs.close();
 				
-				/* */
+				/*Step 1. insert INFO */
 				sql_insertClientInfo
 					= " INSERT INTO ASTK_CLIENT_INFO(CLIENT_CODE, CLIENT_ID, CLIENT_PW, IS_CONN) VALUES";
 				sql_insertClientInfo
 					+= " ("+ clientCode +",'"+ clientID +"','"+ clientPW +"','N')";
 				rs2 = st.executeUpdate(sql_insertClientInfo);
-				if (rs2 != 1) { conn.rollback(); return map; }
+				if (rs2 != 1) { conn.rollback(); map.put("result", "F"); return map; }
 				
-				/* */
+				/*Step 2. insert Prof */
 				sql_insertClientProf
 					= " INSERT INTO ASTK_CLIENT_PROFILE(CLIENT_CODE, CLIENT_EMAIL, CLIENT_PHONE, CLIENT_NAME, CLIENT_CTT) VALUES ";
 				sql_insertClientProf
 					+= " ("+ clientCode +",'"+ clientEmail +"','"+ clientPhone +"','"+ clientName +"','"+ clientCtt +"')";
 				rs2 = st.executeUpdate(sql_insertClientProf);
-				if (rs2 != 1) { conn.rollback(); return map; }
+				if (rs2 != 1) { conn.rollback(); map.put("result", "F"); return map; }
 				
-				/* */
+				/*Step 3. insert Point */
 				sql_insertClientPoint
 					= " INSERT INTO ASTK_CLIENT_POINT(CLIENT_CODE) VALUES ";
 				sql_insertClientPoint
 					+= " ("+ clientCode +") ";
 				rs2 = st.executeUpdate(sql_insertClientPoint);
-				if (rs2 != 1) { conn.rollback(); return map; }
+				if (rs2 != 1) { conn.rollback(); map.put("result", "F"); return map; }
 				
-				/*  */
+				/*Step 4. insert QnA  */
+				sql_insertClientPWQnA
+					= "INSERT INTO ASTK_CLIENT_PASSWORD_QNA	(CLIENT_CODE, QUESTION, ANSWER) VALUES ";
+				sql_insertClientPWQnA
+					+= " ("+ clientCode +","+ clientQuestion +",'"+ clientAnswer +"' )";
+				rs2 = st.executeUpdate(sql_insertClientPWQnA);
+				if (rs2 != 1) { conn.rollback(); map.put("result", "F"); return map; }
+				
+				/*Step 5. insert OTC */
 				final String OTC = ADTools.getOTC(10);
 				final long NOW = System.currentTimeMillis();
 				sql_updateClientInfo
@@ -259,21 +406,21 @@ public class ClientManager {
 					= " INSERT INTO ASTK_OTC_INFO(OTC, OTC_QUERY, PK_CODE, OTC_DATE) VALUES ";
 				sql_insertOTC
 					+= " ('"+ OTC +"','"+ CharManager.beforeOracle_withSpace(sql_updateClientInfo) +"',"+ clientCode +","+ NOW +")";
-				//System.out.println(sql_insertOTC);
 				rs2 = st.executeUpdate(sql_insertOTC);
 				if (rs2 != 1) { conn.rollback(); return map; }
+				
+				/*Step 6. send welcome Email */
+				//MailManager.sendWelcome(clientEmail);
 				
 				map.put("OTC", OTC);
 				map.put("clientCode", clientCode);
 				map.put("result", "T");
 				conn.commit();
-				return map;
 				
 			} catch (Exception ex) {
 				System.out.println("log : try-catch.."+ ASTKLogManager.getMethodName_withClassName() +"\n" + ex);
 				conn.rollback();
 				map.put("result", "E");
-				return map;
 				
 			} finally {
 				try { if(rs != null) rs.close(); } catch (Exception ex) { }
@@ -284,9 +431,9 @@ public class ClientManager {
 		} catch (Exception ex) {
 			System.out.println("log : try-catch.."+ ASTKLogManager.getMethodName_withClassName() +"\n"+ex);
 			map.put("result", "E");
-			return map;
 		}
 		
+		return map;
 		
 	}
 	

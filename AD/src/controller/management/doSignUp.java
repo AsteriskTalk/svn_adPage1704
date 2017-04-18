@@ -53,6 +53,8 @@ public class doSignUp extends HttpServlet {
 		String clientPhone = "";
 		String clientCtt = "";
 		String clientLogo = "";
+		long clientQuestion = 0;
+		String clientAnswer = "";
 		
 		String oldFilePath = "";
 		String oldFileName = "";
@@ -80,11 +82,13 @@ public class doSignUp extends HttpServlet {
 			clientPhone = CharManager.beforeOracle_removeSpace(multi.getParameter("clientPhone"));
 			clientCtt = CharManager.beforeOracle_withSpace(multi.getParameter("clientCtt"));
 			clientLogo = multi.getFilesystemName("clientLogo"); //로고 파일 이름
+			clientQuestion = Long.parseLong(multi.getParameter("clientQuestion"));
+			clientAnswer = CharManager.beforeOracle_removeSpace("clientAnswer");
 			
 		  useLogo = clientLogo!=null;
 		  
-		  /* Step 1. 회원가입 - 포인트, 프로필, 인포 작성 및 가입 승인 대기 쿼리 작성 */
-			map = cm.doSignUp(clientID, clientPW, clientName, clientEmail, clientPhone, clientCtt);
+		  /* Step 1. 회원가입 - 포인트, 프로필, 인포, QnA 작성 및 가입 승인 대기 쿼리 작성 */
+			map = cm.doSignUp(clientID, clientPW, clientName, clientEmail, clientPhone, clientCtt, clientQuestion, clientAnswer);
 			result = map.get("result").equals("T");
 			
 			/* Step 2. 가입 성공 및 로고가 있을 경우와 없을경우에 따른 DB내 경로 수정 */
