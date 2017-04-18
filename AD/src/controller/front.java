@@ -43,6 +43,7 @@ public class front extends HttpServlet {
 		try {
 			remoteAddr = req.getRemoteAddr();
 			forwardAddr = req.getHeader("x-forwarded_for");
+			if (servletPath.startsWith("system")) { servletPath = "/index"; }
 			
 			if (!servletPath.equals("signOut")) {
 

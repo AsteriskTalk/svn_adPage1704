@@ -13,6 +13,14 @@
   	<url-pattern>*.ad</url-pattern>
   </servlet-mapping>
   <servlet>
+  	<servlet-name>SystemFront</servlet-name>
+  	<servlet-class>controller.systemFront</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>SystemFront</servlet-name>
+  	<url-pattern>*.sys</url-pattern>
+  </servlet-mapping>
+  <servlet>
   	<servlet-name>menu</servlet-name>
   	<servlet-class>controller.main.menu</servlet-class>
   </servlet>
@@ -27,6 +35,14 @@
   <servlet-mapping>
   	<servlet-name>Index</servlet-name>
   	<url-pattern>/index</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>ViewError</servlet-name>
+  	<servlet-class>controller.common.viewError</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ViewError</servlet-name>
+  	<url-pattern>/error</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -87,6 +103,14 @@
   <servlet-mapping>
   	<servlet-name>ViewPoint</servlet-name>
   	<url-pattern>/myPoint</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>ViewFindIDPW</servlet-name>
+  	<servlet-class>controller.management.viewFindIDPW</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ViewFindIDPW</servlet-name>
+  	<url-pattern>/findIDPW</url-pattern>
   </servlet-mapping>
   
   
@@ -235,6 +259,14 @@
   	<url-pattern>/userHistory</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>ViewSystem</servlet-name>
+  	<servlet-class>controller.system.viewSystemEntrance</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ViewSystem</servlet-name>
+  	<url-pattern>/system</url-pattern>
+  </servlet-mapping>
   <servlet>
   	<servlet-name>GoSystem</servlet-name>
   	<servlet-class>controller.system.goSystemManagement</servlet-class>

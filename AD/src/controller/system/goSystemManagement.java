@@ -24,7 +24,10 @@ public class goSystemManagement extends HttpServlet {
 		final String PW = "*astk1027talk!";
 		String systemPW = "";
 		
+		boolean auth = false;
+		
 		try {
+			auth = (Boolean) req.getAttribute("auth");
 			systemPW = CharManager.beforeOracle_removeSpace(req.getParameter("systemPW"));
 			
 			if (systemPW.equals(PW)) {
@@ -33,6 +36,7 @@ public class goSystemManagement extends HttpServlet {
 				html += "비밀번호 찾기 질문 추가<br>";
 				html += "<form action='addClientPWQuestion.sys' method='post' >";
 				html += "<input type='text' name='question' placeholder='질문을 입력하세요.' required /> ";
+				html += "<input type='submit' value='추가하기' />";
 				html += "</form><br>";
 				
 				html += "공지사항<br>";
@@ -44,13 +48,16 @@ public class goSystemManagement extends HttpServlet {
 				html += "<input type='file' name='noticeImg' placeholder='공지 첨부 이미지' required />";
 				html += "</form>";
 				req.setAttribute("html", html);
+				req.setAttribute("view", view);
+			} else {
+				page = (String) sc.getAttribute("INDEX_SERVLET_PATH");
 			}
-			req.setAttribute("view", view);
 			
 		} catch (Exception ex) {
 			System.out.println("log : try-catch.."+ASTKLogManager.getClassName_now()+"\n"+ex);
 			page = (String) sc.getAttribute("ERROR_SERVLET_PATH");
 			req.setAttribute("ex", ex);
+			req.setAttribute("msg", "인증되지 않은 접근");
 			
 		} finally {
 			RequestDispatcher rd = req.getRequestDispatcher(page);

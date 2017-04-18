@@ -353,7 +353,21 @@ function checkAnswer() {
 	if (answerResult) { answerResult = checkLength(clientAnswer.value, 2, 20); }
 	
 	if (answerResult) { msg.innerHTML = ""; }
-	else { msg.innerHTML = "비밀번호 찾기 답변은 2~20자리의 문자, 숫자, 영문자만 입력 가능합니다."; }
+	else { msg.innerHTML = "비밀번호 찾기 답변은 2~20자리의 문자, 숫자, 영문자만 입력 가능합니다."; clientAnswer.focus(); }
+}
+
+function checkAnswer_alert(clientAnswer) {
+	var msg = document.getElementById("a_warningMsg_answer");
+	var answerValue = clientAnswer.value;
+	var answerResult = false;
+	
+	if (answerValue.length == 0) { alert("비밀번호 찾기 답변을 입력해주세요."); clientAnswer.focus(); return false; }
+	
+	answerResult = checkString_Eng_Kor_Num(answerValue);
+	if (answerResult) { answerResult = checkLength(answerValue, 2, 20); }
+	
+	if (answerResult) { return true; }
+	else { alert("비밀번호 찾기 답변은 2~20자리의 문자, 숫자, 영문자만 입력 가능합니다."); clientAnswer.focus(); return false; }
 }
 
 function doSignUp() {
@@ -382,17 +396,19 @@ function doSignUp() {
 		clientID.focus(); return;
 	}
 	PWResult = checkPW(clientID, clientPW, clientPW2);
+	if (!PWResult) { clientPW.focus(); return; }
+
+	if (clientQuestion.selectedIndex == 0) { alert("비밀번호 찾기 질문을 선택해주세요."); clientQuestion.focus(); return; }
+	
+	answerResult = checkAnswer_alert(clientAnswer);
+	if (!answerResult) { return; }
+	
 	EmailResult = checkString(clientEmail.value, 4, 16);
-	answerResult = checkString_Eng_Kor_Num(clientAnswer.value);
-	answerResult = checkLength(clientAnswer.value, 2, 20);
+	if (!EmailResult) { alert("이메일 검증이 제대로 되지 않았습니다. 확인 후 다시 시도해주세요."); clientEmail.focus(); return; }
 	
 	if (clientCtt_area.value.length ==0 ){ clientCtt.value= "nope"; } 
 	else { clientCtt.value = clientCtt_area.value; }
 
-	if (!answerResult) {
-		alert("비밀번호 찾기 답변은 최소 2글자, 최대 20글자의 한/영문만 가능합니다. ");
-		clientAnswer.focus(); return;
-	}
 	
 	if (IDResult == "true" && PWResult && EmailResult && answerResult) { signUpForm.submit(); }
 	

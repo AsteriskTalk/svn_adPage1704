@@ -35,12 +35,20 @@ public class systemFront extends HttpServlet {
 			remoteAddr = req.getRemoteAddr();
 			forwardAddr = req.getHeader("x-forwarded_for");
 			
+			System.out.println("re : "+ remoteAddr + " ; for : " + forwardAddr);
+			
+			if(!remoteAddr.startsWith("14.45") && !remoteAddr.startsWith("0:0:0")) { 
+				servletPath = (String)sc.getAttribute("ERROR_SERVLET_PATH");
+				req.setAttribute("msg", "허용되지 않은 IP로의 접근입니다."); 
+			}
+			
+			req.setAttribute("auth", true);
+			
 		} catch (Exception ex) {
 			System.out.println("log : SYSTEM_FRONT\n"+ex);
 			servletPath = "/index";
 			
 		} finally {
-//			System.out.println("front..rd : " + servletPath);
 			RequestDispatcher rd = req.getRequestDispatcher(servletPath);
 			rd.forward(req, resp);
 			
