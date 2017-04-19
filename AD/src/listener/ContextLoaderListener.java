@@ -11,6 +11,7 @@ import DAO.ClientManager;
 import DAO.ETCManager;
 import DAO.FunctionManager;
 import DAO.PointManager;
+import DAO.SystemManager;
 import DAO.UserManager;
 import util.DBConnectionPool;
 
@@ -45,6 +46,14 @@ public class ContextLoaderListener  implements ServletContextListener {
 			localMap.put("인천", "INCHEON");
 			sc.setAttribute("localMap", localMap);
 
+<<<<<<< HEAD
+=======
+			final String INDEX_SERVLET_PATH = "index.ad";
+			sc.setAttribute("INDEX_SERVLET_PATH", INDEX_SERVLET_PATH);
+			final String ERROR_SERVLET_PATH = "error.ad";
+			sc.setAttribute("ERROR_SERVLET_PATH", ERROR_SERVLET_PATH);
+			
+>>>>>>> branch 'solpi' of https://github.com/AsteriskTalk/svn_adPage1704
 			final String ASTK_URL = "www.asterisktalk.net";
 			sc.setAttribute("ASTK_URL", ASTK_URL);
 			final String INDEX_PAGE = "index.jsp";
@@ -70,6 +79,8 @@ public class ContextLoaderListener  implements ServletContextListener {
 			sc.setAttribute("etc", etc);
 			final UserManager um = new UserManager(connPool);
 			sc.setAttribute("um", um);
+			final SystemManager sm = new SystemManager(connPool);
+			sc.setAttribute("sm", sm);
 			
 			System.out.println("log : Server Start..complete");
 			

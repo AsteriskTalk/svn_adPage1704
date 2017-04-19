@@ -10,8 +10,8 @@ import org.json.simple.JSONObject;
 
 import DTO.ADInfo;
 import DTO.ADSended;
+import DTO.OTCInfo;
 import util.ADParser;
-import util.ADTools;
 import util.ASTKLogManager;
 import util.DBConnectionPool;
 import util.FCMPushManager;
@@ -24,6 +24,59 @@ public class FunctionManager {
 	
 	public FunctionManager(DBConnectionPool connPool) {
 		this.connPool = connPool;
+	}
+	
+	public String doEmailCheck(String OTC) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String sql_update = "";
+		
+		map = new ETCManager(connPool).selectOTC(OTC);
+		if (map.get("result").equals("N")) { return "N"; }
+		else if (!map.get("result").equals("T")) { return "F"; }
+		OTCInfo o = (OTCInfo)map.get("OTCInfo");
+		
+		if (o.isUsed()) { return "U"; }
+		
+		sql_update = o.getOTCQuery();
+
+		Connection conn = null;
+		Statement st = null;
+		int rs = 0;
+		
+		try {
+			conn = connPool.getConn();
+			conn.setAutoCommit(false);
+			st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			
+			try {
+				rs = st.executeUpdate(sql_update);
+				if (rs != 1) { conn.rollback(); return "F"; }
+				
+				sql_update
+				= " UPDATE ASTK_OTC_INFO SET IS_USED='T' WHERE OTC='"+ OTC +"' ";
+				rs = st.executeUpdate(sql_update);
+				if (rs != 1) { conn.rollback(); return "F"; }
+				
+				conn.commit();
+				return "T";
+				
+			} catch (Exception ex) {
+				System.out.println("log : try-catch.."+ ASTKLogManager.getMethodName_withClassName() + "\n"+ex);
+				conn.rollback();
+				return "E";
+				
+			} finally {
+				try { if (st != null) st.close();} catch (Exception ex) { }
+				try { if (conn != null) conn.close();} catch (Exception ex) { }
+				
+			}
+			
+		} catch (Exception ex) {
+			System.out.println("log : try-catch.."+ ASTKLogManager.getMethodName_withClassName() + "\n"+ex);
+			return "E";
+			
+		}
+		
 	}
 	
 	public JSONObject getProfile(long userId)  {
@@ -250,38 +303,45 @@ public class FunctionManager {
 			conn.setAutoCommit(false);
 			st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE );
 			
-			// Step 1. ADHistory 에 기입
-			sql_insertADHistory
-				= " INSERT INTO ASTK_AD_HISTORY (";
-			sql_insertADHistory
-				+= " AD_CODE, CLIENT_CODE, USER_CODE, HIST_DATE, HIST_TYPE, HIST_POINT ";
-			sql_insertADHistory
-				+= " ) VALUES ( ";
-			sql_insertADHistory
-				+= " "+ ADCode +","+ clientCode +","+ userCode +","+ NOW +",'V',"+ VIEW_POINT +" ";
-			sql_insertADHistory
-				+= " ) ";
-			rs2 = st.executeUpdate(sql_insertADHistory);
-			if (rs2 != 1) { conn.rollback(); return false; }
-			
-			// Step 2. SendedAD 를 변경
-			sql_updateSendedAD
-				= " UPDATE ASTK_AD_SENDED ";
-			sql_updateSendedAD
-				+= " SET WAS_VIEW = 'T' ";
-			sql_updateSendedAD
-				+= " WHERE SENDED_CODE="+ sendedCode;
-			rs2 = st.executeUpdate(sql_updateSendedAD);
-			if (rs2 != 1) { conn.rollback(); return false; }
-			
-			// Step 3. ASTK 서버에 UserPoint Update 요청
-			json = new ADParser().parsingUpdateUserPoint(userCode, chatGrpCode, ADCode, clientCode, 1);
-			String resultStr = (String)json.get("result");
-			result = resultStr.equals("success") ? true : false;
-			if (!result) { conn.rollback(); } //결과 false 이면 위의 모든 것을 롤백한다.
-			else { conn.commit(); }
-			
-			return result;
+			try {
+				// Step 1. ADHistory 에 기입
+				sql_insertADHistory
+					= " INSERT INTO ASTK_AD_HISTORY (";
+				sql_insertADHistory
+					+= " AD_CODE, CLIENT_CODE, USER_CODE, HIST_DATE, HIST_TYPE, HIST_POINT ";
+				sql_insertADHistory
+					+= " ) VALUES ( ";
+				sql_insertADHistory
+					+= " "+ ADCode +","+ clientCode +","+ userCode +","+ NOW +",'V',"+ VIEW_POINT +" ";
+				sql_insertADHistory
+					+= " ) ";
+				rs2 = st.executeUpdate(sql_insertADHistory);
+				if (rs2 != 1) { conn.rollback(); return false; }
+				
+				// Step 2. SendedAD 를 변경
+				sql_updateSendedAD
+					= " UPDATE ASTK_AD_SENDED ";
+				sql_updateSendedAD
+					+= " SET WAS_VIEW = 'T' ";
+				sql_updateSendedAD
+					+= " WHERE SENDED_CODE="+ sendedCode;
+				rs2 = st.executeUpdate(sql_updateSendedAD);
+				if (rs2 != 1) { conn.rollback(); return false; }
+				
+				// Step 3. ASTK 서버에 UserPoint Update 요청
+				json = new ADParser().parsingUpdateUserPoint(userCode, chatGrpCode, ADCode, clientCode, 1);
+				String resultStr = (String)json.get("result");
+				result = resultStr.equals("success") ? true : false;
+				if (!result) { conn.rollback(); } //결과 false 이면 위의 모든 것을 롤백한다.
+				else { conn.commit(); }
+				
+				return result;
+				
+			} catch (Exception ex) {
+				System.out.println("log : try-catch.."+ ASTKLogManager.getMethodName_withClassName() +"\n"+ex);
+				conn.rollback();
+				return false;
+			}
 			
 		} catch (Exception ex) {
 			System.out.println("log : try-catch.."+ ASTKLogManager.getMethodName_withClassName() +"\n"+ex);

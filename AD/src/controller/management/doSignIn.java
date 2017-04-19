@@ -74,9 +74,15 @@ public class doSignIn extends HttpServlet {
 				tmp = am.selectADHistory_all(CLIENT_CODE);
 				ses.setAttribute("ADHistoryMap_all", tmp);
 				
+<<<<<<< HEAD
 				if (viewPath.startsWith("adMain")) { insidePage = AD_MAIN_PAGE; useInside = true; } 
 				else if (viewPath.startsWith("history")) { insidePage = HISTORY_MAIN_PAGE; useInside = true; } 
 				else if (viewPath.startsWith("statics")) { insidePage = STATICS_MAIN_PAGE; useInside = true; }
+=======
+			} else {
+				servletPath = "index.ad"; 
+				req.setAttribute("clientID", clientID);
+>>>>>>> branch 'solpi' of https://github.com/AsteriskTalk/svn_adPage1704
 				
 				if (useInside) { req.setAttribute("insidePage", insidePage); }
 				

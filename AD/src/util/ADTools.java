@@ -2,8 +2,8 @@ package util;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Random;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,9 +11,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import com.oreilly.servlet.MultipartRequest;
-
-import DAO.ADManager;
-import DAO.ClientManager;
 
 public class ADTools {
 	
@@ -44,6 +41,17 @@ public class ADTools {
 //			}
 //		}
 //	}
+	
+	public static String getOTC(int length) {
+		String result = "";
+		Random rnd = new Random();
+		for (int i=0 ; i<length ; i++) {
+			Boolean b = rnd.nextBoolean();
+			if (b ) { result += rnd.nextInt(10); }
+			else { result += (char)(rnd.nextInt(22)+67); }
+		}
+		return result;
+	}
 	
 	public static void printRequest(HttpServletRequest req) {
 		Enumeration e = req.getParameterNames();

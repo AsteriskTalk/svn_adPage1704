@@ -13,6 +13,14 @@
   	<url-pattern>*.ad</url-pattern>
   </servlet-mapping>
   <servlet>
+  	<servlet-name>SystemFront</servlet-name>
+  	<servlet-class>controller.systemFront</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>SystemFront</servlet-name>
+  	<url-pattern>*.sys</url-pattern>
+  </servlet-mapping>
+  <servlet>
   	<servlet-name>menu</servlet-name>
   	<servlet-class>controller.main.headerClick</servlet-class>
   </servlet>
@@ -28,7 +36,33 @@
   	<servlet-name>Index</servlet-name>
   	<url-pattern>/index</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>ViewError</servlet-name>
+  	<servlet-class>controller.common.viewError</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ViewError</servlet-name>
+  	<url-pattern>/error</url-pattern>
+  </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>MailTest</servlet-name>
+  	<servlet-class>controller.tester.mailSendTest</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>MailTest</servlet-name>
+  	<url-pattern>/testMail</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+  	<servlet-name>EmailCheck</servlet-name>
+  	<servlet-class>controller.management.doEmailCheck</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>EmailCheck</servlet-name>
+  	<url-pattern>/EmailCheck</url-pattern>
+  </servlet-mapping>
   
   <servlet>
   	<servlet-name>HistoryClick</servlet-name>
@@ -60,8 +94,37 @@
   	<servlet-class>controller.AD.ADClick</servlet-class>
   </servlet>
   <servlet-mapping>
+<<<<<<< HEAD
   	<servlet-name>ADClick</servlet-name>
   	<url-pattern>/ADClick</url-pattern>
+=======
+  	<servlet-name>ViewAD</servlet-name>
+  	<url-pattern>/myAD</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>ViewNews</servlet-name>
+  	<servlet-class>controller.news.viewNews</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ViewNews</servlet-name>
+  	<url-pattern>/news</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>ViewPoint</servlet-name>
+  	<servlet-class>controller.point.viewPoint</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ViewPoint</servlet-name>
+  	<url-pattern>/myPoint</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>ViewFindIDPW</servlet-name>
+  	<servlet-class>controller.management.viewFindIDPW</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ViewFindIDPW</servlet-name>
+  	<url-pattern>/findIDPW</url-pattern>
+>>>>>>> branch 'solpi' of https://github.com/AsteriskTalk/svn_adPage1704
   </servlet-mapping>
   
   
@@ -208,6 +271,31 @@
   <servlet-mapping>
   	<servlet-name>UserHistory</servlet-name>
   	<url-pattern>/userHistory</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>ViewSystem</servlet-name>
+  	<servlet-class>controller.system.viewSystemEntrance</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ViewSystem</servlet-name>
+  	<url-pattern>/system</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>GoSystem</servlet-name>
+  	<servlet-class>controller.system.goSystemManagement</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>GoSystem</servlet-name>
+  	<url-pattern>/goSystem</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>AddClientPWQuestion</servlet-name>
+  	<servlet-class>controller.system.addClientPWQuestion</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AddClientPWQuestion</servlet-name>
+  	<url-pattern>/addClientPWQuestion</url-pattern>
   </servlet-mapping>
   
   <context-param>
