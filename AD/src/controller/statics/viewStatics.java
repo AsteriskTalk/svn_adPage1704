@@ -23,7 +23,7 @@ public class viewStatics  extends HttpServlet {
 		System.out.println("\nlog : doGP.."+ ASTKLogManager.getClassName_now());
 		ServletContext sc = req.getServletContext();
 		HttpSession session = req.getSession();
-		
+		 
 		String page = (String)sc.getAttribute("INDEX_PAGE");
 		String view = "statics/main.jsp";
 		String insidePage = "all.jsp";
