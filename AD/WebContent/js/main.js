@@ -66,7 +66,7 @@ $(function(){
     
   $(".playBtn").on("click",function(){//재생 버튼을  클릭했을 때...
      clearTimeout(auto1); //auto1에 할당된 seTimeout을 제거합니다.
-     auto1=setTimeout(autoPlay,1000); //1초마다 autoPlay 함수를 실행합니다.
+     auto1=setTimeout(autoPlay,3000); //1초마다 autoPlay 함수를 실행합니다.
     
      //재생 버튼에 "src"속성을 활성화된 버튼 이미지로 바꿉니다.
      $("img",this).attr("src",

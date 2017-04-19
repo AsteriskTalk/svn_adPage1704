@@ -34,7 +34,11 @@ function goSignUp() {
 	<div id="wrap">
 		<div id="header">
 			<h1>
+<<<<<<< HEAD
 				<a class="pointer" onclick="goHome();"><img  alt="logo"></a>
+=======
+				<a class="pointer" onclick="goHome();"><img alt="logo"></a>
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
 			</h1>
 			<dl id="util_menu">
 				<!-- <dt class="hide">유틸메뉴</dt> -->

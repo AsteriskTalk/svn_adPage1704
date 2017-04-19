@@ -9,27 +9,66 @@
 	src: url(../fonts/NanumGothic.woff)
 }
 
-
 /*기본 레이아웃*/
+<<<<<<< HEAD
 
 #header .nav a{
 	font-size: 16px;
 	
+=======
+#wrap {
+	width: 1003px;
+	margin: 0 auto;
+	background-color: #fff;
+	position: relative;
+	
 }
 
+#wrap{
+	margin-top: 20px;
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
+}
+
+<<<<<<< HEAD
 #header .nav li{
 	margin-left: 30px;
 }
 
 #footer {
-	background-color: #f8f8f8;
-	border-top: 2px solid #c56666;
-	overflow: hidden;
+=======
+#header {
+	height: 227px;
+	position: relative;
+	z-index: 10;
 }
 
 
+
+#footer_wrap {
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
+	background-color: #f8f8f8;
+	border-top: 2px solid #c56666;
+<<<<<<< HEAD
+	overflow: hidden;
+=======
+	
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
+}
+
+<<<<<<< HEAD
+=======
+#inner_footer {
+	width: 50%;
+	height: 60%;
+	margin: 0 auto;
+	position: relative;
+	padding: 20px 0 50px 350px;
+}
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
+
 /*기본 글꼴 및 링크 텍스트 꾸미기*/
 body {
+<<<<<<< HEAD
 	padding-top: 100px;
 	background: #fff;
 	font-family: NanumGothic, 나눔고딕, 'Nanum Gothic', '맑은 고딕', HelveticaNeue,
@@ -38,6 +77,35 @@ body {
 	color: #64686d;
 	/* line-height: 26px; */
 	margin-top: 40px;
+=======
+	font: 12px gulim, "굴림", sans-serif;
+	color: #333;
+	background-color: #000;
+	min-width: 1003px;
+}
+
+select, input, textarea, button {
+	font: 12px gulim, "굴림", sans-serif;
+	color: #333;
+}
+
+a {
+	color: #333;
+	text-decoration: none;
+}
+
+ a:hover, a:focus {
+	color: #c0c0c0;
+} 
+
+.hide, legend, caption, hr {
+	position: absolute;
+	left: -9999px;
+	width: 0;
+	height: 0;
+	overflow: hidden;
+	text-indent: -9999px;
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -74,6 +142,7 @@ ul, ol {
 	margin-bottom: 10px;
 }
 
+<<<<<<< HEAD
 
 
 
@@ -430,13 +499,28 @@ scale
 		color: #45aed6;
 		background-color: transparent;
 	}
+=======
+/*헤더 영역*/
+#header h1 {
+	position: absolute;
+	left: 36px;
+	top: 53px;
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
 }
 
 /*로그인 영역*/
 .login_wrap {
+<<<<<<< HEAD
 	position: relative;
+=======
+	width:480px;
+	height:100%;
+	position: relative;	
+	font-family:  NanumGothic, 나눔고딕, 'Nanum Gothic', '맑은 고딕', HelveticaNeue;
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
 }
 
+<<<<<<< HEAD
 #login_f {
 	width: 305px;
 	height: 161px;
@@ -446,6 +530,16 @@ scale
 	top: -500px;
 	z-index: 15;
 	padding: 40px 0 0 30px;
+=======
+#signIn_form {
+	
+	width: 305px;
+	height: 161px;
+	/* background: url("../images/login_bg.png"); */
+	padding: 40px 0;
+	z-index: 15;
+	
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
 }
 
 .user_id, .user_pw {
@@ -458,6 +552,7 @@ scale
 	left: 1px;
 }
 
+<<<<<<< HEAD
 .user_pw {
 	margin-bottom: 8px;
 }
@@ -486,6 +581,37 @@ scale
 	bottom: 20px;
 	right: 22px;
 }
+=======
+
+
+.user_pw {
+	margin-bottom: 8px;
+}
+
+#signIn_ID, #signIn_PW {
+	width: 170px;
+	height: 33px;
+	line-height: 33px;
+	padding-left: 3px;
+	border: 1px solid #aaa;
+	margin: 2px 0;
+}
+
+#signIn_form img {
+	vertical-align: middle;
+}
+
+.log_btn {
+	position: absolute;
+	top: 40px;
+	left: 340px;
+	
+	
+	
+}
+
+
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
 
 .join_btn_wrap {
 	margin: 10px 0;
@@ -501,11 +627,16 @@ scale
 }
 
 /*유틸 메뉴 영역*/
+<<<<<<< HEAD
 #util_menu  {
 	float: left;
 	padding: 0 5px;
 	margin:20px 50px;
 	
+=======
+#util_menu dd {
+	float: left;
+	padding: 0 5px;
 }
 
 .util_first li {
@@ -513,18 +644,77 @@ scale
 	display: inline;
 }
 
-#util_menu li {
-	float: left;
+#util_menu {
+	position: absolute;
+	top: 4px;
+	right: 3px;
 }
 
+#sch_f {
+	position: absolute;
+	top: 85px;
+	left: 375px;
+}
+
+#keyword {
+	border: 2px solid #d82824;
+	height: 27px;
+	line-height: 27px;
+	width: 295px;
+	background: url("../images/sch_guide.gif") no-repeat;
+	padding-left: 5px;
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
+}
+
+<<<<<<< HEAD
+.util_first li {
+	margin-left: 10px;
+	display: inline;
+=======
+/*GNB 영역*/
+#gnb {
+	position: absolute;
+	top: 175px;
+	left: 0;
+	width: 1003px;
+	height: 52px;
+	background: #ae1c17 url("../images/gnb_bg.gif") repeat-x;
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
+}
+
+<<<<<<< HEAD
+#util_menu li {
+	float: left;
+=======
+#gnb li {
+	font-family:  NanumGothic, 나눔고딕, 'Nanum Gothic', '맑은 고딕', HelveticaNeue;
+	float: left;
+	margin:20px 50px;	
+	font-weight: bold;
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
+}
+
+<<<<<<< HEAD
 
 #util_menu {
 	
 	position: absolute;
 	top: 4px;
 	right: 3px;
+=======
+#gnb ul {
+	position: absolute;
+	background-color: #FFF;
+	width: 1003px;
+	top: 52px;
+	left: 0;
+	line-height: 35px;
+	height: 35px;
+	display: none;
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
 }
 
+<<<<<<< HEAD
 #google_translate_element{
 	float:right;
 	margin:5px 0 0 25px;
@@ -540,13 +730,55 @@ scale
 	background: url("../images/sch_guide.gif") no-repeat;
 	padding-left: 5px;
 }
+=======
+#gnb ul li {
+	margin-right: 1px;
+	padding-left: 10px;
+	background: url("../images/main_bullet.png") 2px 15px no-repeat;
+	
+}
+
+
+#gnb ul.sub1 li:first-child {
+	margin-left: 60px;
+	
+}
+
+#gnb ul.sub2 li:first-child {
+	margin-left: 157px;
+}
+
+#gnb ul.sub3 li:first-child {
+	margin-left: 302px;
+}
+
+#gnb ul.sub4 li:first-child {
+	margin-left: 438px;
+}
+
+
+#gnb ul .scroll a{
+	color:#fff;
+} 
+
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
 
 
 
+<<<<<<< HEAD
 #topMenu{
 	height: 50px;
 	width: 850px;
 	
+=======
+/*퀵 메뉴*/
+#quick_menu {
+	width: 95px;
+	text-align: center;
+	position: absolute;
+	top: 100px;
+	right: -96px;
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
 }
 
 
@@ -571,9 +803,20 @@ scale
 ********* Footer ******
 ************************/
 
+<<<<<<< HEAD
 #bottom_menu{
 	margin:auto 0;
+=======
+#bottom_menu dd {
+	float: left;
+	margin-right: 15px;
+}
+
+#bottom_menu {
+	width: 100%;
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
 	overflow: hidden;
+<<<<<<< HEAD
 	margin:25px 10px;
 }
 
@@ -582,12 +825,29 @@ scale
 #bottom_menu li{
 	float:left;
 	
+=======
+	margin-bottom: 25px;
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
 }
 
 
+<<<<<<< HEAD
 
 
 address p{
+=======
+address p {
+	font-size: 12px;
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
 	margin-top: 20px;
+<<<<<<< HEAD
 	font-size: 14px;
+=======
+}
+
+#relSite_wrap {
+	position: absolute;
+	left: 815px;
+	top: 50px;
+>>>>>>> branch 'Aoki' of https://github.com/AsteriskTalk/svn_adPage1704
 }
