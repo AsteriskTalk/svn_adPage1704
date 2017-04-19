@@ -6,9 +6,27 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>header</title>
 <!--  desktop Setting -->
-<script type="text/javascript" src="js/astk/headerMenuClick.js"></script>
 </head>
 <body id="body_index_header" class="homepage">
+<script type="text/javascript" src="js/astk/headerMenuClick.js"></script>
+<script type="text/javascript">
+
+function goMyProfile() {
+	location.href = "myProfile.ad";
+}
+
+function goSignIn() {
+	location.href = "signIn.ad";
+}
+
+function goSignOut() {
+	location.href = "doSignOut.ad";
+}
+
+function goSignUp() {
+	location.href="signUp.ad";
+}
+</script>
 	<!-- btn function - header -->
 
 	<form id="servletPath" method="post" action="#"> </form>
@@ -28,16 +46,16 @@
 								String clientID = (String) session.getAttribute("clientID");
 								if (clientID == null || clientID.equals("") || clientID == ""
 										|| clientID.equals(null)) {
-									out.println("<a id='signInBtn' class='pointer' onclick='doSignIn();' > 로그인 </a>");
+									out.println("<a id='signInBtn' class='pointer' onclick='goSignIn();' > 로그인 </a>");
 								} else {
 									out.println("<a id='welcome' class='pointer' >" + clientID
 											+ "님, 환영합니다. </a>");
 									out.println("<a id='myInfoBtn' class='pointer' onclick='myInfo();'> 내 정보 </a>");
-									out.println("<a id='signOutBtn' class='pointer' onclick='doSignOut();''> 로그아웃 </a>");
+									out.println("<a id='signOutBtn' class='pointer' onclick='goSignOut();''> 로그아웃 </a>");
 								}
 							%>
 						</li>
-						<li><a class="pointer">회원가입</a></li>
+						<li><a class="pointer" onclick="goSignUp();" >회원가입</a></li>
 						<li><a class="pointer">사이트맵</a></li>
 					</ul>
 				</dd>

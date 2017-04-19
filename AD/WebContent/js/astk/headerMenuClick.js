@@ -34,14 +34,3 @@
 			servletPath.submit();
 		}
 
-		function doSignIn() {
-			location.href = "signIn.ad";
-		}
-
-		function doSignOut() {
-			location.href = "doSignOut.ad";
-		}
-
-		function goMyProfile() {
-			location.href = "myProfile.ad";
-		}
