@@ -144,33 +144,32 @@
 					</map></li>
 			</ul>
 		</div>
-		<div id="bestbook_zone">
+		<div id="bestbook_zone banner_link">
 			<h3>광고 협력업체</h3>
 			<div id="best_bg">
 				<ul>
-					<li><a href="#"><img src="images/bestbook_list_1.png"
-							alt="" /><span> <strong>책 제목</strong>책 저자
-						</span></a></li>
-					<li><a href="#"><img src="images/bestbook_list_2.png"
-							alt="" /> <span><strong>책 제목</strong>책 저자</span></a></li>
-					<li><a href="#"><img src="images/bestbook_list_3.png"
-							alt="" /> <span><strong>책 제목</strong>책 저자</span></a></li>
-					<li><a href="#"><img src="images/bestbook_list_4.png"
-							alt="" /> <span><strong>책 제목</strong>책 저자</span></a></li>
-					<li><a href="#"><img src="images/bestbook_list_5.png"
-							alt="" /> <span><strong>책 제목</strong>책 저자</span></a></li>
-					<li><a href="#"><img src="images/bestbook_list_6.png"
-							alt="" /> <span><strong>책 제목</strong>책 저자</span></a></li>
-					<li><a href="#"><img src="images/bestbook_list_7.png"
-							alt="" /> <span><strong>책 제목</strong>책 저자</span></a></li>
-					<li><a href="#"><img src="images/bestbook_list_8.png"
-							alt="" /> <span><strong>책 제목</strong>책 저자</span></a></li>
-					<li><a href="#"><img src="images/bestbook_list_9.png"
-							alt="" /> <span><strong>책 제목</strong>책 저자</span> </a></li>
-					<li><a href="#"> <img src="images/bestbook_list_10.png"
-							alt="" /> <span><strong>책 제목</strong>책 저자</span></a></li>
+					<li><a href="#"><img src="images/bannerlink.png" alt="" />
+							<span><strong>쿠팡</strong>광고업체</span></a></li>
+					<li><a href="#"><img src="images/bannerlink.png" alt="" />
+							<span><strong>티몬</strong>광고업체</span></a></li>
+					<li><a href="#"><img src="images/bannerlink.png" alt="" />
+							<span><strong>11번가</strong>광고업체</span></a></li>
+					<li><a href="#"><img src="images/bannerlink.png" alt="" />
+							<span><strong>g마켓</strong>광고업체</span></a></li>
+					<li><a href="#"><img src="images/bannerlink.png" alt="" />
+							<span><strong>위메프</strong>광고업체</span></a></li>
+					<li><a href="#"><img src="images/bannerlink.png" alt="" />
+							<span><strong>쿠차</strong>광고업체</span></a></li>
+					<li><a href="#"><img src="images/bannerlink.png" alt="" />
+							<span><strong>옥션</strong>광고업체</span></a></li>
+					<li><a href="#"><img src="images/bannerlink.png" alt="" />
+							<span><strong>네이버</strong>광고업체</span></a></li>
+					<li><a href="#"><img src="images/bannerlink.png" alt="" />
+							<span><strong>다음</strong>광고업체</span> </a></li>
+					<li><a href="#"> <img src="images/bannerlink.png" alt="" />
+							<span><strong>구글</strong>광고업체</span></a></li>
 				</ul>
-				<p class="prev_btn">
+				<!-- <p class="prev_btn">
 					<a href="#"> <img src="images/bestbook_btn_left.png"
 						alt="이전으로 이동" />
 					</a>
@@ -179,7 +178,7 @@
 					<a href="#"> <img src="images/bestbook_btn_right.png"
 						alt="다음으로 이동" />
 					</a>
-				</p>
+				</p> -->
 			</div>
 		</div>
 	</div>

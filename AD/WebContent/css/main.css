@@ -1,6 +1,7 @@
 #visual {
 	height: 263px;
 	position: relative;
+	margin-bottom: 15px;
 }
 
 .touch_bullet {
@@ -12,6 +13,7 @@
 
 .touch_bullet li {
 	float: left;
+	
 }
 
 .touch_left_btn {
@@ -125,12 +127,12 @@
 	margin-bottom: 40px;
 }
 
-#bestbook_zone {
+#banner_link {
 	margin-bottom: 40px;
 	overflow: hidden;
 }
 
-#bestbook_zone h3 {
+#banner_link h3 {
 	margin-left:5px;
 	font: 16px NanumGothic, 나눔고딕, 'Nanum Gothic', '맑은 고딕', HelveticaNeue;
 	margin-bottom: 10px;
@@ -138,7 +140,8 @@
 
 #best_bg {
 	width: 963px;
-	height: 243px;
+	/* height: 243px; */
+	height: 100%;
 	padding-top: 18px;
 	background: url("../images/bestbook_bg.gif") 0 0 no-repeat;
 	position: relative;
@@ -155,8 +158,9 @@
 }
 
 #best_bg span {
-	padding-top: 18px;
-}
+	padding-bottom: 10px;
+	
+} 
 
 #best_bg .prev_btn {
 	position: absolute;
